@@ -1,0 +1,194 @@
+# Default configuration for Speech-to-Text project
+# Override specific parameters as needed
+
+# Project metadata
+project_name: "speech-to-text-ru"
+description: "Russian speech-to-text fine-tuning with Mozilla Common Voice 22.0 (Official)"
+version: "0.1.0"
+
+# Experiment configuration (common for both training and evaluation)
+experiment:
+  output_dir: "experiments"
+  experiment_name: "whisper_ru_cv22_finetune"
+  seed: 42
+
+# Data configuration
+data:
+  # Common Voice 22.0 dataset settings (downloaded from https://commonvoice.mozilla.org/en/datasets)
+  language: "ru"
+  task: "transcribe"  # Task for STT models (transcribe, translate for Whisper)
+  train_split: "train"
+  validation_split: "dev"  # Common Voice uses 'dev' for validation split
+  test_split: "test"
+  sample_rate: 16000  #target sample rate
+  data_dir: "data"  # Directory containing cv-corpus-22.0-2025-06-20/
+  dataset_path: "cv-corpus-22.0-2025-06-20/ru"  # Path to specific dataset within data_dir
+  num_workers: 4
+  preprocessing_num_workers: 8
+  normalize: true  # Normalize audio amplitude
+  trim_silence: true  # Trim silence from audio
+  silence_threshold: 0.01  # Threshold for silence detection (fraction of max energy, 0.0-1.0)
+
+  processing_and_augmentation_device: "cpu"  # Device for processing and augmentations ('cpu' or 'cuda')
+
+  # Data processing settings
+  filter_by_duration: true  # Apply duration filtering during PyTorch Dataset loading
+  max_duration: 30.0
+  min_duration: 0.2
+
+  # DataLoader settings
+  pin_memory: true  # Pin memory for faster data transfer to GPU
+
+  # Audio augmentation settings (disabled by default)
+  augmentation:
+    enabled: true
+
+    # Time-domain augmentations
+    add_noise: true
+    noise_probability: 0.3
+    noise_factor: 0.02
+    
+    speed_perturbation: true
+    speed_probability: 0.3
+    speed_factor_range: [0.9, 1.1]
+    speed_num_steps: 3
+    
+    pitch_shift: true
+    pitch_probability: 0.3
+    pitch_shift_range: [-2, 2]
+    
+    volume_perturbation: true
+    volume_probability: 0.3
+    volume_range_db: [-10, 10]
+    
+    fade_inout: true
+    fade_probability: 0.2
+    fade_duration: 0.1
+    
+    # Frequency-domain augmentations
+    spec_augment: true
+    spec_augment_probability: 0.4
+    time_mask_max_size: 20
+    freq_mask_max_size: 30
+    num_time_masks: 2
+    num_freq_masks: 2
+    
+    # Environmental augmentations
+    reverb: true
+    reverb_probability: 0.2
+    reverb_time: 0.3  # seconds
+    reverb_decay_rate: 0.3  # decay factor
+    reverb_impulse_amplitude: 0.1  # impulse response amplitude
+    reverb_mix_level: 0.3  # how much reverb to mix (0.0-1.0)
+
+# Model configuration
+model:
+  model_name: "openai/whisper-small"
+  model_type: "whisper"
+  freeze_feature_encoder: true  # Freeze feature encoder - acoustic features are language-agnostic
+  freeze_encoder: true  # Freeze encoder - acoustic features are language-agnostic
+  freeze_decoder: false  # Decoder learns language-specific patterns, should be trainable
+  unfreeze_last_n_encoder_layers: 0  # Keep encoder fully frozen for language fine-tuning
+  unfreeze_last_n_decoder_layers: 0  # Decoder is fully trainable by default
+
+  # Fine-grained unfreezing for critical components (applied AFTER freeze/unfreeze operations)
+  # Use case: freeze_decoder=true + unfreeze_embed_tokens=true for cross-lingual transfer
+  unfreeze_embed_tokens: false  # Unfreeze decoder token embeddings (critical for new vocabulary)
+  unfreeze_embed_positions_decoder: false  # Unfreeze decoder positional embeddings
+  unfreeze_lm_head: false  # Unfreeze output projection (lm_head/proj_out)
+  unfreeze_layer_norm_decoder: false  # Unfreeze final decoder layer norm
+
+  # Dropout parameters (standard HuggingFace names) - Whisper defaults to 0.0
+  activation_dropout: 0.0  # Dropout for activation functions
+  attention_dropout: 0.0  # Dropout for attention weights
+  dropout: 0.0  # General dropout rate
+  # Hardware and compilation settings
+  use_gpu: true
+  # gpu_memory_fraction removed - let PyTorch manage memory automatically
+  compile_model: false
+
+# Training configuration
+training:
+  num_train_epochs: 10
+  train_batch_size: 8
+  eval_batch_size: 8
+  gradient_accumulation_steps: 2
+  learning_rate: 1e-4
+  weight_decay: 0.01
+
+  # Learning rate scheduler configuration
+  scheduler_name: "linear"  # Scheduler type: "reduce_on_plateau", "cosine", "onecycle", "linear"
+
+  # ReduceLROnPlateau scheduler settings
+  reduce_on_plateau:
+    factor: 0.5  # Reduce LR by this factor when plateau detected
+    patience: 2  # Wait N epochs without improvement before reducing LR
+    min_lr: 1e-7  # Minimum learning rate
+    mode: "min"  # Minimize the monitored metric
+    threshold: 1e-4  # Threshold for measuring improvement
+
+  # CosineAnnealingLR scheduler settings
+  cosine:
+    T_max: 10  # Maximum number of iterations (typically num_train_epochs)
+    eta_min: 1e-7  # Minimum learning rate
+    last_epoch: -1  # The index of last epoch
+
+  # OneCycleLR scheduler settings
+  onecycle:
+    max_lr: 1e-3  # Upper learning rate boundary
+    pct_start: 0.3  # Percentage of cycle spent increasing LR
+    anneal_strategy: "cos"  # 'cos' or 'linear'
+    div_factor: 25.0  # Initial LR = max_lr / div_factor
+    final_div_factor: 1e4  # Final LR = max_lr / final_div_factor
+
+  # LinearLR scheduler settings (warmup + linear decay)
+  linear:
+    warmup_ratio: 0.1  # Warmup for 10% of total training steps, then linear decay to 0
+
+  # Warmup + Plateau + Linear Decay scheduler settings
+  warmup_plateau_decay:
+    warmup_ratio: 0.1  # Warmup for 10% of total steps (LR: 0 -> 1)
+    plateau_ratio: 0.5  # Plateau ends at 50% of total steps (LR: 1 constant)
+    # After plateau_ratio, LR decays linearly from 1 to 0 until end
+
+  max_steps: null
+  eval_steps: 500
+  save_steps: 1000
+  logging_steps: 100
+  load_best_model_at_end: true
+  metric_for_best_model: "eval_wer"
+  greater_is_better: false
+  save_total_limit: 3
+  fp16: true
+  num_workers: 4
+  remove_unused_columns: true  # Remove unused columns (safer, faster)
+  use_cpu_offload: false  # CPU offload for large models (experimental)
+  # Early stopping configuration
+  use_early_stopping: true  # Enable/disable early stopping
+  early_stopping_patience: 3  # Number of evaluations with no improvement before stopping
+  early_stopping_threshold: 0.01  # Minimum change to qualify as improvement
+
+# Evaluation configuration
+evaluation:
+  batch_size: 16
+  num_workers: 4
+
+  compute_metrics: true
+  prediction_loss_only: false
+  eval_on_start: false
+  eval_accumulation_steps: null
+  calculate_wer: true
+  calculate_cer: true
+  calculate_bleu: false
+  num_beams: 1
+  max_length: 448
+  language: "ru"
+  task: "transcribe"
+
+# Logging configuration
+logging:
+  use_wandb: false
+  wandb_project: "speech-to-text-ru"
+  wandb_entity: null
+  log_level: "INFO"
+  report_to: ["tensorboard", "wandb"]

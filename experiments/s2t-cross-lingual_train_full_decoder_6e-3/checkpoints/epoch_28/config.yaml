@@ -1,0 +1,160 @@
+experiment:
+  output_dir: experiments
+  experiment_name: s2t-cross-lingual_train_full_decoder_6e-3
+  seed: 42
+data:
+  language: ru
+  task: transcribe
+  train_split: train
+  validation_split: dev
+  test_split: test
+  max_duration: 30.0
+  min_duration: 0.2
+  sample_rate: 16000
+  data_dir: data
+  dataset_path: cv-corpus-22.0-2025-06-20/ru
+  num_workers: 4
+  preprocessing_num_workers: 8
+  normalize: true
+  trim_silence: true
+  silence_threshold: 0.01
+  processing_and_augmentation_device: cpu
+  filter_by_duration: true
+  pin_memory: true
+  max_source_positions: 6000
+  max_target_positions: 1024
+  augmentation:
+    enabled: true
+    add_noise: true
+    noise_probability: 0.3
+    noise_factor: 0.02
+    speed_perturbation: true
+    speed_probability: 0.3
+    speed_factor_range:
+    - 0.9
+    - 1.1
+    speed_num_steps: 3
+    pitch_shift: true
+    pitch_probability: 0.3
+    pitch_shift_range:
+    - -2
+    - 2
+    volume_perturbation: true
+    volume_probability: 0.3
+    volume_range_db:
+    - -10
+    - 10
+    fade_inout: true
+    fade_probability: 0.2
+    fade_duration: 0.1
+    spec_augment: true
+    spec_augment_probability: 0.4
+    time_mask_max_size: 20
+    freq_mask_max_size: 30
+    num_time_masks: 2
+    num_freq_masks: 2
+    time_stretch: true
+    time_stretch_probability: 0.3
+    time_stretch_range:
+    - 0.95
+    - 1.05
+    reverb: true
+    reverb_probability: 0.2
+    reverb_time: 0.3
+    reverb_decay_rate: 0.3
+    reverb_impulse_amplitude: 0.1
+    reverb_mix_level: 0.3
+model:
+  model_name: facebook/s2t-small-librispeech-asr
+  model_type: speech2text
+  tokenizer_name_or_path: facebook/s2t-medium-mustc-multilingual-st
+  freeze_feature_encoder: true
+  freeze_encoder: true
+  freeze_decoder: false
+  unfreeze_last_n_encoder_layers: 0
+  unfreeze_last_n_decoder_layers: 0
+  activation_dropout: 0.15
+  attention_dropout: 0.15
+  dropout: 0.15
+  use_gpu: true
+  compile_model: false
+  hidden_size: 256
+  num_attention_heads: 4
+  num_hidden_layers: 4
+  intermediate_size: 1024
+  custom: null
+training:
+  num_train_epochs: 30
+  train_batch_size: 64
+  eval_batch_size: 128
+  gradient_accumulation_steps: 2
+  eval_accumulation_steps: null
+  gradient_checkpointing: false
+  max_grad_norm: 1.0
+  learning_rate: 0.006
+  weight_decay: 0.01
+  scheduler_name: warmup_plateau_decay
+  reduce_on_plateau:
+    factor: 0.5
+    patience: 2
+    min_lr: 1.0e-07
+    mode: min
+    threshold: 0.0001
+  cosine:
+    T_max: 10
+    eta_min: 1.0e-07
+    last_epoch: -1
+  onecycle:
+    max_lr: 0.0005
+    pct_start: 0.3
+    anneal_strategy: cos
+    div_factor: 25.0
+    final_div_factor: 10000.0
+  linear:
+    warmup_ratio: 0.1
+  warmup_plateau_decay:
+    warmup_ratio: 0.05
+    plateau_ratio: 0.6
+  max_steps: null
+  eval_steps: 500
+  save_steps: 1000
+  logging_steps: 100
+  load_best_model_at_end: true
+  metric_for_best_model: eval_wer
+  greater_is_better: false
+  save_total_limit: 3
+  fp16: true
+  num_workers: 8
+  remove_unused_columns: true
+  use_cpu_offload: false
+  use_early_stopping: true
+  early_stopping_patience: 3
+  early_stopping_threshold: 0.01
+evaluation:
+  batch_size: 128
+  num_workers: 8
+  compute_metrics: true
+  prediction_loss_only: false
+  eval_on_start: false
+  eval_accumulation_steps: null
+  calculate_wer: true
+  calculate_cer: true
+  calculate_bleu: true
+  num_beams: 1
+  max_length: 448
+  language: ru
+  task: transcribe
+  repetition_penalty: 1.2
+  no_repeat_ngram_size: 3
+logging:
+  use_wandb: false
+  wandb_project: speech-to-text-ru
+  wandb_entity: null
+  log_level: INFO
+  report_to:
+  - tensorboard
+  - wandb
+project_name: speech-to-text-ru
+description: Speech2Text Cross-Lingual (English model + Multilingual tokenizer) for
+  Russian
+version: 0.1.0

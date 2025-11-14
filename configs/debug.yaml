@@ -1,0 +1,91 @@
+# Debug configuration for quick testing and development
+
+# Include default configuration
+defaults:
+  - default
+
+# Experiment configuration (common for both training and evaluation)
+experiment:
+  output_dir: "experiments"
+  experiment_name: "debug_test"
+  seed: 42
+
+# Debug model settings (use smallest model)
+model:
+  model_name: "openai/whisper-tiny"
+  model_type: "whisper"
+  freeze_feature_encoder: true
+  freeze_encoder: true
+  freeze_decoder: false
+  unfreeze_last_n_encoder_layers: 0
+  unfreeze_last_n_decoder_layers: 0
+
+  # Fine-grained unfreezing for critical components
+  unfreeze_embed_tokens: false
+  unfreeze_embed_positions_decoder: false
+  unfreeze_lm_head: false
+  unfreeze_layer_norm_decoder: false
+
+  compile_model: false  # Disable expensive optimizations for debugging
+
+# Debug data settings
+data:
+  preprocessing_num_workers: 2
+  num_workers: 1
+  dataset_path: "cv-corpus-22.0-2025-06-20/ru"  # Explicit path for debug mode
+
+# Debug training settings (fast and minimal)
+training:
+  train_batch_size: 2
+  eval_batch_size: 4
+  num_workers: 1
+  gradient_accumulation_steps: 1
+  learning_rate: 1e-4
+  num_train_epochs: 2
+  max_steps: 100  # Very limited steps
+  eval_steps: 25
+  save_steps: 50
+  logging_steps: 5
+  fp16: false  # Disable mixed precision for debugging
+
+  # Learning rate scheduler configuration
+  scheduler_name: "linear"  # Scheduler type: "reduce_on_plateau", "cosine", "onecycle", "linear"
+
+  # ReduceLROnPlateau scheduler settings
+  reduce_on_plateau:
+    factor: 0.5
+    patience: 2
+    min_lr: 1e-7
+    mode: "min"
+    threshold: 1e-4
+
+  # CosineAnnealingLR scheduler settings
+  cosine:
+    T_max: 2
+    eta_min: 1e-7
+    last_epoch: -1
+
+  # OneCycleLR scheduler settings
+  onecycle:
+    max_lr: 1e-3
+    pct_start: 0.3
+    anneal_strategy: "cos"
+    div_factor: 25.0
+    final_div_factor: 1e4
+
+  # LinearLR scheduler settings (warmup + linear decay)
+  linear:
+    warmup_ratio: 0.1  # Warmup for 10% of total training steps, then linear decay to 0
+
+# Disable expensive features for debug
+logging:
+  use_wandb: false
+  report_to: ["tensorboard"]
+
+# Evaluation settings
+evaluation:
+  batch_size: 4
+  num_workers: 1
+  calculate_wer: true
+  calculate_cer: true
+  calculate_bleu: true

@@ -1,0 +1,161 @@
+2025-11-11 09:17:27,961 - src.utils - INFO - Logging setup complete. Level: INFO
+2025-11-11 09:17:27,961 - src.utils - INFO - Log file: experiments\whisper-base_train_full_dec\training.log
+2025-11-11 09:17:27,962 - src.utils - INFO - Experiment directory: experiments\whisper-base_train_full_dec
+2025-11-11 09:17:27,962 - src.utils - INFO - Log file: experiments\whisper-base_train_full_dec\training.log
+2025-11-11 09:17:27,962 - src.utils - INFO - Checkpoints directory: experiments\whisper-base_train_full_dec\checkpoints
+2025-11-11 09:17:27,962 - src.utils - INFO - Experiment path: experiments\baselines\whisper-base
+2025-11-11 09:17:27,962 - src.utils - INFO - Resume training: False
+2025-11-11 09:17:27,997 - src.utils - INFO - Configuration saved to: experiments\whisper-base_train_full_dec\config.yaml
+2025-11-11 09:17:28,028 - __main__ - INFO - Using GPU: NVIDIA GeForce RTX 4070 Ti
+2025-11-11 09:17:28,028 - __main__ - INFO - GPU Memory: 11.99 GB
+2025-11-11 09:17:28,029 - __main__ - INFO - Model parameters: 72,593,920 total, 52,003,328 trainable
+2025-11-11 09:17:28,029 - __main__ - INFO - Train dataset size: 26654
+2025-11-11 09:17:28,029 - __main__ - INFO - Validation dataset size: 10243
+2025-11-11 09:17:28,029 - src.data - INFO - Initialized AudioCollator with device: cpu, model_type: whisper, labels padding: -100, transpose_features: False
+2025-11-11 09:17:28,029 - __main__ - INFO - Training batches per epoch: 556
+2025-11-11 09:17:28,030 - __main__ - INFO - Validation batches: 81
+2025-11-11 09:17:28,030 - __main__ - INFO - Total training steps: 2780
+2025-11-11 09:17:28,030 - __main__ - INFO - Creating warmup_plateau_decay scheduler with total_steps=2780
+2025-11-11 09:17:28,030 - __main__ - INFO - No scheduler_state.pt found - using fresh scheduler
+2025-11-11 09:17:28,030 - __main__ - INFO - Using optimizer: AdamW (lr=1e-05)
+2025-11-11 09:17:28,031 - __main__ - INFO - Using scheduler: warmup_plateau_decay
+2025-11-11 09:17:28,031 - __main__ - INFO - Starting from epoch 0, global_step 0
+2025-11-11 09:17:28,031 - __main__ - INFO - ============================================================
+2025-11-11 09:17:28,031 - __main__ - INFO - Starting training...
+2025-11-11 09:17:28,031 - __main__ - INFO - ============================================================
+2025-11-11 09:17:28,031 - __main__ - INFO - 
+Epoch 0/4
+2025-11-11 09:23:36,383 - __main__ - INFO - Epoch 0 - Average training loss: 0.9809
+2025-11-11 09:23:36,383 - __main__ - INFO - Running validation...
+2025-11-11 09:30:07,884 - __main__ - INFO - Computing validation metrics...
+2025-11-11 09:30:15,994 - __main__ - INFO - Validation - Epoch 0 - WER: 0.2649, CER: 0.0742
+2025-11-11 09:30:15,995 - __main__ - INFO - Current LR: 1.00e-05
+2025-11-11 09:30:15,996 - __main__ - INFO - New best WER: 0.2649
+2025-11-11 09:30:15,996 - src.models - INFO - CUDA optimizations enabled (cudnn.benchmark=True)
+2025-11-11 09:30:15,997 - src.models - INFO - ModelManager initialized
+2025-11-11 09:30:16,386 - src.models - INFO - Model weights saved to experiments\whisper-base_train_full_dec\checkpoints\epoch_0\model_weights.pt
+2025-11-11 09:30:16,389 - src.models - INFO - Model metadata saved to experiments\whisper-base_train_full_dec\checkpoints\epoch_0\model_metadata.json
+2025-11-11 09:30:16,389 - src.models - INFO - Checkpoint saved to experiments\whisper-base_train_full_dec\checkpoints\epoch_0
+2025-11-11 09:30:16,389 - __main__ - INFO - Model checkpoint saved: experiments\whisper-base_train_full_dec\checkpoints\epoch_0
+2025-11-11 09:30:16,871 - __main__ - INFO - Optimizer state saved: experiments\whisper-base_train_full_dec\checkpoints\epoch_0\optimizer_state.pt
+2025-11-11 09:30:16,874 - __main__ - INFO - Scheduler state saved: experiments\whisper-base_train_full_dec\checkpoints\epoch_0\scheduler_state.pt
+2025-11-11 09:30:16,874 - __main__ - INFO - Experiment metadata saved: experiments\whisper-base_train_full_dec\checkpoints\epoch_0\experiment_metadata.json
+2025-11-11 09:30:16,900 - __main__ - INFO - Config saved to: experiments\whisper-base_train_full_dec\checkpoints\epoch_0\config.yaml
+2025-11-11 09:30:16,901 - __main__ - INFO - Metrics saved to: experiments\whisper-base_train_full_dec\checkpoints\epoch_0\metrics.json
+2025-11-11 09:30:17,196 - __main__ - INFO - Best checkpoint also saved to: experiments\whisper-base_train_full_dec\best_checkpoint
+2025-11-11 09:30:17,196 - __main__ - INFO - 
+Epoch 1/4
+2025-11-11 09:36:06,534 - __main__ - INFO - Epoch 1 - Average training loss: 0.6464
+2025-11-11 09:36:06,535 - __main__ - INFO - Running validation...
+2025-11-11 09:46:42,051 - __main__ - INFO - Computing validation metrics...
+2025-11-11 09:46:49,181 - __main__ - INFO - Validation - Epoch 1 - WER: 0.2468, CER: 0.0698
+2025-11-11 09:46:49,182 - __main__ - INFO - Current LR: 8.57e-06
+2025-11-11 09:46:49,183 - __main__ - INFO - New best WER: 0.2468
+2025-11-11 09:46:49,183 - src.models - INFO - CUDA optimizations enabled (cudnn.benchmark=True)
+2025-11-11 09:46:49,183 - src.models - INFO - ModelManager initialized
+2025-11-11 09:46:49,595 - src.models - INFO - Model weights saved to experiments\whisper-base_train_full_dec\checkpoints\epoch_1\model_weights.pt
+2025-11-11 09:46:49,597 - src.models - INFO - Model metadata saved to experiments\whisper-base_train_full_dec\checkpoints\epoch_1\model_metadata.json
+2025-11-11 09:46:49,597 - src.models - INFO - Checkpoint saved to experiments\whisper-base_train_full_dec\checkpoints\epoch_1
+2025-11-11 09:46:49,598 - __main__ - INFO - Model checkpoint saved: experiments\whisper-base_train_full_dec\checkpoints\epoch_1
+2025-11-11 09:46:50,096 - __main__ - INFO - Optimizer state saved: experiments\whisper-base_train_full_dec\checkpoints\epoch_1\optimizer_state.pt
+2025-11-11 09:46:50,097 - __main__ - INFO - Scheduler state saved: experiments\whisper-base_train_full_dec\checkpoints\epoch_1\scheduler_state.pt
+2025-11-11 09:46:50,098 - __main__ - INFO - Experiment metadata saved: experiments\whisper-base_train_full_dec\checkpoints\epoch_1\experiment_metadata.json
+2025-11-11 09:46:50,122 - __main__ - INFO - Config saved to: experiments\whisper-base_train_full_dec\checkpoints\epoch_1\config.yaml
+2025-11-11 09:46:50,123 - __main__ - INFO - Metrics saved to: experiments\whisper-base_train_full_dec\checkpoints\epoch_1\metrics.json
+2025-11-11 09:46:50,503 - __main__ - INFO - Best checkpoint also saved to: experiments\whisper-base_train_full_dec\best_checkpoint
+2025-11-11 09:46:50,504 - __main__ - INFO - 
+Epoch 2/4
+2025-11-11 09:51:53,369 - __main__ - INFO - Epoch 2 - Average training loss: 0.5760
+2025-11-11 09:51:53,370 - __main__ - INFO - Running validation...
+2025-11-11 09:58:58,653 - __main__ - INFO - Computing validation metrics...
+2025-11-11 09:59:07,056 - __main__ - INFO - Validation - Epoch 2 - WER: 0.2375, CER: 0.0675
+2025-11-11 09:59:07,057 - __main__ - INFO - Current LR: 5.71e-06
+2025-11-11 09:59:07,057 - __main__ - INFO - New best WER: 0.2375
+2025-11-11 09:59:07,057 - src.models - INFO - CUDA optimizations enabled (cudnn.benchmark=True)
+2025-11-11 09:59:07,058 - src.models - INFO - ModelManager initialized
+2025-11-11 09:59:07,392 - src.models - INFO - Model weights saved to experiments\whisper-base_train_full_dec\checkpoints\epoch_2\model_weights.pt
+2025-11-11 09:59:07,394 - src.models - INFO - Model metadata saved to experiments\whisper-base_train_full_dec\checkpoints\epoch_2\model_metadata.json
+2025-11-11 09:59:07,394 - src.models - INFO - Checkpoint saved to experiments\whisper-base_train_full_dec\checkpoints\epoch_2
+2025-11-11 09:59:07,394 - __main__ - INFO - Model checkpoint saved: experiments\whisper-base_train_full_dec\checkpoints\epoch_2
+2025-11-11 09:59:07,888 - __main__ - INFO - Optimizer state saved: experiments\whisper-base_train_full_dec\checkpoints\epoch_2\optimizer_state.pt
+2025-11-11 09:59:07,890 - __main__ - INFO - Scheduler state saved: experiments\whisper-base_train_full_dec\checkpoints\epoch_2\scheduler_state.pt
+2025-11-11 09:59:07,891 - __main__ - INFO - Experiment metadata saved: experiments\whisper-base_train_full_dec\checkpoints\epoch_2\experiment_metadata.json
+2025-11-11 09:59:07,918 - __main__ - INFO - Config saved to: experiments\whisper-base_train_full_dec\checkpoints\epoch_2\config.yaml
+2025-11-11 09:59:07,919 - __main__ - INFO - Metrics saved to: experiments\whisper-base_train_full_dec\checkpoints\epoch_2\metrics.json
+2025-11-11 09:59:08,292 - __main__ - INFO - Best checkpoint also saved to: experiments\whisper-base_train_full_dec\best_checkpoint
+2025-11-11 09:59:08,292 - __main__ - INFO - 
+Epoch 3/4
+2025-11-11 10:04:13,892 - __main__ - INFO - Epoch 3 - Average training loss: 0.5405
+2025-11-11 10:04:13,892 - __main__ - INFO - Running validation...
+2025-11-11 10:14:19,332 - __main__ - INFO - Computing validation metrics...
+2025-11-11 10:14:27,370 - __main__ - INFO - Validation - Epoch 3 - WER: 0.2327, CER: 0.0664
+2025-11-11 10:14:27,371 - __main__ - INFO - Current LR: 2.86e-06
+2025-11-11 10:14:27,371 - __main__ - INFO - New best WER: 0.2327
+2025-11-11 10:14:27,371 - src.models - INFO - CUDA optimizations enabled (cudnn.benchmark=True)
+2025-11-11 10:14:27,372 - src.models - INFO - ModelManager initialized
+2025-11-11 10:14:27,716 - src.models - INFO - Model weights saved to experiments\whisper-base_train_full_dec\checkpoints\epoch_3\model_weights.pt
+2025-11-11 10:14:27,718 - src.models - INFO - Model metadata saved to experiments\whisper-base_train_full_dec\checkpoints\epoch_3\model_metadata.json
+2025-11-11 10:14:27,718 - src.models - INFO - Checkpoint saved to experiments\whisper-base_train_full_dec\checkpoints\epoch_3
+2025-11-11 10:14:27,718 - __main__ - INFO - Model checkpoint saved: experiments\whisper-base_train_full_dec\checkpoints\epoch_3
+2025-11-11 10:14:28,207 - __main__ - INFO - Optimizer state saved: experiments\whisper-base_train_full_dec\checkpoints\epoch_3\optimizer_state.pt
+2025-11-11 10:14:28,213 - __main__ - INFO - Scheduler state saved: experiments\whisper-base_train_full_dec\checkpoints\epoch_3\scheduler_state.pt
+2025-11-11 10:14:28,214 - __main__ - INFO - Experiment metadata saved: experiments\whisper-base_train_full_dec\checkpoints\epoch_3\experiment_metadata.json
+2025-11-11 10:14:28,240 - __main__ - INFO - Config saved to: experiments\whisper-base_train_full_dec\checkpoints\epoch_3\config.yaml
+2025-11-11 10:14:28,240 - __main__ - INFO - Metrics saved to: experiments\whisper-base_train_full_dec\checkpoints\epoch_3\metrics.json
+2025-11-11 10:14:28,581 - __main__ - INFO - Best checkpoint also saved to: experiments\whisper-base_train_full_dec\best_checkpoint
+2025-11-11 10:14:28,582 - __main__ - INFO - 
+Epoch 4/4
+2025-11-11 10:19:58,119 - __main__ - INFO - Epoch 4 - Average training loss: 0.5228
+2025-11-11 10:19:58,119 - __main__ - INFO - Running validation...
+2025-11-11 10:27:07,627 - __main__ - INFO - Computing validation metrics...
+2025-11-11 10:27:16,090 - __main__ - INFO - Validation - Epoch 4 - WER: 0.2307, CER: 0.0659
+2025-11-11 10:27:16,091 - __main__ - INFO - Current LR: 0.00e+00
+2025-11-11 10:27:16,091 - __main__ - INFO - New best WER: 0.2307
+2025-11-11 10:27:16,091 - src.models - INFO - CUDA optimizations enabled (cudnn.benchmark=True)
+2025-11-11 10:27:16,092 - src.models - INFO - ModelManager initialized
+2025-11-11 10:27:16,444 - src.models - INFO - Model weights saved to experiments\whisper-base_train_full_dec\checkpoints\epoch_4\model_weights.pt
+2025-11-11 10:27:16,446 - src.models - INFO - Model metadata saved to experiments\whisper-base_train_full_dec\checkpoints\epoch_4\model_metadata.json
+2025-11-11 10:27:16,446 - src.models - INFO - Checkpoint saved to experiments\whisper-base_train_full_dec\checkpoints\epoch_4
+2025-11-11 10:27:16,447 - __main__ - INFO - Model checkpoint saved: experiments\whisper-base_train_full_dec\checkpoints\epoch_4
+2025-11-11 10:27:16,940 - __main__ - INFO - Optimizer state saved: experiments\whisper-base_train_full_dec\checkpoints\epoch_4\optimizer_state.pt
+2025-11-11 10:27:16,941 - __main__ - INFO - Scheduler state saved: experiments\whisper-base_train_full_dec\checkpoints\epoch_4\scheduler_state.pt
+2025-11-11 10:27:16,941 - __main__ - INFO - Experiment metadata saved: experiments\whisper-base_train_full_dec\checkpoints\epoch_4\experiment_metadata.json
+2025-11-11 10:27:16,969 - __main__ - INFO - Config saved to: experiments\whisper-base_train_full_dec\checkpoints\epoch_4\config.yaml
+2025-11-11 10:27:16,969 - __main__ - INFO - Metrics saved to: experiments\whisper-base_train_full_dec\checkpoints\epoch_4\metrics.json
+2025-11-11 10:27:17,378 - __main__ - INFO - Best checkpoint also saved to: experiments\whisper-base_train_full_dec\best_checkpoint
+2025-11-11 10:27:17,379 - __main__ - INFO - ============================================================
+2025-11-11 10:27:17,379 - __main__ - INFO - Training completed!
+2025-11-11 10:27:17,379 - __main__ - INFO - Total training time: 1:09:49.347470
+2025-11-11 10:27:17,379 - __main__ - INFO - Best WER: 0.2307 (Epoch 4)
+2025-11-11 10:27:17,379 - __main__ - INFO - ============================================================
+2025-11-11 10:27:17,379 - __main__ - INFO - ============================================================
+2025-11-11 10:27:17,380 - __main__ - INFO - Running final evaluation on test set...
+2025-11-11 10:27:17,380 - __main__ - INFO - ============================================================
+2025-11-11 10:27:17,380 - src.data - INFO - Loading test split from TSV file C:\Users\User\Documents\Progs\Projects\seepch_to_text\data\cv-corpus-22.0-2025-06-20\ru\test.tsv...
+2025-11-11 10:27:17,413 - src.data - INFO - Loaded 10,244 samples from test split
+2025-11-11 10:27:17,413 - src.data - INFO - Loading clip durations from clip_durations.tsv...
+2025-11-11 10:27:17,543 - src.data - INFO - Merged durations for 10244 samples
+2025-11-11 10:27:17,546 - src.data - INFO - Pre-filtered 0 samples by metadata duration (min: 0.2s, max: 30.0s). Final filtering after trim_silence happens in AudioPreprocessor.
+2025-11-11 10:27:17,546 - src.data - INFO - After filtering: 10,244 samples remaining
+2025-11-11 10:27:17,547 - src.data - INFO - Cached test split with 10244 samples
+2025-11-11 10:27:17,553 - __main__ - INFO - Test dataset size: 10244
+2025-11-11 10:27:17,553 - src.data - INFO - Initialized AudioCollator with device: cpu, model_type: whisper, labels padding: -100, transpose_features: False
+2025-11-11 10:34:26,567 - __main__ - INFO - Computing test metrics...
+2025-11-11 10:34:34,591 - __main__ - INFO - ============================================================
+2025-11-11 10:34:34,592 - __main__ - INFO - Test Set Results:
+2025-11-11 10:34:34,592 - __main__ - INFO - ============================================================
+2025-11-11 10:34:34,592 - __main__ - INFO - Word Error Rate (WER): 0.2692 (26.92%)
+2025-11-11 10:34:34,592 - __main__ - INFO - Character Error Rate (CER): 0.0856 (8.56%)
+2025-11-11 10:34:34,592 - __main__ - INFO - BLEU Score: 0.5886
+2025-11-11 10:34:34,593 - __main__ - INFO - Substitutions: 18,250
+2025-11-11 10:34:34,593 - __main__ - INFO - Deletions: 2,206
+2025-11-11 10:34:34,593 - __main__ - INFO - Insertions: 2,755
+2025-11-11 10:34:34,593 - __main__ - INFO - Correct Words: 65,752
+2025-11-11 10:34:34,593 - __main__ - INFO - ============================================================
+2025-11-11 10:34:34,594 - __main__ - INFO - Test metrics saved to: experiments\whisper-base_train_full_dec\test_results.json
+2025-11-11 10:34:34,667 - __main__ - INFO - Test predictions saved to: experiments\whisper-base_train_full_dec\test_predictions.csv
+2025-11-11 10:34:34,668 - __main__ - INFO - ============================================================
+2025-11-11 10:34:34,669 - __main__ - INFO - All done!
+2025-11-11 10:34:34,669 - __main__ - INFO - Results saved to: experiments\whisper-base_train_full_dec
+2025-11-11 10:34:34,669 - __main__ - INFO - TensorBoard: tensorboard --logdir experiments\whisper-base_train_full_dec/tensorboard
+2025-11-11 10:34:34,669 - __main__ - INFO - ============================================================

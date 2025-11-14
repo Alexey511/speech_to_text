@@ -1,0 +1,794 @@
+2025-11-12 08:38:35,931 - src.utils - INFO - Logging setup complete. Level: INFO
+2025-11-12 08:38:35,932 - src.utils - INFO - Log file: experiments\s2t-cross-lingual_train_full_decoder_4e-3\training.log
+2025-11-12 08:38:35,932 - src.utils - INFO - Experiment directory: experiments\s2t-cross-lingual_train_full_decoder_4e-3
+2025-11-12 08:38:35,932 - src.utils - INFO - Log file: experiments\s2t-cross-lingual_train_full_decoder_4e-3\training.log
+2025-11-12 08:38:35,932 - src.utils - INFO - Checkpoints directory: experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints
+2025-11-12 08:38:35,933 - src.utils - INFO - Experiment path: experiments\baselines\s2t-cross-lingual
+2025-11-12 08:38:35,933 - src.utils - INFO - Resume training: False
+2025-11-12 08:38:35,975 - src.utils - INFO - Configuration saved to: experiments\s2t-cross-lingual_train_full_decoder_4e-3\config.yaml
+2025-11-12 08:38:36,005 - __main__ - INFO - Using GPU: NVIDIA GeForce RTX 4070 Ti
+2025-11-12 08:38:36,005 - __main__ - INFO - GPU Memory: 11.99 GB
+2025-11-12 08:38:36,006 - __main__ - INFO - Model parameters: 29,536,256 total, 12,033,024 trainable
+2025-11-12 08:38:36,006 - __main__ - INFO - Train dataset size: 26654
+2025-11-12 08:38:36,006 - __main__ - INFO - Validation dataset size: 10243
+2025-11-12 08:38:36,006 - src.data - INFO - Initialized AudioCollator with device: cpu, model_type: speech2text, labels padding: -100, transpose_features: True
+2025-11-12 08:38:36,007 - __main__ - INFO - Training batches per epoch: 417
+2025-11-12 08:38:36,007 - __main__ - INFO - Validation batches: 81
+2025-11-12 08:38:36,007 - __main__ - INFO - Total training steps: 16680
+2025-11-12 08:38:36,007 - __main__ - INFO - Creating warmup_plateau_decay scheduler with total_steps=16680
+2025-11-12 08:38:36,008 - __main__ - INFO - No scheduler_state.pt found - using fresh scheduler
+2025-11-12 08:38:36,008 - __main__ - INFO - Using optimizer: AdamW (lr=0.004)
+2025-11-12 08:38:36,008 - __main__ - INFO - Using scheduler: warmup_plateau_decay
+2025-11-12 08:38:36,008 - __main__ - INFO - Starting from epoch 0, global_step 0
+2025-11-12 08:38:36,009 - __main__ - INFO - ============================================================
+2025-11-12 08:38:36,009 - __main__ - INFO - Starting training...
+2025-11-12 08:38:36,009 - __main__ - INFO - ============================================================
+2025-11-12 08:38:36,009 - __main__ - INFO - 
+Epoch 0/39
+2025-11-12 08:40:24,022 - __main__ - INFO - Epoch 0 - Average training loss: 5.2880
+2025-11-12 08:40:24,023 - __main__ - INFO - Running validation...
+2025-11-12 08:42:43,220 - __main__ - INFO - Computing validation metrics...
+2025-11-12 08:42:52,632 - __main__ - INFO - Validation - Epoch 0 - WER: 0.8404, CER: 0.4186
+2025-11-12 08:42:52,633 - __main__ - INFO - Current LR: 2.00e-03
+2025-11-12 08:42:52,633 - __main__ - INFO - New best WER: 0.8404
+2025-11-12 08:42:52,634 - src.models - INFO - CUDA optimizations enabled (cudnn.benchmark=True)
+2025-11-12 08:42:52,634 - src.models - INFO - ModelManager initialized
+2025-11-12 08:42:52,879 - src.models - INFO - Model weights saved to experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_0\model_weights.pt
+2025-11-12 08:42:52,881 - src.models - INFO - Model metadata saved to experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_0\model_metadata.json
+2025-11-12 08:42:52,882 - src.models - INFO - Checkpoint saved to experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_0
+2025-11-12 08:42:52,882 - __main__ - INFO - Model checkpoint saved: experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_0
+2025-11-12 08:42:52,996 - __main__ - INFO - Optimizer state saved: experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_0\optimizer_state.pt
+2025-11-12 08:42:53,000 - __main__ - INFO - Scheduler state saved: experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_0\scheduler_state.pt
+2025-11-12 08:42:53,000 - __main__ - INFO - Experiment metadata saved: experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_0\experiment_metadata.json
+2025-11-12 08:42:53,026 - __main__ - INFO - Config saved to: experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_0\config.yaml
+2025-11-12 08:42:53,027 - __main__ - INFO - Metrics saved to: experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_0\metrics.json
+2025-11-12 08:42:53,170 - __main__ - INFO - Best checkpoint also saved to: experiments\s2t-cross-lingual_train_full_decoder_4e-3\best_checkpoint
+2025-11-12 08:42:53,171 - __main__ - INFO - 
+Epoch 1/39
+2025-11-12 08:44:35,495 - __main__ - INFO - Epoch 1 - Average training loss: 2.5777
+2025-11-12 08:44:35,496 - __main__ - INFO - Running validation...
+2025-11-12 08:46:58,371 - __main__ - INFO - Computing validation metrics...
+2025-11-12 08:47:06,640 - __main__ - INFO - Validation - Epoch 1 - WER: 0.7179, CER: 0.3042
+2025-11-12 08:47:06,641 - __main__ - INFO - Current LR: 4.00e-03
+2025-11-12 08:47:06,641 - __main__ - INFO - New best WER: 0.7179
+2025-11-12 08:47:06,641 - src.models - INFO - CUDA optimizations enabled (cudnn.benchmark=True)
+2025-11-12 08:47:06,641 - src.models - INFO - ModelManager initialized
+2025-11-12 08:47:06,784 - src.models - INFO - Model weights saved to experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_1\model_weights.pt
+2025-11-12 08:47:06,787 - src.models - INFO - Model metadata saved to experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_1\model_metadata.json
+2025-11-12 08:47:06,787 - src.models - INFO - Checkpoint saved to experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_1
+2025-11-12 08:47:06,787 - __main__ - INFO - Model checkpoint saved: experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_1
+2025-11-12 08:47:06,905 - __main__ - INFO - Optimizer state saved: experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_1\optimizer_state.pt
+2025-11-12 08:47:07,032 - __main__ - INFO - Scheduler state saved: experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_1\scheduler_state.pt
+2025-11-12 08:47:07,033 - __main__ - INFO - Experiment metadata saved: experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_1\experiment_metadata.json
+2025-11-12 08:47:07,076 - __main__ - INFO - Config saved to: experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_1\config.yaml
+2025-11-12 08:47:07,077 - __main__ - INFO - Metrics saved to: experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_1\metrics.json
+2025-11-12 08:47:07,208 - __main__ - INFO - Best checkpoint also saved to: experiments\s2t-cross-lingual_train_full_decoder_4e-3\best_checkpoint
+2025-11-12 08:47:07,209 - __main__ - INFO - 
+Epoch 2/39
+2025-11-12 08:48:52,423 - __main__ - INFO - Epoch 2 - Average training loss: 2.1150
+2025-11-12 08:48:52,423 - __main__ - INFO - Running validation...
+2025-11-12 08:51:09,321 - __main__ - INFO - Computing validation metrics...
+2025-11-12 08:51:17,961 - __main__ - INFO - Validation - Epoch 2 - WER: 0.6569, CER: 0.2666
+2025-11-12 08:51:17,962 - __main__ - INFO - Current LR: 4.00e-03
+2025-11-12 08:51:17,962 - __main__ - INFO - New best WER: 0.6569
+2025-11-12 08:51:17,963 - src.models - INFO - CUDA optimizations enabled (cudnn.benchmark=True)
+2025-11-12 08:51:17,963 - src.models - INFO - ModelManager initialized
+2025-11-12 08:51:18,104 - src.models - INFO - Model weights saved to experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_2\model_weights.pt
+2025-11-12 08:51:18,107 - src.models - INFO - Model metadata saved to experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_2\model_metadata.json
+2025-11-12 08:51:18,107 - src.models - INFO - Checkpoint saved to experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_2
+2025-11-12 08:51:18,107 - __main__ - INFO - Model checkpoint saved: experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_2
+2025-11-12 08:51:18,219 - __main__ - INFO - Optimizer state saved: experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_2\optimizer_state.pt
+2025-11-12 08:51:18,270 - __main__ - INFO - Scheduler state saved: experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_2\scheduler_state.pt
+2025-11-12 08:51:18,271 - __main__ - INFO - Experiment metadata saved: experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_2\experiment_metadata.json
+2025-11-12 08:51:18,299 - __main__ - INFO - Config saved to: experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_2\config.yaml
+2025-11-12 08:51:18,300 - __main__ - INFO - Metrics saved to: experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_2\metrics.json
+2025-11-12 08:51:18,442 - __main__ - INFO - Best checkpoint also saved to: experiments\s2t-cross-lingual_train_full_decoder_4e-3\best_checkpoint
+2025-11-12 08:51:18,442 - __main__ - INFO - 
+Epoch 3/39
+2025-11-12 08:53:01,757 - __main__ - INFO - Epoch 3 - Average training loss: 1.8455
+2025-11-12 08:53:01,757 - __main__ - INFO - Running validation...
+2025-11-12 08:55:21,785 - __main__ - INFO - Computing validation metrics...
+2025-11-12 08:55:31,362 - __main__ - INFO - Validation - Epoch 3 - WER: 0.6277, CER: 0.2509
+2025-11-12 08:55:31,363 - __main__ - INFO - Current LR: 4.00e-03
+2025-11-12 08:55:31,363 - __main__ - INFO - New best WER: 0.6277
+2025-11-12 08:55:31,364 - src.models - INFO - CUDA optimizations enabled (cudnn.benchmark=True)
+2025-11-12 08:55:31,364 - src.models - INFO - ModelManager initialized
+2025-11-12 08:55:31,501 - src.models - INFO - Model weights saved to experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_3\model_weights.pt
+2025-11-12 08:55:31,503 - src.models - INFO - Model metadata saved to experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_3\model_metadata.json
+2025-11-12 08:55:31,504 - src.models - INFO - Checkpoint saved to experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_3
+2025-11-12 08:55:31,504 - __main__ - INFO - Model checkpoint saved: experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_3
+2025-11-12 08:55:31,615 - __main__ - INFO - Optimizer state saved: experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_3\optimizer_state.pt
+2025-11-12 08:55:31,616 - __main__ - INFO - Scheduler state saved: experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_3\scheduler_state.pt
+2025-11-12 08:55:31,617 - __main__ - INFO - Experiment metadata saved: experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_3\experiment_metadata.json
+2025-11-12 08:55:31,642 - __main__ - INFO - Config saved to: experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_3\config.yaml
+2025-11-12 08:55:31,643 - __main__ - INFO - Metrics saved to: experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_3\metrics.json
+2025-11-12 08:55:31,773 - __main__ - INFO - Best checkpoint also saved to: experiments\s2t-cross-lingual_train_full_decoder_4e-3\best_checkpoint
+2025-11-12 08:55:31,786 - __main__ - INFO - Removed old checkpoint: experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_0
+2025-11-12 08:55:31,786 - __main__ - INFO - 
+Epoch 4/39
+2025-11-12 08:57:17,586 - __main__ - INFO - Epoch 4 - Average training loss: 1.6796
+2025-11-12 08:57:17,587 - __main__ - INFO - Running validation...
+2025-11-12 08:59:34,910 - __main__ - INFO - Computing validation metrics...
+2025-11-12 08:59:44,208 - __main__ - INFO - Validation - Epoch 4 - WER: 0.5901, CER: 0.2315
+2025-11-12 08:59:44,209 - __main__ - INFO - Current LR: 4.00e-03
+2025-11-12 08:59:44,209 - __main__ - INFO - New best WER: 0.5901
+2025-11-12 08:59:44,210 - src.models - INFO - CUDA optimizations enabled (cudnn.benchmark=True)
+2025-11-12 08:59:44,210 - src.models - INFO - ModelManager initialized
+2025-11-12 08:59:44,369 - src.models - INFO - Model weights saved to experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_4\model_weights.pt
+2025-11-12 08:59:44,371 - src.models - INFO - Model metadata saved to experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_4\model_metadata.json
+2025-11-12 08:59:44,371 - src.models - INFO - Checkpoint saved to experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_4
+2025-11-12 08:59:44,372 - __main__ - INFO - Model checkpoint saved: experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_4
+2025-11-12 08:59:44,482 - __main__ - INFO - Optimizer state saved: experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_4\optimizer_state.pt
+2025-11-12 08:59:44,483 - __main__ - INFO - Scheduler state saved: experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_4\scheduler_state.pt
+2025-11-12 08:59:44,484 - __main__ - INFO - Experiment metadata saved: experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_4\experiment_metadata.json
+2025-11-12 08:59:44,511 - __main__ - INFO - Config saved to: experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_4\config.yaml
+2025-11-12 08:59:44,512 - __main__ - INFO - Metrics saved to: experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_4\metrics.json
+2025-11-12 08:59:44,649 - __main__ - INFO - Best checkpoint also saved to: experiments\s2t-cross-lingual_train_full_decoder_4e-3\best_checkpoint
+2025-11-12 08:59:44,662 - __main__ - INFO - Removed old checkpoint: experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_1
+2025-11-12 08:59:44,663 - __main__ - INFO - 
+Epoch 5/39
+2025-11-12 09:01:29,507 - __main__ - INFO - Epoch 5 - Average training loss: 1.5859
+2025-11-12 09:01:29,507 - __main__ - INFO - Running validation...
+2025-11-12 09:03:48,684 - __main__ - INFO - Computing validation metrics...
+2025-11-12 09:03:57,530 - __main__ - INFO - Validation - Epoch 5 - WER: 0.5773, CER: 0.2293
+2025-11-12 09:03:57,531 - __main__ - INFO - Current LR: 4.00e-03
+2025-11-12 09:03:57,531 - __main__ - INFO - New best WER: 0.5773
+2025-11-12 09:03:57,531 - src.models - INFO - CUDA optimizations enabled (cudnn.benchmark=True)
+2025-11-12 09:03:57,531 - src.models - INFO - ModelManager initialized
+2025-11-12 09:03:57,679 - src.models - INFO - Model weights saved to experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_5\model_weights.pt
+2025-11-12 09:03:57,682 - src.models - INFO - Model metadata saved to experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_5\model_metadata.json
+2025-11-12 09:03:57,682 - src.models - INFO - Checkpoint saved to experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_5
+2025-11-12 09:03:57,682 - __main__ - INFO - Model checkpoint saved: experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_5
+2025-11-12 09:03:57,795 - __main__ - INFO - Optimizer state saved: experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_5\optimizer_state.pt
+2025-11-12 09:03:57,797 - __main__ - INFO - Scheduler state saved: experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_5\scheduler_state.pt
+2025-11-12 09:03:57,797 - __main__ - INFO - Experiment metadata saved: experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_5\experiment_metadata.json
+2025-11-12 09:03:57,828 - __main__ - INFO - Config saved to: experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_5\config.yaml
+2025-11-12 09:03:57,828 - __main__ - INFO - Metrics saved to: experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_5\metrics.json
+2025-11-12 09:03:57,971 - __main__ - INFO - Best checkpoint also saved to: experiments\s2t-cross-lingual_train_full_decoder_4e-3\best_checkpoint
+2025-11-12 09:03:57,986 - __main__ - INFO - Removed old checkpoint: experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_2
+2025-11-12 09:03:57,986 - __main__ - INFO - 
+Epoch 6/39
+2025-11-12 09:05:42,184 - __main__ - INFO - Epoch 6 - Average training loss: 1.5072
+2025-11-12 09:05:42,185 - __main__ - INFO - Running validation...
+2025-11-12 09:08:00,098 - __main__ - INFO - Computing validation metrics...
+2025-11-12 09:08:08,813 - __main__ - INFO - Validation - Epoch 6 - WER: 0.5572, CER: 0.2253
+2025-11-12 09:08:08,814 - __main__ - INFO - Current LR: 4.00e-03
+2025-11-12 09:08:08,814 - __main__ - INFO - New best WER: 0.5572
+2025-11-12 09:08:08,815 - src.models - INFO - CUDA optimizations enabled (cudnn.benchmark=True)
+2025-11-12 09:08:08,815 - src.models - INFO - ModelManager initialized
+2025-11-12 09:08:08,923 - src.models - INFO - Model weights saved to experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_6\model_weights.pt
+2025-11-12 09:08:08,926 - src.models - INFO - Model metadata saved to experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_6\model_metadata.json
+2025-11-12 09:08:08,926 - src.models - INFO - Checkpoint saved to experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_6
+2025-11-12 09:08:08,926 - __main__ - INFO - Model checkpoint saved: experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_6
+2025-11-12 09:08:09,152 - __main__ - INFO - Optimizer state saved: experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_6\optimizer_state.pt
+2025-11-12 09:08:09,161 - __main__ - INFO - Scheduler state saved: experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_6\scheduler_state.pt
+2025-11-12 09:08:09,161 - __main__ - INFO - Experiment metadata saved: experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_6\experiment_metadata.json
+2025-11-12 09:08:09,186 - __main__ - INFO - Config saved to: experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_6\config.yaml
+2025-11-12 09:08:09,187 - __main__ - INFO - Metrics saved to: experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_6\metrics.json
+2025-11-12 09:08:09,335 - __main__ - INFO - Best checkpoint also saved to: experiments\s2t-cross-lingual_train_full_decoder_4e-3\best_checkpoint
+2025-11-12 09:08:09,348 - __main__ - INFO - Removed old checkpoint: experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_3
+2025-11-12 09:08:09,349 - __main__ - INFO - 
+Epoch 7/39
+2025-11-12 09:09:51,897 - __main__ - INFO - Epoch 7 - Average training loss: 1.4339
+2025-11-12 09:09:51,898 - __main__ - INFO - Running validation...
+2025-11-12 09:12:13,510 - __main__ - INFO - Computing validation metrics...
+2025-11-12 09:12:22,315 - __main__ - INFO - Validation - Epoch 7 - WER: 0.5490, CER: 0.2167
+2025-11-12 09:12:22,316 - __main__ - INFO - Current LR: 4.00e-03
+2025-11-12 09:12:22,316 - __main__ - INFO - New best WER: 0.5490
+2025-11-12 09:12:22,316 - src.models - INFO - CUDA optimizations enabled (cudnn.benchmark=True)
+2025-11-12 09:12:22,317 - src.models - INFO - ModelManager initialized
+2025-11-12 09:12:22,476 - src.models - INFO - Model weights saved to experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_7\model_weights.pt
+2025-11-12 09:12:22,479 - src.models - INFO - Model metadata saved to experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_7\model_metadata.json
+2025-11-12 09:12:22,479 - src.models - INFO - Checkpoint saved to experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_7
+2025-11-12 09:12:22,479 - __main__ - INFO - Model checkpoint saved: experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_7
+2025-11-12 09:12:22,743 - __main__ - INFO - Optimizer state saved: experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_7\optimizer_state.pt
+2025-11-12 09:12:22,744 - __main__ - INFO - Scheduler state saved: experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_7\scheduler_state.pt
+2025-11-12 09:12:22,745 - __main__ - INFO - Experiment metadata saved: experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_7\experiment_metadata.json
+2025-11-12 09:12:22,774 - __main__ - INFO - Config saved to: experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_7\config.yaml
+2025-11-12 09:12:22,775 - __main__ - INFO - Metrics saved to: experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_7\metrics.json
+2025-11-12 09:12:23,027 - __main__ - INFO - Best checkpoint also saved to: experiments\s2t-cross-lingual_train_full_decoder_4e-3\best_checkpoint
+2025-11-12 09:12:23,040 - __main__ - INFO - Removed old checkpoint: experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_4
+2025-11-12 09:12:23,040 - __main__ - INFO - 
+Epoch 8/39
+2025-11-12 09:14:11,013 - __main__ - INFO - Epoch 8 - Average training loss: 1.3852
+2025-11-12 09:14:11,014 - __main__ - INFO - Running validation...
+2025-11-12 09:16:35,426 - __main__ - INFO - Computing validation metrics...
+2025-11-12 09:16:44,444 - __main__ - INFO - Validation - Epoch 8 - WER: 0.5405, CER: 0.2112
+2025-11-12 09:16:44,445 - __main__ - INFO - Current LR: 4.00e-03
+2025-11-12 09:16:44,445 - __main__ - INFO - New best WER: 0.5405
+2025-11-12 09:16:44,446 - src.models - INFO - CUDA optimizations enabled (cudnn.benchmark=True)
+2025-11-12 09:16:44,446 - src.models - INFO - ModelManager initialized
+2025-11-12 09:16:44,595 - src.models - INFO - Model weights saved to experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_8\model_weights.pt
+2025-11-12 09:16:44,598 - src.models - INFO - Model metadata saved to experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_8\model_metadata.json
+2025-11-12 09:16:44,598 - src.models - INFO - Checkpoint saved to experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_8
+2025-11-12 09:16:44,598 - __main__ - INFO - Model checkpoint saved: experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_8
+2025-11-12 09:16:44,853 - __main__ - INFO - Optimizer state saved: experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_8\optimizer_state.pt
+2025-11-12 09:16:44,863 - __main__ - INFO - Scheduler state saved: experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_8\scheduler_state.pt
+2025-11-12 09:16:44,864 - __main__ - INFO - Experiment metadata saved: experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_8\experiment_metadata.json
+2025-11-12 09:16:44,892 - __main__ - INFO - Config saved to: experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_8\config.yaml
+2025-11-12 09:16:44,892 - __main__ - INFO - Metrics saved to: experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_8\metrics.json
+2025-11-12 09:16:45,028 - __main__ - INFO - Best checkpoint also saved to: experiments\s2t-cross-lingual_train_full_decoder_4e-3\best_checkpoint
+2025-11-12 09:16:45,042 - __main__ - INFO - Removed old checkpoint: experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_5
+2025-11-12 09:16:45,042 - __main__ - INFO - 
+Epoch 9/39
+2025-11-12 09:18:35,598 - __main__ - INFO - Epoch 9 - Average training loss: 1.3349
+2025-11-12 09:18:35,598 - __main__ - INFO - Running validation...
+2025-11-12 09:21:07,176 - __main__ - INFO - Computing validation metrics...
+2025-11-12 09:21:17,053 - __main__ - INFO - Validation - Epoch 9 - WER: 0.5422, CER: 0.2200
+2025-11-12 09:21:17,054 - __main__ - INFO - Current LR: 4.00e-03
+2025-11-12 09:21:17,054 - src.models - INFO - CUDA optimizations enabled (cudnn.benchmark=True)
+2025-11-12 09:21:17,055 - src.models - INFO - ModelManager initialized
+2025-11-12 09:21:17,196 - src.models - INFO - Model weights saved to experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_9\model_weights.pt
+2025-11-12 09:21:17,198 - src.models - INFO - Model metadata saved to experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_9\model_metadata.json
+2025-11-12 09:21:17,198 - src.models - INFO - Checkpoint saved to experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_9
+2025-11-12 09:21:17,199 - __main__ - INFO - Model checkpoint saved: experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_9
+2025-11-12 09:21:17,335 - __main__ - INFO - Optimizer state saved: experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_9\optimizer_state.pt
+2025-11-12 09:21:17,339 - __main__ - INFO - Scheduler state saved: experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_9\scheduler_state.pt
+2025-11-12 09:21:17,340 - __main__ - INFO - Experiment metadata saved: experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_9\experiment_metadata.json
+2025-11-12 09:21:17,366 - __main__ - INFO - Config saved to: experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_9\config.yaml
+2025-11-12 09:21:17,366 - __main__ - INFO - Metrics saved to: experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_9\metrics.json
+2025-11-12 09:21:17,379 - __main__ - INFO - Removed old checkpoint: experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_6
+2025-11-12 09:21:17,379 - __main__ - INFO - 
+Epoch 10/39
+2025-11-12 09:23:14,122 - __main__ - INFO - Epoch 10 - Average training loss: 1.2967
+2025-11-12 09:23:14,123 - __main__ - INFO - Running validation...
+2025-11-12 09:25:41,872 - __main__ - INFO - Computing validation metrics...
+2025-11-12 09:25:49,025 - __main__ - INFO - Validation - Epoch 10 - WER: 0.5222, CER: 0.2134
+2025-11-12 09:25:49,026 - __main__ - INFO - Current LR: 4.00e-03
+2025-11-12 09:25:49,027 - __main__ - INFO - New best WER: 0.5222
+2025-11-12 09:25:49,027 - src.models - INFO - CUDA optimizations enabled (cudnn.benchmark=True)
+2025-11-12 09:25:49,027 - src.models - INFO - ModelManager initialized
+2025-11-12 09:25:49,348 - src.models - INFO - Model weights saved to experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_10\model_weights.pt
+2025-11-12 09:25:49,351 - src.models - INFO - Model metadata saved to experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_10\model_metadata.json
+2025-11-12 09:25:49,351 - src.models - INFO - Checkpoint saved to experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_10
+2025-11-12 09:25:49,351 - __main__ - INFO - Model checkpoint saved: experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_10
+2025-11-12 09:25:49,698 - __main__ - INFO - Optimizer state saved: experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_10\optimizer_state.pt
+2025-11-12 09:25:49,699 - __main__ - INFO - Scheduler state saved: experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_10\scheduler_state.pt
+2025-11-12 09:25:49,700 - __main__ - INFO - Experiment metadata saved: experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_10\experiment_metadata.json
+2025-11-12 09:25:49,726 - __main__ - INFO - Config saved to: experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_10\config.yaml
+2025-11-12 09:25:49,727 - __main__ - INFO - Metrics saved to: experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_10\metrics.json
+2025-11-12 09:25:49,863 - __main__ - INFO - Best checkpoint also saved to: experiments\s2t-cross-lingual_train_full_decoder_4e-3\best_checkpoint
+2025-11-12 09:25:49,876 - __main__ - INFO - Removed old checkpoint: experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_7
+2025-11-12 09:25:49,876 - __main__ - INFO - 
+Epoch 11/39
+2025-11-12 09:27:34,528 - __main__ - INFO - Epoch 11 - Average training loss: 1.2724
+2025-11-12 09:27:34,528 - __main__ - INFO - Running validation...
+2025-11-12 09:29:54,361 - __main__ - INFO - Computing validation metrics...
+2025-11-12 09:30:02,314 - __main__ - INFO - Validation - Epoch 11 - WER: 0.5162, CER: 0.2097
+2025-11-12 09:30:02,315 - __main__ - INFO - Current LR: 4.00e-03
+2025-11-12 09:30:02,315 - __main__ - INFO - New best WER: 0.5162
+2025-11-12 09:30:02,316 - src.models - INFO - CUDA optimizations enabled (cudnn.benchmark=True)
+2025-11-12 09:30:02,316 - src.models - INFO - ModelManager initialized
+2025-11-12 09:30:02,472 - src.models - INFO - Model weights saved to experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_11\model_weights.pt
+2025-11-12 09:30:02,474 - src.models - INFO - Model metadata saved to experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_11\model_metadata.json
+2025-11-12 09:30:02,474 - src.models - INFO - Checkpoint saved to experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_11
+2025-11-12 09:30:02,475 - __main__ - INFO - Model checkpoint saved: experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_11
+2025-11-12 09:30:02,623 - __main__ - INFO - Optimizer state saved: experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_11\optimizer_state.pt
+2025-11-12 09:30:02,624 - __main__ - INFO - Scheduler state saved: experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_11\scheduler_state.pt
+2025-11-12 09:30:02,624 - __main__ - INFO - Experiment metadata saved: experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_11\experiment_metadata.json
+2025-11-12 09:30:02,649 - __main__ - INFO - Config saved to: experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_11\config.yaml
+2025-11-12 09:30:02,649 - __main__ - INFO - Metrics saved to: experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_11\metrics.json
+2025-11-12 09:30:02,774 - __main__ - INFO - Best checkpoint also saved to: experiments\s2t-cross-lingual_train_full_decoder_4e-3\best_checkpoint
+2025-11-12 09:30:02,788 - __main__ - INFO - Removed old checkpoint: experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_8
+2025-11-12 09:30:02,788 - __main__ - INFO - 
+Epoch 12/39
+2025-11-12 09:31:47,802 - __main__ - INFO - Epoch 12 - Average training loss: 1.2337
+2025-11-12 09:31:47,803 - __main__ - INFO - Running validation...
+2025-11-12 09:34:08,348 - __main__ - INFO - Computing validation metrics...
+2025-11-12 09:34:16,313 - __main__ - INFO - Validation - Epoch 12 - WER: 0.5108, CER: 0.2054
+2025-11-12 09:34:16,314 - __main__ - INFO - Current LR: 4.00e-03
+2025-11-12 09:34:16,314 - __main__ - INFO - New best WER: 0.5108
+2025-11-12 09:34:16,315 - src.models - INFO - CUDA optimizations enabled (cudnn.benchmark=True)
+2025-11-12 09:34:16,315 - src.models - INFO - ModelManager initialized
+2025-11-12 09:34:16,490 - src.models - INFO - Model weights saved to experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_12\model_weights.pt
+2025-11-12 09:34:16,492 - src.models - INFO - Model metadata saved to experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_12\model_metadata.json
+2025-11-12 09:34:16,493 - src.models - INFO - Checkpoint saved to experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_12
+2025-11-12 09:34:16,493 - __main__ - INFO - Model checkpoint saved: experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_12
+2025-11-12 09:34:16,610 - __main__ - INFO - Optimizer state saved: experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_12\optimizer_state.pt
+2025-11-12 09:34:16,611 - __main__ - INFO - Scheduler state saved: experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_12\scheduler_state.pt
+2025-11-12 09:34:16,612 - __main__ - INFO - Experiment metadata saved: experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_12\experiment_metadata.json
+2025-11-12 09:34:16,642 - __main__ - INFO - Config saved to: experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_12\config.yaml
+2025-11-12 09:34:16,643 - __main__ - INFO - Metrics saved to: experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_12\metrics.json
+2025-11-12 09:34:16,779 - __main__ - INFO - Best checkpoint also saved to: experiments\s2t-cross-lingual_train_full_decoder_4e-3\best_checkpoint
+2025-11-12 09:34:16,792 - __main__ - INFO - Removed old checkpoint: experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_9
+2025-11-12 09:34:16,793 - __main__ - INFO - 
+Epoch 13/39
+2025-11-12 09:35:59,546 - __main__ - INFO - Epoch 13 - Average training loss: 1.2002
+2025-11-12 09:35:59,547 - __main__ - INFO - Running validation...
+2025-11-12 09:38:19,967 - __main__ - INFO - Computing validation metrics...
+2025-11-12 09:38:29,291 - __main__ - INFO - Validation - Epoch 13 - WER: 0.5177, CER: 0.2130
+2025-11-12 09:38:29,293 - __main__ - INFO - Current LR: 4.00e-03
+2025-11-12 09:38:29,293 - src.models - INFO - CUDA optimizations enabled (cudnn.benchmark=True)
+2025-11-12 09:38:29,293 - src.models - INFO - ModelManager initialized
+2025-11-12 09:38:29,584 - src.models - INFO - Model weights saved to experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_13\model_weights.pt
+2025-11-12 09:38:29,587 - src.models - INFO - Model metadata saved to experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_13\model_metadata.json
+2025-11-12 09:38:29,587 - src.models - INFO - Checkpoint saved to experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_13
+2025-11-12 09:38:29,587 - __main__ - INFO - Model checkpoint saved: experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_13
+2025-11-12 09:38:29,704 - __main__ - INFO - Optimizer state saved: experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_13\optimizer_state.pt
+2025-11-12 09:38:29,705 - __main__ - INFO - Scheduler state saved: experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_13\scheduler_state.pt
+2025-11-12 09:38:29,705 - __main__ - INFO - Experiment metadata saved: experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_13\experiment_metadata.json
+2025-11-12 09:38:29,730 - __main__ - INFO - Config saved to: experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_13\config.yaml
+2025-11-12 09:38:29,731 - __main__ - INFO - Metrics saved to: experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_13\metrics.json
+2025-11-12 09:38:29,745 - __main__ - INFO - Removed old checkpoint: experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_10
+2025-11-12 09:38:29,745 - __main__ - INFO - 
+Epoch 14/39
+2025-11-12 09:40:16,068 - __main__ - INFO - Epoch 14 - Average training loss: 1.1712
+2025-11-12 09:40:16,069 - __main__ - INFO - Running validation...
+2025-11-12 09:42:35,762 - __main__ - INFO - Computing validation metrics...
+2025-11-12 09:42:43,343 - __main__ - INFO - Validation - Epoch 14 - WER: 0.5120, CER: 0.2083
+2025-11-12 09:42:43,344 - __main__ - INFO - Current LR: 4.00e-03
+2025-11-12 09:42:43,344 - src.models - INFO - CUDA optimizations enabled (cudnn.benchmark=True)
+2025-11-12 09:42:43,344 - src.models - INFO - ModelManager initialized
+2025-11-12 09:42:43,494 - src.models - INFO - Model weights saved to experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_14\model_weights.pt
+2025-11-12 09:42:43,631 - src.models - INFO - Model metadata saved to experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_14\model_metadata.json
+2025-11-12 09:42:43,631 - src.models - INFO - Checkpoint saved to experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_14
+2025-11-12 09:42:43,631 - __main__ - INFO - Model checkpoint saved: experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_14
+2025-11-12 09:42:43,753 - __main__ - INFO - Optimizer state saved: experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_14\optimizer_state.pt
+2025-11-12 09:42:43,753 - __main__ - INFO - Scheduler state saved: experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_14\scheduler_state.pt
+2025-11-12 09:42:43,754 - __main__ - INFO - Experiment metadata saved: experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_14\experiment_metadata.json
+2025-11-12 09:42:43,781 - __main__ - INFO - Config saved to: experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_14\config.yaml
+2025-11-12 09:42:43,781 - __main__ - INFO - Metrics saved to: experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_14\metrics.json
+2025-11-12 09:42:43,796 - __main__ - INFO - Removed old checkpoint: experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_11
+2025-11-12 09:42:43,796 - __main__ - INFO - 
+Epoch 15/39
+2025-11-12 09:44:33,292 - __main__ - INFO - Epoch 15 - Average training loss: 1.1488
+2025-11-12 09:44:33,293 - __main__ - INFO - Running validation...
+2025-11-12 09:46:59,662 - __main__ - INFO - Computing validation metrics...
+2025-11-12 09:47:07,093 - __main__ - INFO - Validation - Epoch 15 - WER: 0.5029, CER: 0.2028
+2025-11-12 09:47:07,094 - __main__ - INFO - Current LR: 4.00e-03
+2025-11-12 09:47:07,094 - __main__ - INFO - New best WER: 0.5029
+2025-11-12 09:47:07,095 - src.models - INFO - CUDA optimizations enabled (cudnn.benchmark=True)
+2025-11-12 09:47:07,095 - src.models - INFO - ModelManager initialized
+2025-11-12 09:47:07,233 - src.models - INFO - Model weights saved to experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_15\model_weights.pt
+2025-11-12 09:47:07,236 - src.models - INFO - Model metadata saved to experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_15\model_metadata.json
+2025-11-12 09:47:07,236 - src.models - INFO - Checkpoint saved to experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_15
+2025-11-12 09:47:07,236 - __main__ - INFO - Model checkpoint saved: experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_15
+2025-11-12 09:47:07,358 - __main__ - INFO - Optimizer state saved: experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_15\optimizer_state.pt
+2025-11-12 09:47:07,358 - __main__ - INFO - Scheduler state saved: experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_15\scheduler_state.pt
+2025-11-12 09:47:07,359 - __main__ - INFO - Experiment metadata saved: experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_15\experiment_metadata.json
+2025-11-12 09:47:07,391 - __main__ - INFO - Config saved to: experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_15\config.yaml
+2025-11-12 09:47:07,392 - __main__ - INFO - Metrics saved to: experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_15\metrics.json
+2025-11-12 09:47:07,543 - __main__ - INFO - Best checkpoint also saved to: experiments\s2t-cross-lingual_train_full_decoder_4e-3\best_checkpoint
+2025-11-12 09:47:07,557 - __main__ - INFO - Removed old checkpoint: experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_12
+2025-11-12 09:47:07,557 - __main__ - INFO - 
+Epoch 16/39
+2025-11-12 09:48:50,810 - __main__ - INFO - Epoch 16 - Average training loss: 1.1173
+2025-11-12 09:48:50,811 - __main__ - INFO - Running validation...
+2025-11-12 09:51:42,924 - __main__ - INFO - Computing validation metrics...
+2025-11-12 09:51:50,363 - __main__ - INFO - Validation - Epoch 16 - WER: 0.5007, CER: 0.2059
+2025-11-12 09:51:50,364 - __main__ - INFO - Current LR: 3.83e-03
+2025-11-12 09:51:50,364 - __main__ - INFO - New best WER: 0.5007
+2025-11-12 09:51:50,365 - src.models - INFO - CUDA optimizations enabled (cudnn.benchmark=True)
+2025-11-12 09:51:50,365 - src.models - INFO - ModelManager initialized
+2025-11-12 09:51:50,511 - src.models - INFO - Model weights saved to experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_16\model_weights.pt
+2025-11-12 09:51:50,514 - src.models - INFO - Model metadata saved to experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_16\model_metadata.json
+2025-11-12 09:51:50,515 - src.models - INFO - Checkpoint saved to experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_16
+2025-11-12 09:51:50,515 - __main__ - INFO - Model checkpoint saved: experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_16
+2025-11-12 09:51:50,638 - __main__ - INFO - Optimizer state saved: experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_16\optimizer_state.pt
+2025-11-12 09:51:50,639 - __main__ - INFO - Scheduler state saved: experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_16\scheduler_state.pt
+2025-11-12 09:51:50,639 - __main__ - INFO - Experiment metadata saved: experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_16\experiment_metadata.json
+2025-11-12 09:51:50,668 - __main__ - INFO - Config saved to: experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_16\config.yaml
+2025-11-12 09:51:50,668 - __main__ - INFO - Metrics saved to: experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_16\metrics.json
+2025-11-12 09:51:50,806 - __main__ - INFO - Best checkpoint also saved to: experiments\s2t-cross-lingual_train_full_decoder_4e-3\best_checkpoint
+2025-11-12 09:51:50,819 - __main__ - INFO - Removed old checkpoint: experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_13
+2025-11-12 09:51:50,819 - __main__ - INFO - 
+Epoch 17/39
+2025-11-12 09:53:42,728 - __main__ - INFO - Epoch 17 - Average training loss: 1.0910
+2025-11-12 09:53:42,728 - __main__ - INFO - Running validation...
+2025-11-12 09:55:59,705 - __main__ - INFO - Computing validation metrics...
+2025-11-12 09:56:09,837 - __main__ - INFO - Validation - Epoch 17 - WER: 0.4992, CER: 0.2003
+2025-11-12 09:56:09,838 - __main__ - INFO - Current LR: 3.67e-03
+2025-11-12 09:56:09,839 - __main__ - INFO - New best WER: 0.4992
+2025-11-12 09:56:09,839 - src.models - INFO - CUDA optimizations enabled (cudnn.benchmark=True)
+2025-11-12 09:56:09,839 - src.models - INFO - ModelManager initialized
+2025-11-12 09:56:10,009 - src.models - INFO - Model weights saved to experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_17\model_weights.pt
+2025-11-12 09:56:10,012 - src.models - INFO - Model metadata saved to experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_17\model_metadata.json
+2025-11-12 09:56:10,012 - src.models - INFO - Checkpoint saved to experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_17
+2025-11-12 09:56:10,012 - __main__ - INFO - Model checkpoint saved: experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_17
+2025-11-12 09:56:10,127 - __main__ - INFO - Optimizer state saved: experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_17\optimizer_state.pt
+2025-11-12 09:56:10,127 - __main__ - INFO - Scheduler state saved: experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_17\scheduler_state.pt
+2025-11-12 09:56:10,128 - __main__ - INFO - Experiment metadata saved: experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_17\experiment_metadata.json
+2025-11-12 09:56:10,157 - __main__ - INFO - Config saved to: experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_17\config.yaml
+2025-11-12 09:56:10,158 - __main__ - INFO - Metrics saved to: experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_17\metrics.json
+2025-11-12 09:56:10,293 - __main__ - INFO - Best checkpoint also saved to: experiments\s2t-cross-lingual_train_full_decoder_4e-3\best_checkpoint
+2025-11-12 09:56:10,306 - __main__ - INFO - Removed old checkpoint: experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_14
+2025-11-12 09:56:10,306 - __main__ - INFO - 
+Epoch 18/39
+2025-11-12 09:57:51,986 - __main__ - INFO - Epoch 18 - Average training loss: 1.0539
+2025-11-12 09:57:51,986 - __main__ - INFO - Running validation...
+2025-11-12 10:00:09,792 - __main__ - INFO - Computing validation metrics...
+2025-11-12 10:00:17,914 - __main__ - INFO - Validation - Epoch 18 - WER: 0.4968, CER: 0.2039
+2025-11-12 10:00:17,915 - __main__ - INFO - Current LR: 3.50e-03
+2025-11-12 10:00:17,915 - __main__ - INFO - New best WER: 0.4968
+2025-11-12 10:00:17,915 - src.models - INFO - CUDA optimizations enabled (cudnn.benchmark=True)
+2025-11-12 10:00:17,915 - src.models - INFO - ModelManager initialized
+2025-11-12 10:00:18,093 - src.models - INFO - Model weights saved to experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_18\model_weights.pt
+2025-11-12 10:00:18,096 - src.models - INFO - Model metadata saved to experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_18\model_metadata.json
+2025-11-12 10:00:18,096 - src.models - INFO - Checkpoint saved to experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_18
+2025-11-12 10:00:18,096 - __main__ - INFO - Model checkpoint saved: experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_18
+2025-11-12 10:00:18,211 - __main__ - INFO - Optimizer state saved: experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_18\optimizer_state.pt
+2025-11-12 10:00:18,212 - __main__ - INFO - Scheduler state saved: experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_18\scheduler_state.pt
+2025-11-12 10:00:18,212 - __main__ - INFO - Experiment metadata saved: experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_18\experiment_metadata.json
+2025-11-12 10:00:18,237 - __main__ - INFO - Config saved to: experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_18\config.yaml
+2025-11-12 10:00:18,238 - __main__ - INFO - Metrics saved to: experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_18\metrics.json
+2025-11-12 10:00:18,370 - __main__ - INFO - Best checkpoint also saved to: experiments\s2t-cross-lingual_train_full_decoder_4e-3\best_checkpoint
+2025-11-12 10:00:18,383 - __main__ - INFO - Removed old checkpoint: experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_15
+2025-11-12 10:00:18,383 - __main__ - INFO - 
+Epoch 19/39
+2025-11-12 10:01:59,621 - __main__ - INFO - Epoch 19 - Average training loss: 1.0291
+2025-11-12 10:01:59,621 - __main__ - INFO - Running validation...
+2025-11-12 10:04:16,201 - __main__ - INFO - Computing validation metrics...
+2025-11-12 10:04:24,931 - __main__ - INFO - Validation - Epoch 19 - WER: 0.4937, CER: 0.2014
+2025-11-12 10:04:24,932 - __main__ - INFO - Current LR: 3.33e-03
+2025-11-12 10:04:24,932 - __main__ - INFO - New best WER: 0.4937
+2025-11-12 10:04:24,933 - src.models - INFO - CUDA optimizations enabled (cudnn.benchmark=True)
+2025-11-12 10:04:24,933 - src.models - INFO - ModelManager initialized
+2025-11-12 10:04:25,151 - src.models - INFO - Model weights saved to experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_19\model_weights.pt
+2025-11-12 10:04:25,154 - src.models - INFO - Model metadata saved to experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_19\model_metadata.json
+2025-11-12 10:04:25,154 - src.models - INFO - Checkpoint saved to experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_19
+2025-11-12 10:04:25,154 - __main__ - INFO - Model checkpoint saved: experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_19
+2025-11-12 10:04:25,270 - __main__ - INFO - Optimizer state saved: experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_19\optimizer_state.pt
+2025-11-12 10:04:25,271 - __main__ - INFO - Scheduler state saved: experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_19\scheduler_state.pt
+2025-11-12 10:04:25,272 - __main__ - INFO - Experiment metadata saved: experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_19\experiment_metadata.json
+2025-11-12 10:04:25,297 - __main__ - INFO - Config saved to: experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_19\config.yaml
+2025-11-12 10:04:25,298 - __main__ - INFO - Metrics saved to: experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_19\metrics.json
+2025-11-12 10:04:25,423 - __main__ - INFO - Best checkpoint also saved to: experiments\s2t-cross-lingual_train_full_decoder_4e-3\best_checkpoint
+2025-11-12 10:04:25,436 - __main__ - INFO - Removed old checkpoint: experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_16
+2025-11-12 10:04:25,436 - __main__ - INFO - 
+Epoch 20/39
+2025-11-12 10:06:05,972 - __main__ - INFO - Epoch 20 - Average training loss: 1.0009
+2025-11-12 10:06:05,973 - __main__ - INFO - Running validation...
+2025-11-12 10:08:20,691 - __main__ - INFO - Computing validation metrics...
+2025-11-12 10:08:28,860 - __main__ - INFO - Validation - Epoch 20 - WER: 0.4854, CER: 0.1986
+2025-11-12 10:08:28,862 - __main__ - INFO - Current LR: 3.17e-03
+2025-11-12 10:08:28,862 - __main__ - INFO - New best WER: 0.4854
+2025-11-12 10:08:28,862 - src.models - INFO - CUDA optimizations enabled (cudnn.benchmark=True)
+2025-11-12 10:08:28,862 - src.models - INFO - ModelManager initialized
+2025-11-12 10:08:29,025 - src.models - INFO - Model weights saved to experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_20\model_weights.pt
+2025-11-12 10:08:29,027 - src.models - INFO - Model metadata saved to experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_20\model_metadata.json
+2025-11-12 10:08:29,027 - src.models - INFO - Checkpoint saved to experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_20
+2025-11-12 10:08:29,028 - __main__ - INFO - Model checkpoint saved: experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_20
+2025-11-12 10:08:29,142 - __main__ - INFO - Optimizer state saved: experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_20\optimizer_state.pt
+2025-11-12 10:08:29,143 - __main__ - INFO - Scheduler state saved: experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_20\scheduler_state.pt
+2025-11-12 10:08:29,144 - __main__ - INFO - Experiment metadata saved: experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_20\experiment_metadata.json
+2025-11-12 10:08:29,174 - __main__ - INFO - Config saved to: experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_20\config.yaml
+2025-11-12 10:08:29,174 - __main__ - INFO - Metrics saved to: experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_20\metrics.json
+2025-11-12 10:08:29,650 - __main__ - INFO - Best checkpoint also saved to: experiments\s2t-cross-lingual_train_full_decoder_4e-3\best_checkpoint
+2025-11-12 10:08:29,662 - __main__ - INFO - Removed old checkpoint: experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_17
+2025-11-12 10:08:29,662 - __main__ - INFO - 
+Epoch 21/39
+2025-11-12 10:10:10,114 - __main__ - INFO - Epoch 21 - Average training loss: 0.9733
+2025-11-12 10:10:10,115 - __main__ - INFO - Running validation...
+2025-11-12 10:12:26,340 - __main__ - INFO - Computing validation metrics...
+2025-11-12 10:12:35,179 - __main__ - INFO - Validation - Epoch 21 - WER: 0.4776, CER: 0.1923
+2025-11-12 10:12:35,180 - __main__ - INFO - Current LR: 3.00e-03
+2025-11-12 10:12:35,180 - __main__ - INFO - New best WER: 0.4776
+2025-11-12 10:12:35,181 - src.models - INFO - CUDA optimizations enabled (cudnn.benchmark=True)
+2025-11-12 10:12:35,181 - src.models - INFO - ModelManager initialized
+2025-11-12 10:12:35,514 - src.models - INFO - Model weights saved to experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_21\model_weights.pt
+2025-11-12 10:12:35,516 - src.models - INFO - Model metadata saved to experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_21\model_metadata.json
+2025-11-12 10:12:35,517 - src.models - INFO - Checkpoint saved to experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_21
+2025-11-12 10:12:35,517 - __main__ - INFO - Model checkpoint saved: experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_21
+2025-11-12 10:12:35,641 - __main__ - INFO - Optimizer state saved: experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_21\optimizer_state.pt
+2025-11-12 10:12:35,642 - __main__ - INFO - Scheduler state saved: experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_21\scheduler_state.pt
+2025-11-12 10:12:35,642 - __main__ - INFO - Experiment metadata saved: experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_21\experiment_metadata.json
+2025-11-12 10:12:35,667 - __main__ - INFO - Config saved to: experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_21\config.yaml
+2025-11-12 10:12:35,668 - __main__ - INFO - Metrics saved to: experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_21\metrics.json
+2025-11-12 10:12:35,808 - __main__ - INFO - Best checkpoint also saved to: experiments\s2t-cross-lingual_train_full_decoder_4e-3\best_checkpoint
+2025-11-12 10:12:35,822 - __main__ - INFO - Removed old checkpoint: experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_18
+2025-11-12 10:12:35,822 - __main__ - INFO - 
+Epoch 22/39
+2025-11-12 10:14:18,629 - __main__ - INFO - Epoch 22 - Average training loss: 0.9405
+2025-11-12 10:14:18,630 - __main__ - INFO - Running validation...
+2025-11-12 10:16:34,554 - __main__ - INFO - Computing validation metrics...
+2025-11-12 10:16:42,808 - __main__ - INFO - Validation - Epoch 22 - WER: 0.4758, CER: 0.1905
+2025-11-12 10:16:42,809 - __main__ - INFO - Current LR: 2.83e-03
+2025-11-12 10:16:42,809 - __main__ - INFO - New best WER: 0.4758
+2025-11-12 10:16:42,810 - src.models - INFO - CUDA optimizations enabled (cudnn.benchmark=True)
+2025-11-12 10:16:42,810 - src.models - INFO - ModelManager initialized
+2025-11-12 10:16:42,962 - src.models - INFO - Model weights saved to experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_22\model_weights.pt
+2025-11-12 10:16:42,964 - src.models - INFO - Model metadata saved to experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_22\model_metadata.json
+2025-11-12 10:16:42,965 - src.models - INFO - Checkpoint saved to experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_22
+2025-11-12 10:16:42,965 - __main__ - INFO - Model checkpoint saved: experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_22
+2025-11-12 10:16:43,077 - __main__ - INFO - Optimizer state saved: experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_22\optimizer_state.pt
+2025-11-12 10:16:43,077 - __main__ - INFO - Scheduler state saved: experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_22\scheduler_state.pt
+2025-11-12 10:16:43,078 - __main__ - INFO - Experiment metadata saved: experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_22\experiment_metadata.json
+2025-11-12 10:16:43,106 - __main__ - INFO - Config saved to: experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_22\config.yaml
+2025-11-12 10:16:43,107 - __main__ - INFO - Metrics saved to: experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_22\metrics.json
+2025-11-12 10:16:43,235 - __main__ - INFO - Best checkpoint also saved to: experiments\s2t-cross-lingual_train_full_decoder_4e-3\best_checkpoint
+2025-11-12 10:16:43,248 - __main__ - INFO - Removed old checkpoint: experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_19
+2025-11-12 10:16:43,249 - __main__ - INFO - 
+Epoch 23/39
+2025-11-12 10:18:24,477 - __main__ - INFO - Epoch 23 - Average training loss: 0.9136
+2025-11-12 10:18:24,478 - __main__ - INFO - Running validation...
+2025-11-12 10:20:41,585 - __main__ - INFO - Computing validation metrics...
+2025-11-12 10:20:50,648 - __main__ - INFO - Validation - Epoch 23 - WER: 0.4727, CER: 0.1890
+2025-11-12 10:20:50,649 - __main__ - INFO - Current LR: 2.67e-03
+2025-11-12 10:20:50,649 - __main__ - INFO - New best WER: 0.4727
+2025-11-12 10:20:50,650 - src.models - INFO - CUDA optimizations enabled (cudnn.benchmark=True)
+2025-11-12 10:20:50,650 - src.models - INFO - ModelManager initialized
+2025-11-12 10:20:50,850 - src.models - INFO - Model weights saved to experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_23\model_weights.pt
+2025-11-12 10:20:50,852 - src.models - INFO - Model metadata saved to experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_23\model_metadata.json
+2025-11-12 10:20:50,853 - src.models - INFO - Checkpoint saved to experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_23
+2025-11-12 10:20:50,853 - __main__ - INFO - Model checkpoint saved: experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_23
+2025-11-12 10:20:50,964 - __main__ - INFO - Optimizer state saved: experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_23\optimizer_state.pt
+2025-11-12 10:20:50,965 - __main__ - INFO - Scheduler state saved: experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_23\scheduler_state.pt
+2025-11-12 10:20:50,965 - __main__ - INFO - Experiment metadata saved: experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_23\experiment_metadata.json
+2025-11-12 10:20:50,990 - __main__ - INFO - Config saved to: experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_23\config.yaml
+2025-11-12 10:20:50,990 - __main__ - INFO - Metrics saved to: experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_23\metrics.json
+2025-11-12 10:20:51,124 - __main__ - INFO - Best checkpoint also saved to: experiments\s2t-cross-lingual_train_full_decoder_4e-3\best_checkpoint
+2025-11-12 10:20:51,138 - __main__ - INFO - Removed old checkpoint: experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_20
+2025-11-12 10:20:51,138 - __main__ - INFO - 
+Epoch 24/39
+2025-11-12 10:22:32,816 - __main__ - INFO - Epoch 24 - Average training loss: 0.8907
+2025-11-12 10:22:32,817 - __main__ - INFO - Running validation...
+2025-11-12 10:24:49,160 - __main__ - INFO - Computing validation metrics...
+2025-11-12 10:24:57,807 - __main__ - INFO - Validation - Epoch 24 - WER: 0.4746, CER: 0.1948
+2025-11-12 10:24:57,809 - __main__ - INFO - Current LR: 2.50e-03
+2025-11-12 10:24:57,809 - src.models - INFO - CUDA optimizations enabled (cudnn.benchmark=True)
+2025-11-12 10:24:57,809 - src.models - INFO - ModelManager initialized
+2025-11-12 10:24:57,969 - src.models - INFO - Model weights saved to experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_24\model_weights.pt
+2025-11-12 10:24:57,973 - src.models - INFO - Model metadata saved to experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_24\model_metadata.json
+2025-11-12 10:24:57,973 - src.models - INFO - Checkpoint saved to experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_24
+2025-11-12 10:24:57,973 - __main__ - INFO - Model checkpoint saved: experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_24
+2025-11-12 10:24:58,171 - __main__ - INFO - Optimizer state saved: experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_24\optimizer_state.pt
+2025-11-12 10:24:58,172 - __main__ - INFO - Scheduler state saved: experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_24\scheduler_state.pt
+2025-11-12 10:24:58,172 - __main__ - INFO - Experiment metadata saved: experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_24\experiment_metadata.json
+2025-11-12 10:24:58,197 - __main__ - INFO - Config saved to: experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_24\config.yaml
+2025-11-12 10:24:58,198 - __main__ - INFO - Metrics saved to: experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_24\metrics.json
+2025-11-12 10:24:58,211 - __main__ - INFO - Removed old checkpoint: experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_21
+2025-11-12 10:24:58,211 - __main__ - INFO - 
+Epoch 25/39
+2025-11-12 10:26:40,139 - __main__ - INFO - Epoch 25 - Average training loss: 0.8650
+2025-11-12 10:26:40,139 - __main__ - INFO - Running validation...
+2025-11-12 10:28:57,804 - __main__ - INFO - Computing validation metrics...
+2025-11-12 10:29:06,938 - __main__ - INFO - Validation - Epoch 25 - WER: 0.4775, CER: 0.1980
+2025-11-12 10:29:06,939 - __main__ - INFO - Current LR: 2.33e-03
+2025-11-12 10:29:06,939 - src.models - INFO - CUDA optimizations enabled (cudnn.benchmark=True)
+2025-11-12 10:29:06,940 - src.models - INFO - ModelManager initialized
+2025-11-12 10:29:07,085 - src.models - INFO - Model weights saved to experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_25\model_weights.pt
+2025-11-12 10:29:07,087 - src.models - INFO - Model metadata saved to experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_25\model_metadata.json
+2025-11-12 10:29:07,087 - src.models - INFO - Checkpoint saved to experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_25
+2025-11-12 10:29:07,088 - __main__ - INFO - Model checkpoint saved: experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_25
+2025-11-12 10:29:07,204 - __main__ - INFO - Optimizer state saved: experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_25\optimizer_state.pt
+2025-11-12 10:29:07,204 - __main__ - INFO - Scheduler state saved: experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_25\scheduler_state.pt
+2025-11-12 10:29:07,205 - __main__ - INFO - Experiment metadata saved: experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_25\experiment_metadata.json
+2025-11-12 10:29:07,230 - __main__ - INFO - Config saved to: experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_25\config.yaml
+2025-11-12 10:29:07,231 - __main__ - INFO - Metrics saved to: experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_25\metrics.json
+2025-11-12 10:29:07,244 - __main__ - INFO - Removed old checkpoint: experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_22
+2025-11-12 10:29:07,244 - __main__ - INFO - 
+Epoch 26/39
+2025-11-12 10:30:48,571 - __main__ - INFO - Epoch 26 - Average training loss: 0.8465
+2025-11-12 10:30:48,572 - __main__ - INFO - Running validation...
+2025-11-12 10:33:05,559 - __main__ - INFO - Computing validation metrics...
+2025-11-12 10:33:13,152 - __main__ - INFO - Validation - Epoch 26 - WER: 0.4706, CER: 0.1916
+2025-11-12 10:33:13,153 - __main__ - INFO - Current LR: 2.17e-03
+2025-11-12 10:33:13,153 - __main__ - INFO - New best WER: 0.4706
+2025-11-12 10:33:13,153 - src.models - INFO - CUDA optimizations enabled (cudnn.benchmark=True)
+2025-11-12 10:33:13,154 - src.models - INFO - ModelManager initialized
+2025-11-12 10:33:13,328 - src.models - INFO - Model weights saved to experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_26\model_weights.pt
+2025-11-12 10:33:13,331 - src.models - INFO - Model metadata saved to experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_26\model_metadata.json
+2025-11-12 10:33:13,331 - src.models - INFO - Checkpoint saved to experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_26
+2025-11-12 10:33:13,331 - __main__ - INFO - Model checkpoint saved: experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_26
+2025-11-12 10:33:13,421 - __main__ - INFO - Optimizer state saved: experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_26\optimizer_state.pt
+2025-11-12 10:33:13,421 - __main__ - INFO - Scheduler state saved: experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_26\scheduler_state.pt
+2025-11-12 10:33:13,422 - __main__ - INFO - Experiment metadata saved: experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_26\experiment_metadata.json
+2025-11-12 10:33:13,446 - __main__ - INFO - Config saved to: experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_26\config.yaml
+2025-11-12 10:33:13,447 - __main__ - INFO - Metrics saved to: experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_26\metrics.json
+2025-11-12 10:33:13,574 - __main__ - INFO - Best checkpoint also saved to: experiments\s2t-cross-lingual_train_full_decoder_4e-3\best_checkpoint
+2025-11-12 10:33:13,588 - __main__ - INFO - Removed old checkpoint: experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_23
+2025-11-12 10:33:13,588 - __main__ - INFO - 
+Epoch 27/39
+2025-11-12 10:34:55,941 - __main__ - INFO - Epoch 27 - Average training loss: 0.8181
+2025-11-12 10:34:55,942 - __main__ - INFO - Running validation...
+2025-11-12 10:37:12,615 - __main__ - INFO - Computing validation metrics...
+2025-11-12 10:37:20,612 - __main__ - INFO - Validation - Epoch 27 - WER: 0.4717, CER: 0.1942
+2025-11-12 10:37:20,613 - __main__ - INFO - Current LR: 2.00e-03
+2025-11-12 10:37:20,614 - src.models - INFO - CUDA optimizations enabled (cudnn.benchmark=True)
+2025-11-12 10:37:20,614 - src.models - INFO - ModelManager initialized
+2025-11-12 10:37:20,761 - src.models - INFO - Model weights saved to experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_27\model_weights.pt
+2025-11-12 10:37:20,763 - src.models - INFO - Model metadata saved to experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_27\model_metadata.json
+2025-11-12 10:37:20,763 - src.models - INFO - Checkpoint saved to experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_27
+2025-11-12 10:37:20,764 - __main__ - INFO - Model checkpoint saved: experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_27
+2025-11-12 10:37:20,874 - __main__ - INFO - Optimizer state saved: experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_27\optimizer_state.pt
+2025-11-12 10:37:20,875 - __main__ - INFO - Scheduler state saved: experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_27\scheduler_state.pt
+2025-11-12 10:37:20,876 - __main__ - INFO - Experiment metadata saved: experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_27\experiment_metadata.json
+2025-11-12 10:37:20,900 - __main__ - INFO - Config saved to: experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_27\config.yaml
+2025-11-12 10:37:20,900 - __main__ - INFO - Metrics saved to: experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_27\metrics.json
+2025-11-12 10:37:20,914 - __main__ - INFO - Removed old checkpoint: experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_24
+2025-11-12 10:37:20,914 - __main__ - INFO - 
+Epoch 28/39
+2025-11-12 10:39:00,847 - __main__ - INFO - Epoch 28 - Average training loss: 0.8000
+2025-11-12 10:39:00,848 - __main__ - INFO - Running validation...
+2025-11-12 10:41:17,150 - __main__ - INFO - Computing validation metrics...
+2025-11-12 10:41:24,977 - __main__ - INFO - Validation - Epoch 28 - WER: 0.4631, CER: 0.1913
+2025-11-12 10:41:24,979 - __main__ - INFO - Current LR: 1.83e-03
+2025-11-12 10:41:24,979 - __main__ - INFO - New best WER: 0.4631
+2025-11-12 10:41:24,979 - src.models - INFO - CUDA optimizations enabled (cudnn.benchmark=True)
+2025-11-12 10:41:24,979 - src.models - INFO - ModelManager initialized
+2025-11-12 10:41:25,112 - src.models - INFO - Model weights saved to experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_28\model_weights.pt
+2025-11-12 10:41:25,114 - src.models - INFO - Model metadata saved to experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_28\model_metadata.json
+2025-11-12 10:41:25,114 - src.models - INFO - Checkpoint saved to experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_28
+2025-11-12 10:41:25,115 - __main__ - INFO - Model checkpoint saved: experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_28
+2025-11-12 10:41:25,523 - __main__ - INFO - Optimizer state saved: experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_28\optimizer_state.pt
+2025-11-12 10:41:25,524 - __main__ - INFO - Scheduler state saved: experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_28\scheduler_state.pt
+2025-11-12 10:41:25,524 - __main__ - INFO - Experiment metadata saved: experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_28\experiment_metadata.json
+2025-11-12 10:41:25,556 - __main__ - INFO - Config saved to: experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_28\config.yaml
+2025-11-12 10:41:25,557 - __main__ - INFO - Metrics saved to: experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_28\metrics.json
+2025-11-12 10:41:25,680 - __main__ - INFO - Best checkpoint also saved to: experiments\s2t-cross-lingual_train_full_decoder_4e-3\best_checkpoint
+2025-11-12 10:41:25,692 - __main__ - INFO - Removed old checkpoint: experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_25
+2025-11-12 10:41:25,692 - __main__ - INFO - 
+Epoch 29/39
+2025-11-12 10:43:05,924 - __main__ - INFO - Epoch 29 - Average training loss: 0.7715
+2025-11-12 10:43:05,925 - __main__ - INFO - Running validation...
+2025-11-12 10:45:23,343 - __main__ - INFO - Computing validation metrics...
+2025-11-12 10:45:31,607 - __main__ - INFO - Validation - Epoch 29 - WER: 0.4640, CER: 0.1894
+2025-11-12 10:45:31,609 - __main__ - INFO - Current LR: 1.67e-03
+2025-11-12 10:45:31,609 - src.models - INFO - CUDA optimizations enabled (cudnn.benchmark=True)
+2025-11-12 10:45:31,609 - src.models - INFO - ModelManager initialized
+2025-11-12 10:45:31,820 - src.models - INFO - Model weights saved to experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_29\model_weights.pt
+2025-11-12 10:45:31,822 - src.models - INFO - Model metadata saved to experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_29\model_metadata.json
+2025-11-12 10:45:31,823 - src.models - INFO - Checkpoint saved to experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_29
+2025-11-12 10:45:31,823 - __main__ - INFO - Model checkpoint saved: experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_29
+2025-11-12 10:45:31,935 - __main__ - INFO - Optimizer state saved: experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_29\optimizer_state.pt
+2025-11-12 10:45:31,935 - __main__ - INFO - Scheduler state saved: experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_29\scheduler_state.pt
+2025-11-12 10:45:31,936 - __main__ - INFO - Experiment metadata saved: experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_29\experiment_metadata.json
+2025-11-12 10:45:31,967 - __main__ - INFO - Config saved to: experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_29\config.yaml
+2025-11-12 10:45:31,968 - __main__ - INFO - Metrics saved to: experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_29\metrics.json
+2025-11-12 10:45:31,981 - __main__ - INFO - Removed old checkpoint: experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_26
+2025-11-12 10:45:31,981 - __main__ - INFO - 
+Epoch 30/39
+2025-11-12 10:47:12,108 - __main__ - INFO - Epoch 30 - Average training loss: 0.7521
+2025-11-12 10:47:12,109 - __main__ - INFO - Running validation...
+2025-11-12 10:49:28,255 - __main__ - INFO - Computing validation metrics...
+2025-11-12 10:49:38,105 - __main__ - INFO - Validation - Epoch 30 - WER: 0.4661, CER: 0.1900
+2025-11-12 10:49:38,106 - __main__ - INFO - Current LR: 1.50e-03
+2025-11-12 10:49:38,107 - src.models - INFO - CUDA optimizations enabled (cudnn.benchmark=True)
+2025-11-12 10:49:38,107 - src.models - INFO - ModelManager initialized
+2025-11-12 10:49:38,282 - src.models - INFO - Model weights saved to experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_30\model_weights.pt
+2025-11-12 10:49:38,285 - src.models - INFO - Model metadata saved to experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_30\model_metadata.json
+2025-11-12 10:49:38,285 - src.models - INFO - Checkpoint saved to experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_30
+2025-11-12 10:49:38,285 - __main__ - INFO - Model checkpoint saved: experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_30
+2025-11-12 10:49:38,403 - __main__ - INFO - Optimizer state saved: experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_30\optimizer_state.pt
+2025-11-12 10:49:38,404 - __main__ - INFO - Scheduler state saved: experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_30\scheduler_state.pt
+2025-11-12 10:49:38,404 - __main__ - INFO - Experiment metadata saved: experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_30\experiment_metadata.json
+2025-11-12 10:49:38,429 - __main__ - INFO - Config saved to: experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_30\config.yaml
+2025-11-12 10:49:38,430 - __main__ - INFO - Metrics saved to: experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_30\metrics.json
+2025-11-12 10:49:38,443 - __main__ - INFO - Removed old checkpoint: experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_27
+2025-11-12 10:49:38,443 - __main__ - INFO - 
+Epoch 31/39
+2025-11-12 10:51:18,263 - __main__ - INFO - Epoch 31 - Average training loss: 0.7302
+2025-11-12 10:51:18,264 - __main__ - INFO - Running validation...
+2025-11-12 10:53:34,514 - __main__ - INFO - Computing validation metrics...
+2025-11-12 10:53:42,725 - __main__ - INFO - Validation - Epoch 31 - WER: 0.4615, CER: 0.1875
+2025-11-12 10:53:42,726 - __main__ - INFO - Current LR: 1.33e-03
+2025-11-12 10:53:42,726 - __main__ - INFO - New best WER: 0.4615
+2025-11-12 10:53:42,727 - src.models - INFO - CUDA optimizations enabled (cudnn.benchmark=True)
+2025-11-12 10:53:42,727 - src.models - INFO - ModelManager initialized
+2025-11-12 10:53:42,896 - src.models - INFO - Model weights saved to experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_31\model_weights.pt
+2025-11-12 10:53:42,899 - src.models - INFO - Model metadata saved to experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_31\model_metadata.json
+2025-11-12 10:53:42,899 - src.models - INFO - Checkpoint saved to experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_31
+2025-11-12 10:53:42,899 - __main__ - INFO - Model checkpoint saved: experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_31
+2025-11-12 10:53:43,036 - __main__ - INFO - Optimizer state saved: experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_31\optimizer_state.pt
+2025-11-12 10:53:43,037 - __main__ - INFO - Scheduler state saved: experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_31\scheduler_state.pt
+2025-11-12 10:53:43,037 - __main__ - INFO - Experiment metadata saved: experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_31\experiment_metadata.json
+2025-11-12 10:53:43,068 - __main__ - INFO - Config saved to: experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_31\config.yaml
+2025-11-12 10:53:43,069 - __main__ - INFO - Metrics saved to: experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_31\metrics.json
+2025-11-12 10:53:43,222 - __main__ - INFO - Best checkpoint also saved to: experiments\s2t-cross-lingual_train_full_decoder_4e-3\best_checkpoint
+2025-11-12 10:53:43,235 - __main__ - INFO - Removed old checkpoint: experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_28
+2025-11-12 10:53:43,235 - __main__ - INFO - 
+Epoch 32/39
+2025-11-12 10:55:23,479 - __main__ - INFO - Epoch 32 - Average training loss: 0.7111
+2025-11-12 10:55:23,479 - __main__ - INFO - Running validation...
+2025-11-12 10:57:39,880 - __main__ - INFO - Computing validation metrics...
+2025-11-12 10:57:48,491 - __main__ - INFO - Validation - Epoch 32 - WER: 0.4572, CER: 0.1883
+2025-11-12 10:57:48,492 - __main__ - INFO - Current LR: 1.17e-03
+2025-11-12 10:57:48,492 - __main__ - INFO - New best WER: 0.4572
+2025-11-12 10:57:48,492 - src.models - INFO - CUDA optimizations enabled (cudnn.benchmark=True)
+2025-11-12 10:57:48,493 - src.models - INFO - ModelManager initialized
+2025-11-12 10:57:48,632 - src.models - INFO - Model weights saved to experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_32\model_weights.pt
+2025-11-12 10:57:48,634 - src.models - INFO - Model metadata saved to experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_32\model_metadata.json
+2025-11-12 10:57:48,635 - src.models - INFO - Checkpoint saved to experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_32
+2025-11-12 10:57:48,635 - __main__ - INFO - Model checkpoint saved: experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_32
+2025-11-12 10:57:48,792 - __main__ - INFO - Optimizer state saved: experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_32\optimizer_state.pt
+2025-11-12 10:57:48,792 - __main__ - INFO - Scheduler state saved: experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_32\scheduler_state.pt
+2025-11-12 10:57:48,793 - __main__ - INFO - Experiment metadata saved: experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_32\experiment_metadata.json
+2025-11-12 10:57:48,819 - __main__ - INFO - Config saved to: experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_32\config.yaml
+2025-11-12 10:57:48,820 - __main__ - INFO - Metrics saved to: experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_32\metrics.json
+2025-11-12 10:57:48,950 - __main__ - INFO - Best checkpoint also saved to: experiments\s2t-cross-lingual_train_full_decoder_4e-3\best_checkpoint
+2025-11-12 10:57:48,963 - __main__ - INFO - Removed old checkpoint: experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_29
+2025-11-12 10:57:48,963 - __main__ - INFO - 
+Epoch 33/39
+2025-11-12 10:59:29,459 - __main__ - INFO - Epoch 33 - Average training loss: 0.6878
+2025-11-12 10:59:29,459 - __main__ - INFO - Running validation...
+2025-11-12 11:01:46,162 - __main__ - INFO - Computing validation metrics...
+2025-11-12 11:01:55,420 - __main__ - INFO - Validation - Epoch 33 - WER: 0.4593, CER: 0.1886
+2025-11-12 11:01:55,422 - __main__ - INFO - Current LR: 1.00e-03
+2025-11-12 11:01:55,422 - src.models - INFO - CUDA optimizations enabled (cudnn.benchmark=True)
+2025-11-12 11:01:55,422 - src.models - INFO - ModelManager initialized
+2025-11-12 11:01:55,865 - src.models - INFO - Model weights saved to experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_33\model_weights.pt
+2025-11-12 11:01:55,867 - src.models - INFO - Model metadata saved to experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_33\model_metadata.json
+2025-11-12 11:01:55,867 - src.models - INFO - Checkpoint saved to experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_33
+2025-11-12 11:01:55,868 - __main__ - INFO - Model checkpoint saved: experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_33
+2025-11-12 11:01:55,982 - __main__ - INFO - Optimizer state saved: experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_33\optimizer_state.pt
+2025-11-12 11:01:55,983 - __main__ - INFO - Scheduler state saved: experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_33\scheduler_state.pt
+2025-11-12 11:01:55,983 - __main__ - INFO - Experiment metadata saved: experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_33\experiment_metadata.json
+2025-11-12 11:01:56,007 - __main__ - INFO - Config saved to: experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_33\config.yaml
+2025-11-12 11:01:56,008 - __main__ - INFO - Metrics saved to: experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_33\metrics.json
+2025-11-12 11:01:56,021 - __main__ - INFO - Removed old checkpoint: experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_30
+2025-11-12 11:01:56,022 - __main__ - INFO - 
+Epoch 34/39
+2025-11-12 11:03:36,068 - __main__ - INFO - Epoch 34 - Average training loss: 0.6679
+2025-11-12 11:03:36,068 - __main__ - INFO - Running validation...
+2025-11-12 11:05:53,381 - __main__ - INFO - Computing validation metrics...
+2025-11-12 11:06:01,895 - __main__ - INFO - Validation - Epoch 34 - WER: 0.4601, CER: 0.1891
+2025-11-12 11:06:01,897 - __main__ - INFO - Current LR: 8.33e-04
+2025-11-12 11:06:01,897 - src.models - INFO - CUDA optimizations enabled (cudnn.benchmark=True)
+2025-11-12 11:06:01,897 - src.models - INFO - ModelManager initialized
+2025-11-12 11:06:02,234 - src.models - INFO - Model weights saved to experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_34\model_weights.pt
+2025-11-12 11:06:02,236 - src.models - INFO - Model metadata saved to experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_34\model_metadata.json
+2025-11-12 11:06:02,237 - src.models - INFO - Checkpoint saved to experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_34
+2025-11-12 11:06:02,237 - __main__ - INFO - Model checkpoint saved: experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_34
+2025-11-12 11:06:02,356 - __main__ - INFO - Optimizer state saved: experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_34\optimizer_state.pt
+2025-11-12 11:06:02,356 - __main__ - INFO - Scheduler state saved: experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_34\scheduler_state.pt
+2025-11-12 11:06:02,357 - __main__ - INFO - Experiment metadata saved: experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_34\experiment_metadata.json
+2025-11-12 11:06:02,386 - __main__ - INFO - Config saved to: experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_34\config.yaml
+2025-11-12 11:06:02,387 - __main__ - INFO - Metrics saved to: experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_34\metrics.json
+2025-11-12 11:06:02,401 - __main__ - INFO - Removed old checkpoint: experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_31
+2025-11-12 11:06:02,401 - __main__ - INFO - 
+Epoch 35/39
+2025-11-12 11:07:42,375 - __main__ - INFO - Epoch 35 - Average training loss: 0.6474
+2025-11-12 11:07:42,376 - __main__ - INFO - Running validation...
+2025-11-12 11:09:59,775 - __main__ - INFO - Computing validation metrics...
+2025-11-12 11:10:07,924 - __main__ - INFO - Validation - Epoch 35 - WER: 0.4593, CER: 0.1889
+2025-11-12 11:10:07,925 - __main__ - INFO - Current LR: 6.67e-04
+2025-11-12 11:10:07,925 - src.models - INFO - CUDA optimizations enabled (cudnn.benchmark=True)
+2025-11-12 11:10:07,926 - src.models - INFO - ModelManager initialized
+2025-11-12 11:10:08,087 - src.models - INFO - Model weights saved to experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_35\model_weights.pt
+2025-11-12 11:10:08,089 - src.models - INFO - Model metadata saved to experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_35\model_metadata.json
+2025-11-12 11:10:08,089 - src.models - INFO - Checkpoint saved to experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_35
+2025-11-12 11:10:08,090 - __main__ - INFO - Model checkpoint saved: experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_35
+2025-11-12 11:10:08,208 - __main__ - INFO - Optimizer state saved: experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_35\optimizer_state.pt
+2025-11-12 11:10:08,209 - __main__ - INFO - Scheduler state saved: experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_35\scheduler_state.pt
+2025-11-12 11:10:08,209 - __main__ - INFO - Experiment metadata saved: experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_35\experiment_metadata.json
+2025-11-12 11:10:08,234 - __main__ - INFO - Config saved to: experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_35\config.yaml
+2025-11-12 11:10:08,234 - __main__ - INFO - Metrics saved to: experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_35\metrics.json
+2025-11-12 11:10:08,248 - __main__ - INFO - Removed old checkpoint: experiments\s2t-cross-lingual_train_full_decoder_4e-3\checkpoints\epoch_32
+2025-11-12 11:10:08,249 - __main__ - INFO - Early stopping triggered after 3 epochs without improvement
+2025-11-12 11:10:08,249 - __main__ - INFO - ============================================================
+2025-11-12 11:10:08,249 - __main__ - INFO - Training completed!
+2025-11-12 11:10:08,249 - __main__ - INFO - Total training time: 2:31:32.239659
+2025-11-12 11:10:08,250 - __main__ - INFO - Best WER: 0.4572 (Epoch 32)
+2025-11-12 11:10:08,250 - __main__ - INFO - ============================================================
+2025-11-12 11:10:08,250 - __main__ - INFO - ============================================================
+2025-11-12 11:10:08,250 - __main__ - INFO - Running final evaluation on test set...
+2025-11-12 11:10:08,250 - __main__ - INFO - ============================================================
+2025-11-12 11:10:08,251 - src.data - INFO - Loading test split from TSV file C:\Users\User\Documents\Progs\Projects\seepch_to_text\data\cv-corpus-22.0-2025-06-20\ru\test.tsv...
+2025-11-12 11:10:08,280 - src.data - INFO - Loaded 10,244 samples from test split
+2025-11-12 11:10:08,281 - src.data - INFO - Loading clip durations from clip_durations.tsv...
+2025-11-12 11:10:08,404 - src.data - INFO - Merged durations for 10244 samples
+2025-11-12 11:10:08,406 - src.data - INFO - Pre-filtered 0 samples by metadata duration (min: 0.2s, max: 30.0s). Final filtering after trim_silence happens in AudioPreprocessor.
+2025-11-12 11:10:08,407 - src.data - INFO - After filtering: 10,244 samples remaining
+2025-11-12 11:10:08,407 - src.data - INFO - Cached test split with 10244 samples
+2025-11-12 11:10:09,454 - src.data - INFO - Extracted from Speech2Text config (CPU mode): max_source_positions=6000, max_target_positions=1024
+2025-11-12 11:10:09,455 - __main__ - INFO - Test dataset size: 10244
+2025-11-12 11:10:09,455 - src.data - INFO - Initialized AudioCollator with device: cpu, model_type: speech2text, labels padding: -100, transpose_features: True
+2025-11-12 11:12:35,443 - __main__ - INFO - Computing test metrics...
+2025-11-12 11:12:44,791 - __main__ - INFO - ============================================================
+2025-11-12 11:12:44,791 - __main__ - INFO - Test Set Results:
+2025-11-12 11:12:44,791 - __main__ - INFO - ============================================================
+2025-11-12 11:12:44,791 - __main__ - INFO - Word Error Rate (WER): 0.4930 (49.30%)
+2025-11-12 11:12:44,792 - __main__ - INFO - Character Error Rate (CER): 0.2156 (21.56%)
+2025-11-12 11:12:44,792 - __main__ - INFO - BLEU Score: 0.3561
+2025-11-12 11:12:44,792 - __main__ - INFO - Substitutions: 33,452
+2025-11-12 11:12:44,792 - __main__ - INFO - Deletions: 3,626
+2025-11-12 11:12:44,792 - __main__ - INFO - Insertions: 5,419
+2025-11-12 11:12:44,792 - __main__ - INFO - Correct Words: 49,129
+2025-11-12 11:12:44,792 - __main__ - INFO - ============================================================
+2025-11-12 11:12:44,793 - __main__ - INFO - Test metrics saved to: experiments\s2t-cross-lingual_train_full_decoder_4e-3\test_results.json
+2025-11-12 11:12:44,876 - __main__ - INFO - Test predictions saved to: experiments\s2t-cross-lingual_train_full_decoder_4e-3\test_predictions.csv
+2025-11-12 11:12:44,878 - __main__ - INFO - ============================================================
+2025-11-12 11:12:44,878 - __main__ - INFO - All done!
+2025-11-12 11:12:44,878 - __main__ - INFO - Results saved to: experiments\s2t-cross-lingual_train_full_decoder_4e-3
+2025-11-12 11:12:44,879 - __main__ - INFO - TensorBoard: tensorboard --logdir experiments\s2t-cross-lingual_train_full_decoder_4e-3/tensorboard
+2025-11-12 11:12:44,879 - __main__ - INFO - ============================================================

@@ -1,0 +1,97 @@
+2025-11-11 04:37:21,036 - src.utils - INFO - Logging setup complete. Level: INFO
+2025-11-11 04:37:21,036 - src.utils - INFO - Log file: experiments\whisper-base_evaluation_val\evaluation.log
+2025-11-11 04:37:21,036 - src.utils - INFO - Evaluation directory: experiments\whisper-base_evaluation_val
+2025-11-11 04:37:21,036 - src.utils - INFO - Log file: experiments\whisper-base_evaluation_val\evaluation.log
+2025-11-11 04:37:21,037 - src.utils - INFO - Model path: experiments/baselines/whisper-base
+2025-11-11 04:37:21,063 - src.utils - INFO - Configuration saved to: experiments\whisper-base_evaluation_val\config.yaml
+2025-11-11 04:37:21,120 - __main__ - INFO - Initializing data manager...
+2025-11-11 04:37:21,120 - __main__ - INFO - Loading model and processor...
+2025-11-11 04:37:21,120 - __main__ - INFO - Initializing model manager...
+2025-11-11 04:37:21,121 - src.models - INFO - CUDA optimizations enabled (cudnn.benchmark=True)
+2025-11-11 04:37:21,121 - src.models - INFO - ModelManager initialized
+2025-11-11 04:37:21,121 - __main__ - INFO - Using device: cuda
+2025-11-11 04:37:21,121 - __main__ - INFO - Loading checkpoint from: experiments/baselines/whisper-base
+2025-11-11 04:37:21,121 - src.models - INFO - Creating processor from checkpoint config: openai/whisper-base
+2025-11-11 04:37:21,122 - src.models - INFO - Creating WhisperProcessor with language='ru', task='transcribe'
+2025-11-11 04:37:23,427 - src.models - INFO - Loading Whisper model: openai/whisper-base
+2025-11-11 04:37:25,391 - src.models - INFO - Feature encoder frozen (conv1, conv2, embed_positions)
+2025-11-11 04:37:25,391 - src.models - INFO - Encoder frozen
+2025-11-11 04:37:25,392 - src.models - INFO - Model loaded. Total parameters: 72,593,920, Trainable: 52,003,328
+2025-11-11 04:37:25,393 - src.models - INFO - Model created: whisper - openai/whisper-base
+2025-11-11 04:37:25,763 - src.models - INFO - Loaded weights from experiments\baselines\whisper-base\model_weights.pt
+2025-11-11 04:37:25,825 - src.models - INFO - Model moved to device: cuda
+2025-11-11 04:37:25,827 - src.models - INFO - Model Info: {'model_type': 'whisper', 'model_name': 'openai/whisper-base', 'total_parameters': 72593920, 'trainable_parameters': 52003328, 'trainable_ratio': 0.7163592763691504}
+2025-11-11 04:37:25,827 - src.data - INFO - Set pad_token_id: 50257
+2025-11-11 04:37:25,827 - src.data - INFO - WhisperProcessor verified: language='ru', task='transcribe'
+2025-11-11 04:37:25,827 - __main__ - INFO - Loaded checkpoint: model=openai/whisper-base
+2025-11-11 04:37:25,828 - __main__ - INFO - Using GPU: NVIDIA GeForce RTX 4070 Ti
+2025-11-11 04:37:25,828 - __main__ - INFO - GPU Memory: 11.99 GB
+2025-11-11 04:37:25,828 - __main__ - INFO - Evaluating on validation dataset...
+2025-11-11 04:37:25,828 - __main__ - INFO - Loading validation dataset...
+2025-11-11 04:37:25,828 - src.data - INFO - Loading validation split from TSV file C:\Users\User\Documents\Progs\Projects\seepch_to_text\data\cv-corpus-22.0-2025-06-20\ru\dev.tsv...
+2025-11-11 04:37:25,858 - src.data - INFO - Loaded 10,243 samples from validation split
+2025-11-11 04:37:25,859 - src.data - INFO - Loading clip durations from clip_durations.tsv...
+2025-11-11 04:37:25,992 - src.data - INFO - Merged durations for 10243 samples
+2025-11-11 04:37:25,994 - src.data - INFO - Pre-filtered 0 samples by metadata duration (min: 0.2s, max: 30.0s). Final filtering after trim_silence happens in AudioPreprocessor.
+2025-11-11 04:37:25,995 - src.data - INFO - After filtering: 10,243 samples remaining
+2025-11-11 04:37:25,995 - src.data - INFO - Cached validation split with 10243 samples
+2025-11-11 04:37:26,005 - __main__ - INFO - Evaluating on 10243 samples from validation split
+2025-11-11 04:37:26,005 - src.data - INFO - Initialized AudioCollator with device: cpu, model_type: whisper, labels padding: -100, transpose_features: False
+2025-11-11 04:37:26,005 - __main__ - INFO - Batch size: 128
+2025-11-11 04:37:26,006 - __main__ - INFO - Total batches: 81
+2025-11-11 04:37:26,006 - __main__ - INFO - Device: cuda:0
+2025-11-11 04:37:26,006 - __main__ - INFO - Starting evaluation loop...
+2025-11-11 04:44:09,522 - __main__ - INFO - Evaluation loop completed. Processing results...
+2025-11-11 04:44:09,522 - __main__ - INFO - Computing metrics...
+2025-11-11 04:44:18,662 - __main__ - INFO - WER: 0.3172, CER: 0.0965
+2025-11-11 04:44:18,741 - __main__ - INFO - TensorBoard logs saved to: experiments\whisper-base_evaluation_val
+2025-11-11 04:44:18,742 - __main__ - INFO - Metrics saved to: experiments\whisper-base_evaluation_val\validation_results.json
+2025-11-11 04:44:18,742 - __main__ - INFO - ============================================================
+2025-11-11 04:44:18,742 - __main__ - INFO - Evaluation Results on validation split:
+2025-11-11 04:44:18,742 - __main__ - INFO - ============================================================
+2025-11-11 04:44:18,742 - __main__ - INFO - Word Error Rate (WER): 0.3172 (31.72%)
+2025-11-11 04:44:18,743 - __main__ - INFO - Character Error Rate (CER): 0.0965 (9.65%)
+2025-11-11 04:44:18,743 - __main__ - INFO - BLEU Score: 0.5181
+2025-11-11 04:44:18,743 - __main__ - INFO - Substitutions: 21,624
+2025-11-11 04:44:18,743 - __main__ - INFO - Deletions: 3,134
+2025-11-11 04:44:18,743 - __main__ - INFO - Insertions: 3,118
+2025-11-11 04:44:18,743 - __main__ - INFO - Correct Words: 63,129
+2025-11-11 04:44:18,744 - __main__ - INFO - ============================================================
+2025-11-11 04:44:18,775 - __main__ - INFO - Predictions saved to: experiments\whisper-base_evaluation_val\validation_predictions.csv
+2025-11-11 04:44:18,776 - __main__ - INFO - Sample predictions:
+2025-11-11 04:44:18,776 - __main__ - INFO -   Reference:  Вопрос стоит так: как долго мы будем продолжать спорить на эту тему?
+2025-11-11 04:44:18,777 - __main__ - INFO -   Prediction:  Попростите так, как долго мы продолжаем спорить на эту сему.
+2025-11-11 04:44:18,777 - __main__ - INFO -   ---
+2025-11-11 04:44:18,777 - __main__ - INFO -   Reference:  Нам совершенно необходимо усиливать превентивные меры, чтобы противостоять неминуемой угрозе изменения климата.
+2025-11-11 04:44:18,778 - __main__ - INFO -   Prediction:  Нам совершенно необходимо усиливать приентивное мерзство, что противостоятельными нюмами грузия измея и климаты.
+2025-11-11 04:44:18,778 - __main__ - INFO -   ---
+2025-11-11 04:44:18,778 - __main__ - INFO -   Reference:  Наше правительство проводит политику абсолютной нетерпимости в отношении терроризма.
+2025-11-11 04:44:18,778 - __main__ - INFO -   Prediction:  Наша правитель супроволит политику абсолютно нетерпимости в отношении терроризма.
+2025-11-11 04:44:18,778 - __main__ - INFO -   ---
+2025-11-11 04:44:18,779 - __main__ - INFO - Performing detailed error analysis...
+2025-11-11 04:44:19,329 - __main__ - INFO - Detailed analysis saved to: experiments\whisper-base_evaluation_val\validation_detailed_analysis.json
+2025-11-11 04:44:19,329 - __main__ - INFO - ============================================================
+2025-11-11 04:44:19,329 - __main__ - INFO - Detailed Error Analysis:
+2025-11-11 04:44:19,329 - __main__ - INFO - ============================================================
+2025-11-11 04:44:19,330 - __main__ - INFO - Total Samples: 10,243
+2025-11-11 04:44:19,330 - __main__ - INFO - Perfect Matches: 1,952 (19.06%)
+2025-11-11 04:44:19,330 - __main__ - INFO - Empty Predictions: 0 (0.00%)
+2025-11-11 04:44:19,330 - __main__ - INFO - Overall WER: 0.3172
+2025-11-11 04:44:19,330 - __main__ - INFO - 
+WER by Text Length (words in reference):
+2025-11-11 04:44:19,330 - __main__ - INFO -   1-4: WER=0.4063, Count=935
+2025-11-11 04:44:19,330 - __main__ - INFO -   4-7: WER=0.3457, Count=2,301
+2025-11-11 04:44:19,330 - __main__ - INFO -   7-10: WER=0.3080, Count=2,519
+2025-11-11 04:44:19,331 - __main__ - INFO -   10-13: WER=0.3108, Count=2,749
+2025-11-11 04:44:19,331 - __main__ - INFO -   13-16: WER=0.3105, Count=1,739
+2025-11-11 04:44:19,331 - __main__ - INFO -   16-inf: WER=0.0000, Count=0
+2025-11-11 04:44:19,331 - __main__ - INFO - ============================================================
+2025-11-11 04:44:19,331 - __main__ - INFO - 
+============================================================
+2025-11-11 04:44:19,331 - __main__ - INFO - View evaluation metrics in TensorBoard:
+2025-11-11 04:44:19,331 - __main__ - INFO -   tensorboard --logdir experiments\whisper-base_evaluation_val
+2025-11-11 04:44:19,331 - __main__ - INFO - ============================================================
+2025-11-11 04:44:19,332 - __main__ - INFO - ============================================================
+2025-11-11 04:44:19,333 - __main__ - INFO - Evaluation completed successfully!
+2025-11-11 04:44:19,333 - __main__ - INFO - Results saved to: experiments\whisper-base_evaluation_val
+2025-11-11 04:44:19,333 - __main__ - INFO - ============================================================

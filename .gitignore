@@ -1,0 +1,29 @@
+# Python cache and bytecode
+.mypy_cache/
+.pytest_cache/
+.ruff_cache/
+__pycache__/
+
+# Data directory - Common Voice dataset (~200K files)
+data/cv-corpus-22.0-2025-06-20/
+
+# Jupyter notebooks checkpoints
+notebooks/.ipynb_checkpoints/
+
+# Experiments - heavy model checkpoint files (.pt)
+experiments/*/checkpoints/*/*.pt
+experiments/*/checkpoints/*/*/*.pt
+experiments/*/best_checkpoint/*.pt
+experiments/baselines/*/*.pt
+
+# Experiments - prediction CSV files (can be large)
+experiments/*/*.csv
+experiments/*/checkpoints/*/*.csv
+
+# Temporary directories
+.temp/
+tests/.test_tmp/
+
+# Project specific
+CLAUDE.md
+TODO.txt

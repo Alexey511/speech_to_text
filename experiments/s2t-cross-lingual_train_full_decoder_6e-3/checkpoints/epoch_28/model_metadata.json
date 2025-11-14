@@ -1,0 +1,31 @@
+{
+  "model_name": "facebook/s2t-small-librispeech-asr",
+  "model_type": "speech2text",
+  "model_info": {
+    "model_type": "speech2text",
+    "model_name": "facebook/s2t-small-librispeech-asr",
+    "total_parameters": 29536256,
+    "trainable_parameters": 12033024,
+    "trainable_ratio": 0.4073984190819581
+  },
+  "config": {
+    "model_name": "facebook/s2t-small-librispeech-asr",
+    "model_type": "speech2text",
+    "tokenizer_name_or_path": "facebook/s2t-medium-mustc-multilingual-st",
+    "freeze_feature_encoder": true,
+    "freeze_encoder": true,
+    "freeze_decoder": false,
+    "unfreeze_last_n_encoder_layers": 0,
+    "unfreeze_last_n_decoder_layers": 0,
+    "activation_dropout": 0.15,
+    "attention_dropout": 0.15,
+    "dropout": 0.15,
+    "use_gpu": true,
+    "compile_model": false,
+    "hidden_size": 256,
+    "num_attention_heads": 4,
+    "num_hidden_layers": 4,
+    "intermediate_size": 1024,
+    "custom": null
+  }
+}
