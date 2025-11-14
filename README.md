@@ -860,24 +860,21 @@ tensorboard --logdir experiments
 
 ### Baseline модели (без fine-tuning)
 
-| Модель | WER ↓ | CER ↓ | Параметры | Inference Speed |
-|--------|-------|-------|-----------|-----------------|
-| Whisper Tiny | ~35-40% | ~15-20% | 39M | ⚡⚡⚡⚡⚡ |
-| Whisper Base | ~25-30% | ~10-15% | 74M | ⚡⚡⚡⚡ |
-| Whisper Small | ~18-22% | ~7-10% | 244M | ⚡⚡⚡ |
-| Whisper Medium | ~15-18% | ~6-8% | 769M | ⚡⚡ |
-| Speech2Text (English) | ~90%+ | ~70%+ | 31M | ⚡⚡⚡⚡ |
+| Модель | WER ↓ | CER ↓ | Параметры |
+|--------|-------|-------|-----------|
+| Whisper Base | ~32-35% | ~10-13% | 74M |
+| Whisper Small | ~20-25% | ~7-10% | 244M |
+| Speech2Text (English) | ~100%+ | ~100%+ | 31M |
 
 *Speech2Text показывает плохие результаты на русском без fine-tuning, т.к. обучена только на английском*
 
 ### После fine-tuning (планируемые результаты)
 
-| Модель | WER ↓ | CER ↓ | Параметры | Эпох обучения | VRAM |
-|--------|-------|-------|-----------|---------------|------|
-| Whisper Small (frozen encoder) | TBD | TBD | 244M | ~10 | ~5GB |
-| Whisper Base (frozen encoder) | TBD | TBD | 74M | ~10 | ~3GB |
-| Speech2Text (cross-lingual) | TBD | TBD | 31M | ~15 | ~2GB |
-| Custom CNN+Transformer | TBD | TBD | ~50M | ~20 | ~3GB |
+| Модель | WER ↓ | CER ↓ | Параметры | Эпох обучения |
+|--------|-------|-------|-----------|---------------|
+| Whisper Base (frozen encoder) | ~21-25% | ~8% | 74M | 5 |
+| Whisper Small (frozen encoder) | TBD | TBD | 244M | 5 |
+| Speech2Text (cross-lingual) | ~0.45-0.5 | ~0.2 | 31M |
 
 **Целевые метрики после fine-tuning:**
 - **Whisper Small**: WER < 15%, CER < 6%
@@ -888,7 +885,7 @@ tensorboard --logdir experiments
 - Результаты зависят от гиперпараметров (LR, batch size, freezing strategy)
 - WER/CER измеряются на test split (~10K записей)
 - Все модели обучены на RTX 4070 Ti (12GB VRAM)
-- Время обучения: Whisper Small ~6-8 часов на 10 эпох
+- Время обучения: Whisper Base ~1-1.5 часов на 5 эпох (encoder frozen)
 
 *Таблица будет обновлена по мере завершения экспериментов*
 
@@ -1205,7 +1202,5 @@ MIT License - см. [LICENSE](LICENSE) файл для деталей.
 
 **Этот проект демонстрирует профессиональный подход к ML/DL разработке**
 *Production-ready архитектура • MLOps практики • Comprehensive testing*
-
-⭐ Если проект был полезен, поставьте звезду на GitHub!
 
 </div>
