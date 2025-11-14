@@ -428,7 +428,7 @@ Encoder-decoder архитектура с поддержкой 99 языков. 
 - **`openai/whisper-base`** (74M параметров) - баланс скорости и качества
 - **`openai/whisper-small`** (244M параметров) - **рекомендуется** для fine-tuning
 - **`openai/whisper-medium`** (769M параметров) - высокое качество
-- **`openai/whisper-large`** (1550M параметров) - максимальное качество (требует 16GB+ VRAM)
+- **`openai/whisper-large`** (1550M параметров) - максимальное качество
 
 **Использование:**
 ```yaml
@@ -464,7 +464,6 @@ model:
 | **Whisper Small** | 244M | ~5GB | ⚡⚡⚡ | **~15-20%** | **✅ Рекомендуется** |
 | Whisper Medium | 769M | ~10GB | ⚡⚡ | ~12-15% | High quality |
 | Speech2Text Small | 31M | ~2GB | ⚡⚡⚡⚡ | ~25-30%* | Cross-lingual experiments |
-| Custom Model | ~50M | ~3GB | ⚡⚡⚡⚡ | ~30-35%* | Research |
 
 *Результаты на русском после fine-tuning (baseline без fine-tuning хуже)
 
@@ -883,7 +882,7 @@ tensorboard --logdir experiments
 
 **Примечания:**
 - Результаты зависят от гиперпараметров (LR, batch size, freezing strategy)
-- WER/CER измеряются на test split (~10K записей)
+- WER/CER измеряются на val/test split (~10K/10K записей)
 - Все модели обучены на RTX 4070 Ti (12GB VRAM)
 - Время обучения: Whisper Base ~1-1.5 часов на 5 эпох (encoder frozen)
 
