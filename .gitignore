@@ -178,6 +178,7 @@ temp/
 # Project Specific
 # ============================================================================
 
+notebooks/debug.ipynb
 CLAUDE.md
 TODO.txt
 run_experiments.py
