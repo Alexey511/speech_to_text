@@ -1,16 +1,150 @@
-# Python cache and bytecode
-.mypy_cache/
-.pytest_cache/
-.ruff_cache/
-__pycache__/
+# ============================================================================
+# Python
+# ============================================================================
 
-# Data directory - Common Voice dataset (~200K files)
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# C extensions
+*.so
+
+# Distribution / packaging
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+pip-wheel-metadata/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# PyInstaller
+*.manifest
+*.spec
+
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.nox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+.hypothesis/
+.pytest_cache/
+
+# Type checking & linting
+.mypy_cache/
+.dmypy.json
+dmypy.json
+.ruff_cache/
+.pytype/
+.pylint.d/
+
+# ============================================================================
+# Virtual Environments
+# ============================================================================
+
+venv/
+env/
+ENV/
+.venv/
+.env.local/
+
+# ============================================================================
+# IDEs and Editors
+# ============================================================================
+
+# VSCode
+.vscode/
+*.code-workspace
+
+# PyCharm / IntelliJ
+.idea/
+*.iml
+*.iws
+
+# Vim
+*.swp
+*.swo
+*~
+
+# Emacs
+*~
+\#*\#
+.\#*
+
+# Eclipse
+.project
+.pydevproject
+.settings/
+
+# Sublime Text
+*.sublime-project
+*.sublime-workspace
+
+# ============================================================================
+# Operating System
+# ============================================================================
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Windows
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+ehthumbs_vista.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# Linux
+.directory
+.Trash-*
+
+# ============================================================================
+# Environment Variables
+# ============================================================================
+
+.env
+.env.*
+!.env.example
+
+# ============================================================================
+# Jupyter Notebooks
+# ============================================================================
+
+# Jupyter checkpoints (keep notebooks themselves)
+.ipynb_checkpoints/
+*/.ipynb_checkpoints/
+
+# ============================================================================
+# ML/DL Project Specific
+# ============================================================================
+
+# Data directory - Mozilla Common Voice 22.0 dataset (~200K files, 7.3 GB)
+# IMPORTANT: Use direct path instead of data/* to avoid scanning all files
 data/cv-corpus-22.0-2025-06-20/
 
-# Jupyter notebooks checkpoints
-notebooks/.ipynb_checkpoints/
-
-# Experiments - heavy model checkpoint files (.pt)
+# Experiments - heavy model checkpoint files (.pt files ~100-900 MB each)
 experiments/*/checkpoints/*/*.pt
 experiments/*/checkpoints/*/*/*.pt
 experiments/*/best_checkpoint/*.pt
@@ -20,10 +154,29 @@ experiments/baselines/*/*.pt
 experiments/*/*.csv
 experiments/*/checkpoints/*/*.csv
 
-# Temporary directories
+# WandB (Weights & Biases) tracking files
+wandb/
+*.wandb
+
+# TensorBoard temp files (logs are kept in experiments/)
+runs/
+
+# Model downloads cache
+.cache/
+huggingface/
+
+# ============================================================================
+# Temporary Directories
+# ============================================================================
+
 .temp/
 tests/.test_tmp/
+tmp/
+temp/
 
-# Project specific
+# ============================================================================
+# Project Specific
+# ============================================================================
+
 CLAUDE.md
 TODO.txt
