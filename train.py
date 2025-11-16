@@ -133,7 +133,8 @@ def setup_experiment(
     config: ProjectConfig,
     args,
     experiment_path: str,
-    is_resume: bool = False
+    is_resume: bool = False,
+    experiment_dir: Optional[Path] = None
 ) -> Tuple[str, SummaryWriter]:
     """
     Setup experiment directory and logging.
@@ -143,44 +144,45 @@ def setup_experiment(
         args: Command line arguments
         experiment_path: Path to experiment/checkpoint directory (for auto-generating experiment name)
         is_resume: Whether this is resuming from checkpoint
+        experiment_dir: Optional pre-created experiment directory (if None, will be created)
 
     Returns:
         Tuple of (experiment_dir, tensorboard_writer)
     """
-    # Determine experiment name (priority: CLI arg > config > experiment path name)
-    if args.experiment_name:
-        # CLI argument has highest priority
-        config.experiment.experiment_name = args.experiment_name
-    elif config.experiment.experiment_name:
-        # Use experiment name from config if specified
-        pass  # Already set, do nothing
-    else:
-        # Fallback: auto-generate from experiment directory name + "_trained"
-        experiment_name = Path(experiment_path).name
-        if is_resume:
-            # If resuming, use parent directory name (e.g., whisper_base_trained)
-            config.experiment.experiment_name = Path(experiment_path).parent.parent.name
+    # Use pre-created experiment directory if provided
+    if experiment_dir is None:
+        # Determine experiment name (priority: CLI arg > config > experiment path name)
+        if args.experiment_name:
+            # CLI argument has highest priority
+            config.experiment.experiment_name = args.experiment_name
+        elif config.experiment.experiment_name:
+            # Use experiment name from config if specified
+            pass  # Already set, do nothing
         else:
-            # New training: add _trained suffix
-            config.experiment.experiment_name = f"{experiment_name}_trained"
+            # Fallback: auto-generate from experiment directory name + "_trained"
+            experiment_name = Path(experiment_path).name
+            if is_resume:
+                # If resuming, use parent directory name (e.g., whisper_base_trained)
+                config.experiment.experiment_name = Path(experiment_path).parent.parent.name
+            else:
+                # New training: add _trained suffix
+                config.experiment.experiment_name = f"{experiment_name}_trained"
 
-    # Ensure experiment_name is set (for type checker)
-    assert config.experiment.experiment_name is not None, "Experiment name must be set"
+        # Ensure experiment_name is set (for type checker)
+        assert config.experiment.experiment_name is not None, "Experiment name must be set"
 
-    # Create experiment directory structure
-    experiment_dir = Path(config.experiment.output_dir) / config.experiment.experiment_name
-    experiment_dir.mkdir(parents=True, exist_ok=True)
+        # Create experiment directory structure
+        experiment_dir = Path(config.experiment.output_dir) / config.experiment.experiment_name
+        experiment_dir.mkdir(parents=True, exist_ok=True)
 
     # Create subdirectories
     checkpoints_dir = experiment_dir / "checkpoints"
     checkpoints_dir.mkdir(exist_ok=True)
 
-    # Setup logging to file and console
-    log_file = experiment_dir / "training.log"
-    logger = setup_logging(config, log_file=str(log_file))
+    # Get logger (already setup in main)
+    logger = logging.getLogger(__name__)
 
     logger.info(f"Experiment directory: {experiment_dir}")
-    logger.info(f"Log file: {log_file}")
     logger.info(f"Checkpoints directory: {checkpoints_dir}")
     logger.info(f"Experiment path: {experiment_path}")
     logger.info(f"Resume training: {is_resume}")
@@ -1167,17 +1169,13 @@ def main():
     if not checkpoint_path.exists():
         raise ValueError(f"Checkpoint path does not exist: {checkpoint_path}")
 
-    print(f"Checkpoint path: {checkpoint_path}")
-
     # Find config file
     config_file_path = find_config(checkpoint_path, args.config)
-    print(f"Loading configuration from: {config_file_path}")
     config = load_config(config_file_path)
 
     # Override config with CLI args
     if args.epochs:
         config.training.num_train_epochs = args.epochs
-        print(f"Overriding epochs to: {args.epochs}")
 
     if args.no_wandb:
         config.logging.use_wandb = False
@@ -1188,26 +1186,48 @@ def main():
         config.training.logging_steps = 10
         config.training.save_steps = 50
         config.logging.use_wandb = False
-        print("Debug mode enabled")
 
     # Set random seed early
     set_seed(config.experiment.seed)
 
-    # Print system info
-    print_system_info()
+    # Determine experiment name early (needed for logging setup)
+    if args.experiment_name:
+        config.experiment.experiment_name = args.experiment_name
+    elif not config.experiment.experiment_name:
+        # Auto-generate from experiment directory name
+        experiment_name = Path(checkpoint_path).name
+        config.experiment.experiment_name = f"{experiment_name}_trained"
 
-    # Initialize basic logger for error handling (before experiment setup)
-    logger = logging.getLogger(__name__)
-    logging.basicConfig(level=logging.INFO)
+    # Ensure experiment_name is set (for type checker)
+    assert config.experiment.experiment_name is not None, "Experiment name must be set"
+
+    # Create experiment directory early (needed for logging setup)
+    experiment_dir = Path(config.experiment.output_dir) / config.experiment.experiment_name
+    experiment_dir.mkdir(parents=True, exist_ok=True)
+
+    # Setup logging EARLY - before any other operations
+    log_file = experiment_dir / "training.log"
+    logger = setup_logging(config, log_file=str(log_file))
+
+    # Now log all the information
+    logger.info(f"Checkpoint path: {checkpoint_path}")
+    logger.info(f"Configuration file: {config_file_path}")
+    if args.epochs:
+        logger.info(f"Overriding epochs to: {args.epochs}")
+    if args.debug:
+        logger.info("Debug mode enabled")
+
+    # Print system info (now it will be logged too)
+    print_system_info()
 
     try:
         # Initialize data manager
-        print("Initializing data manager...")
+        logger.info("Initializing data manager...")
         data_manager = DataManager(config)
 
         # Load experiment objects (model, processor, optimizer)
         # Automatically detects if resuming (has optimizer_state.pt) or new training
-        print("Loading experiment objects...")
+        logger.info("Loading experiment objects...")
         exp_objects = load_experiment_objects(
             str(checkpoint_path),
             config
@@ -1227,20 +1247,20 @@ def main():
         data_manager.set_already_loaded_processor(processor)
 
         # Create datasets AFTER processor is loaded (needed for CPU mode)
-        print("Loading datasets...")
+        logger.info("Loading datasets...")
         train_dataset = data_manager.create_dataset("train")
         val_dataset = data_manager.create_dataset("validation")
-        print(f"Train dataset size: {len(train_dataset)}")
-        print(f"Validation dataset size: {len(val_dataset)}")
+        logger.info(f"Train dataset size: {len(train_dataset)}")
+        logger.info(f"Validation dataset size: {len(val_dataset)}")
 
-        # Setup experiment (after loading model, so we know if it's resume)
+        # Setup experiment (now only creates checkpoints dir and TensorBoard/WandB)
         experiment_dir, writer = setup_experiment(
             config,
             args,
             str(checkpoint_path),
-            is_resume=is_resume
+            is_resume=is_resume,
+            experiment_dir=experiment_dir  # Pass already created dir
         )
-        logger = logging.getLogger(__name__)
 
         # Print configuration
         print_config(config)
@@ -1256,9 +1276,6 @@ def main():
         trainable_params = model.get_trainable_parameters()
         total_params = model.get_num_parameters()
         logger.info(f"Model parameters: {total_params:,} total, {trainable_params:,} trainable")
-
-        logger.info(f"Train dataset size: {len(train_dataset)}")
-        logger.info(f"Validation dataset size: {len(val_dataset)}")
 
         # Setup data collator
         transpose_features = config.model.model_type.lower() == "speech2text"
