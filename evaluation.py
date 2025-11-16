@@ -472,14 +472,16 @@ def main():
     model_path = Path(args.model_path)
     config_file = find_config(model_path, args.config)
 
-    print(f"Loading configuration from: {config_file}")
     config = load_config(config_file)
 
-    # Setup evaluation
+    # Setup evaluation (this configures logging)
     eval_dir = setup_evaluation(config, args, args.model_path)
     logger = logging.getLogger(__name__)
 
-    # Print configuration and system info
+    # Log configuration file path
+    logger.info(f"Configuration loaded from: {config_file}")
+
+    # Print configuration and system info (now they will be logged)
     print_config(config)
     print_system_info()
 
