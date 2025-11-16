@@ -55,7 +55,7 @@ except ImportError:
 DEFAULT_CONFIG = {
     "model_path": "experiments/baselines/s2t-cross-lingual",
     "config": None,  # None = auto-search in model directory
-    "experiment_name": "s2t-cross-lingual_train_5_decoder_3e-3",  # None = auto-generate from model name + "_trained"
+    "experiment_name": "s2t-cross-lingual_train_2_decoder_3e-3",  # None = auto-generate from model name + "_trained"
     "epochs": None,  # None = use config value
 }
 # Example model paths:
@@ -230,7 +230,7 @@ def train_one_epoch(
     global_step: int,
     writer: SummaryWriter,
     logger: logging.Logger
-) -> Tuple[float, int]:
+) -> Tuple[float, int, float]:
     """
     Train for one epoch.
 
@@ -246,8 +246,11 @@ def train_one_epoch(
         logger: Logger instance
 
     Returns:
-        Tuple of (average_loss, new_global_step)
+        Tuple of (average_loss, new_global_step, epoch_duration_seconds)
     """
+    # Start timer
+    epoch_start_time = datetime.now()
+
     model.train()
     device = next(model.parameters()).device
 
@@ -330,9 +333,12 @@ def train_one_epoch(
     # Calculate average loss
     avg_loss = total_loss / num_batches if num_batches > 0 else 0.0
 
-    logger.info(f"Epoch {epoch} - Average training loss: {avg_loss:.4f}")
+    # Calculate epoch duration
+    epoch_duration = (datetime.now() - epoch_start_time).total_seconds()
 
-    return avg_loss, global_step
+    logger.info(f"Epoch {epoch} - Average training loss: {avg_loss:.4f}, Duration: {epoch_duration:.2f}s")
+
+    return avg_loss, global_step, epoch_duration
 
 
 def validate_model(
@@ -510,6 +516,63 @@ def save_metrics(
     logger.info(f"Metrics saved to: {save_path}")
 
 
+def update_all_epochs_metrics(
+    epoch: int,
+    train_loss: float,
+    learning_rate: float,
+    epoch_duration: float,
+    global_step: int,
+    val_metrics: Dict[str, float],
+    experiment_dir: str,
+    is_best: bool,
+    logger: logging.Logger
+) -> None:
+    """
+    Update cumulative metrics file with metrics from current epoch.
+
+    Creates or updates metrics_on_all_epochs.json in experiment directory.
+
+    Args:
+        epoch: Current epoch number (0-indexed)
+        train_loss: Average training loss for this epoch
+        learning_rate: Current learning rate
+        epoch_duration: Training time for this epoch (in seconds)
+        global_step: Current global step
+        val_metrics: Validation metrics dictionary
+        experiment_dir: Experiment directory path
+        is_best: Whether this is the best model so far
+        logger: Logger instance
+    """
+    metrics_file = Path(experiment_dir) / "metrics_on_all_epochs.json"
+
+    # Load existing metrics if file exists
+    if metrics_file.exists():
+        with open(metrics_file, 'r', encoding='utf-8') as f:
+            data = json.load(f)
+    else:
+        data = {"epochs": []}
+
+    # Create epoch metrics entry
+    epoch_metrics = {
+        "epoch": epoch,
+        "train_loss": train_loss,
+        "learning_rate": learning_rate,
+        "epoch_duration": epoch_duration,
+        "global_step": global_step,
+        "is_best": is_best,
+        **val_metrics  # Unpack all validation metrics (wer, cer, mer, wil, bleu, etc.)
+    }
+
+    # Add to epochs list
+    data["epochs"].append(epoch_metrics)
+
+    # Save back to file
+    with open(metrics_file, 'w', encoding='utf-8') as f:
+        json.dump(data, f, indent=2, ensure_ascii=False)
+
+    logger.info(f"Updated cumulative metrics: {metrics_file}")
+
+
 def save_optimizer_state(
     optimizer: torch.optim.Optimizer,
     epoch: int,
@@ -621,7 +684,10 @@ def save_checkpoint(
     experiment_dir: str,
     config: ProjectConfig,
     logger: logging.Logger,
-    is_best: bool = False
+    is_best: bool = False,
+    train_loss: float = 0.0,
+    learning_rate: float = 0.0,
+    epoch_duration: float = 0.0
 ):
     """
     Save training checkpoint (model + optimizer + scheduler + experiment metadata).
@@ -642,6 +708,9 @@ def save_checkpoint(
         config: Project configuration
         logger: Logger instance
         is_best: Whether this is the best model so far
+        train_loss: Average training loss for this epoch
+        learning_rate: Current learning rate
+        epoch_duration: Training time for this epoch (in seconds)
     """
     checkpoints_dir = Path(experiment_dir) / "checkpoints"
     model_manager = ModelManager()
@@ -671,6 +740,19 @@ def save_checkpoint(
     # Save metrics separately in human-readable JSON format
     metrics_path = epoch_checkpoint_dir / "metrics.json"
     save_metrics(metrics, metrics_path, logger)
+
+    # Update cumulative metrics file in experiment root
+    update_all_epochs_metrics(
+        epoch=epoch,
+        train_loss=train_loss,
+        learning_rate=learning_rate,
+        epoch_duration=epoch_duration,
+        global_step=global_step,
+        val_metrics=metrics,
+        experiment_dir=experiment_dir,
+        is_best=is_best,
+        logger=logger
+    )
 
     # If this is the best checkpoint, also save to best_checkpoint directory (in experiment root)
     if is_best:
@@ -1350,7 +1432,7 @@ def main():
             logger.info(f"\nEpoch {epoch}/{num_train_epochs-1}")
 
             # Train for one epoch
-            avg_train_loss, global_step = train_one_epoch(
+            avg_train_loss, global_step, epoch_duration = train_one_epoch(
                 model=model,
                 train_dataloader=train_dataloader,
                 optimizer=optimizer,
@@ -1385,7 +1467,9 @@ def main():
                 scheduler.step()  # type: ignore
             # Linear and OneCycleLR step per batch, not per epoch - handled in train_one_epoch
 
-            logger.info(f"Current LR: {optimizer.param_groups[0]['lr']:.2e}")
+            # Get current learning rate
+            current_lr = optimizer.param_groups[0]['lr']
+            logger.info(f"Current LR: {current_lr:.2e}")
 
             # Check if this is the best model
             is_best = current_wer < best_wer
@@ -1408,7 +1492,10 @@ def main():
                 experiment_dir=experiment_dir,
                 config=config,
                 logger=logger,
-                is_best=is_best
+                is_best=is_best,
+                train_loss=avg_train_loss,
+                learning_rate=current_lr,
+                epoch_duration=epoch_duration
             )
 
             # Early stopping
