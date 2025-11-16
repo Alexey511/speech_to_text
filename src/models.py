@@ -217,7 +217,8 @@ class WhisperSTT(BaseSTTModel):
         self.apply_freezing_from_config()
 
         logger.info(
-            f"Model loaded. Total parameters: {self.get_num_parameters():,}, "
+            f"Model loaded with default freezing settings. "
+            f"Total parameters: {self.get_num_parameters():,}, "
             f"Trainable: {self.get_trainable_parameters():,}"
         )
 
@@ -392,7 +393,8 @@ class Speech2TextSTT(BaseSTTModel):
         self.apply_freezing_from_config()
 
         logger.info(
-            f"Model loaded. Total parameters: {self.get_num_parameters():,}, "
+            f"Model loaded with default freezing settings. "
+            f"Total parameters: {self.get_num_parameters():,}, "
             f"Trainable: {self.get_trainable_parameters():,}"
         )
 
