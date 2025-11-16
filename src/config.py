@@ -384,5 +384,16 @@ def save_config(config: ProjectConfig, save_path: str) -> None:
 
 def print_config(config: ProjectConfig) -> None:
     """Pretty print configuration"""
+    import logging
+
     cfg = OmegaConf.structured(config)
-    print(OmegaConf.to_yaml(cfg))
+    config_yaml = OmegaConf.to_yaml(cfg)
+
+    # Log to file and console (logger has both handlers)
+    logger = logging.getLogger(__name__)
+    logger.info("=" * 60)
+    logger.info("CONFIGURATION")
+    logger.info("=" * 60)
+    for line in config_yaml.splitlines():
+        logger.info(line)
+    logger.info("=" * 60)

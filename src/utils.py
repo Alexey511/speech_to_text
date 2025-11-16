@@ -129,29 +129,58 @@ def set_seed(seed: int = 42):
 
 def print_system_info():
     """Print system information"""
-    table = Table(title="System Information")
-    table.add_column("Component", style="cyan")
-    table.add_column("Information", style="magenta")
-    
-    # Python and PyTorch info
     import sys
-    table.add_row("Python Version", sys.version.split()[0])
-    table.add_row("PyTorch Version", torch.__version__)
-    
+
+    # Collect system info
+    python_version = sys.version.split()[0]
+    pytorch_version = torch.__version__
+
     # GPU info
     if torch.cuda.is_available():
         gpu_name = torch.cuda.get_device_name(0)
         gpu_memory = torch.cuda.get_device_properties(0).total_memory / 1024**3
-        table.add_row("GPU", f"{gpu_name}")
-        table.add_row("GPU Memory", f"{gpu_memory:.1f} GB")
         cuda_version = getattr(torch.version, 'cuda', None) if hasattr(torch, 'version') else None  # type: ignore
-        table.add_row("CUDA Version", cuda_version or "Unknown")
+        gpu_info = f"{gpu_name}"
+        gpu_memory_info = f"{gpu_memory:.1f} GB"
+        cuda_info = cuda_version or "Unknown"
     else:
-        table.add_row("GPU", "Not available")
-    
-    # CPU info
-    table.add_row("CPU Cores", str(os.cpu_count()))
-    
+        gpu_info = "Not available"
+        gpu_memory_info = "N/A"
+        cuda_info = "N/A"
+
+    cpu_cores = str(os.cpu_count())
+
+    # Log to file
+    logger = logging.getLogger(__name__)
+    logger.info("=" * 60)
+    logger.info("SYSTEM INFORMATION")
+    logger.info("=" * 60)
+    logger.info(f"Python Version: {python_version}")
+    logger.info(f"PyTorch Version: {pytorch_version}")
+    logger.info(f"GPU: {gpu_info}")
+    if torch.cuda.is_available():
+        logger.info(f"GPU Memory: {gpu_memory_info}")
+        logger.info(f"CUDA Version: {cuda_info}")
+    logger.info(f"CPU Cores: {cpu_cores}")
+    logger.info("=" * 60)
+
+    # Print to console (Rich table)
+    table = Table(title="System Information")
+    table.add_column("Component", style="cyan")
+    table.add_column("Information", style="magenta")
+
+    table.add_row("Python Version", python_version)
+    table.add_row("PyTorch Version", pytorch_version)
+
+    if torch.cuda.is_available():
+        table.add_row("GPU", gpu_info)
+        table.add_row("GPU Memory", gpu_memory_info)
+        table.add_row("CUDA Version", cuda_info)
+    else:
+        table.add_row("GPU", gpu_info)
+
+    table.add_row("CPU Cores", cpu_cores)
+
     console.print(table)
 
 
