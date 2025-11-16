@@ -95,7 +95,7 @@ model:
   freeze_encoder: true  # Freeze encoder - acoustic features are language-agnostic
   freeze_decoder: true  # Decoder learns language-specific patterns, should be trainable
   unfreeze_last_n_encoder_layers: 0
-  unfreeze_last_n_decoder_layers: 5
+  unfreeze_last_n_decoder_layers: 2
 
   # Fine-grained unfreezing for critical components (applied AFTER freeze/unfreeze operations)
   # Critical for cross-lingual transfer: if decoder is frozen, embeddings must be unfrozen

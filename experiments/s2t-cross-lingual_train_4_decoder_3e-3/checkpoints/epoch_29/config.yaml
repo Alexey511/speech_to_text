@@ -72,7 +72,7 @@ model:
   freeze_encoder: true
   freeze_decoder: true
   unfreeze_last_n_encoder_layers: 0
-  unfreeze_last_n_decoder_layers: 5
+  unfreeze_last_n_decoder_layers: 4
   unfreeze_embed_tokens: true
   unfreeze_embed_positions_decoder: true
   unfreeze_lm_head: true

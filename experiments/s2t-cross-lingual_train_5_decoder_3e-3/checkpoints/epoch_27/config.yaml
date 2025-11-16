@@ -1,6 +1,6 @@
 experiment:
   output_dir: experiments
-  experiment_name: s2t-cross-lingual_train_4_decoder_3e-3
+  experiment_name: s2t-cross-lingual_train_5_decoder_3e-3
   seed: 42
 data:
   language: ru
@@ -72,7 +72,7 @@ model:
   freeze_encoder: true
   freeze_decoder: true
   unfreeze_last_n_encoder_layers: 0
-  unfreeze_last_n_decoder_layers: 4
+  unfreeze_last_n_decoder_layers: 5
   unfreeze_embed_tokens: true
   unfreeze_embed_positions_decoder: true
   unfreeze_lm_head: true

@@ -5,8 +5,8 @@
     "model_type": "speech2text",
     "model_name": "facebook/s2t-small-librispeech-asr",
     "total_parameters": 29536256,
-    "trainable_parameters": 8875520,
-    "trainable_ratio": 0.30049577035085284
+    "trainable_parameters": 10454272,
+    "trainable_ratio": 0.3539470947164055
   },
   "config": {
     "model_name": "facebook/s2t-small-librispeech-asr",
@@ -16,7 +16,7 @@
     "freeze_encoder": true,
     "freeze_decoder": true,
     "unfreeze_last_n_encoder_layers": 0,
-    "unfreeze_last_n_decoder_layers": 4,
+    "unfreeze_last_n_decoder_layers": 5,
     "unfreeze_embed_tokens": true,
     "unfreeze_embed_positions_decoder": true,
     "unfreeze_lm_head": true,
