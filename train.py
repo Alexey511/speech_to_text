@@ -32,7 +32,7 @@ from src.data import DataManager, AudioCollator
 from src.models import ModelManager
 from src.metrics import STTMetrics
 from src.utils import (
-    setup_logging, set_seed, print_system_info
+    setup_logging, set_seed, print_system_info, plot_training_metrics
 )
 
 # Import transformers scheduler
@@ -55,7 +55,7 @@ except ImportError:
 DEFAULT_CONFIG = {
     "model_path": "experiments/baselines/s2t-cross-lingual",
     "config": None,  # None = auto-search in model directory
-    "experiment_name": "s2t-cross-lingual_train_2_decoder_3e-3",  # None = auto-generate from model name + "_trained"
+    "experiment_name": "s2t-cross-lingual_train_1_decoder_3e-3",  # None = auto-generate from model name + "_trained"
     "epochs": None,  # None = use config value
 }
 # Example model paths:
@@ -1527,6 +1527,20 @@ def main():
         # Finish WandB run
         if config.logging.use_wandb and WANDB_AVAILABLE and wandb.run:
             wandb.finish()
+
+        # Plot training metrics
+        logger.info("="*60)
+        logger.info("Generating training plots...")
+        logger.info("="*60)
+        metrics_file = Path(experiment_dir) / "metrics_on_all_epochs.json"
+        if metrics_file.exists():
+            try:
+                plot_training_metrics(str(metrics_file))
+                logger.info("Training plots generated successfully")
+            except Exception as e:
+                logger.warning(f"Failed to generate plots: {e}")
+        else:
+            logger.warning(f"Metrics file not found: {metrics_file}")
 
         logger.info("="*60)
         logger.info("All done!")

@@ -14,11 +14,17 @@ from pathlib import Path
 import numpy as np
 import pandas as pd
 import torch
+import matplotlib.pyplot as plt
+import matplotlib
 from rich.console import Console
 from rich.table import Table
 from rich.progress import Progress, SpinnerColumn, TextColumn, BarColumn, TaskProgressColumn
 
 from .config import ProjectConfig
+
+# Set matplotlib style for scientific plots
+matplotlib.use('Agg')  # Non-interactive backend for server environments
+plt.style.use('seaborn-v0_8-paper')  # Scientific paper style
 
 console = Console()
 
@@ -393,10 +399,203 @@ def get_device_info() -> Dict[str, Any]:
             "device_type": "cuda",
             "device_name": torch.cuda.get_device_name(0),
             "memory_total": torch.cuda.get_device_properties(0).total_memory / 1024**3,
-            "memory_available": (torch.cuda.get_device_properties(0).total_memory - 
+            "memory_available": (torch.cuda.get_device_properties(0).total_memory -
                                torch.cuda.memory_allocated()) / 1024**3,
             "cuda_version": torch.version.cuda if hasattr(torch.version, 'cuda') else "Unknown",  # type: ignore
             "cudnn_version": torch.backends.cudnn.version()
         })
-    
+
     return info
+
+
+def plot_training_metrics(metrics_file: str, output_dir: Optional[str] = None) -> None:
+    """
+    Plot training metrics from metrics_on_all_epochs.json file.
+
+    Creates several plots:
+    1. Combined WER, CER, MER, WIL plot
+    2. BLEU score plot
+    3. Error breakdown (substitutions, deletions, insertions, hits) as subplots
+    4. Hits/total_predictions ratio plot
+    5. Combined WER, CER, and train loss plot
+
+    Args:
+        metrics_file: Path to metrics_on_all_epochs.json file
+        output_dir: Directory to save plots (default: same directory as metrics file + '/graphs')
+    """
+    logger = logging.getLogger(__name__)
+
+    # Load metrics
+    metrics_path = Path(metrics_file)
+    if not metrics_path.exists():
+        logger.error(f"Metrics file not found: {metrics_file}")
+        return
+
+    with open(metrics_path, 'r', encoding='utf-8') as f:
+        data = json.load(f)
+
+    epochs_data = data.get('epochs', [])
+    if not epochs_data:
+        logger.error("No epochs data found in metrics file")
+        return
+
+    # Create output directory
+    if output_dir is None:
+        output_dir = str(metrics_path.parent / "graphs")
+
+    output_path = Path(output_dir)
+    output_path.mkdir(parents=True, exist_ok=True)
+    logger.info(f"Saving plots to: {output_path}")
+
+    # Extract data
+    epochs = [e['epoch'] for e in epochs_data]
+    wer = [e['wer'] for e in epochs_data]
+    cer = [e['cer'] for e in epochs_data]
+    mer = [e['mer'] for e in epochs_data]
+    wil = [e['wil'] for e in epochs_data]
+    bleu = [e['bleu'] for e in epochs_data]
+    train_loss = [e['train_loss'] for e in epochs_data]
+    substitutions = [e['substitutions'] for e in epochs_data]
+    deletions = [e['deletions'] for e in epochs_data]
+    insertions = [e['insertions'] for e in epochs_data]
+    hits = [e['hits'] for e in epochs_data]
+    total_predictions = [e['total_predictions'] for e in epochs_data]
+
+    # Calculate hits ratio
+    hits_ratio = [h / t for h, t in zip(hits, total_predictions)]
+
+    # Find best epoch (min WER)
+    best_epoch_idx = wer.index(min(wer))
+    best_epoch = epochs[best_epoch_idx]
+
+    # ========== Plot 1: Combined WER, CER, MER, WIL ==========
+    fig, ax = plt.subplots(figsize=(10, 6))
+
+    ax.plot(epochs, wer, label='WER', linewidth=2.5, marker='o', markersize=4)
+    ax.plot(epochs, cer, label='CER', linewidth=2.5, marker='s', markersize=4)
+    ax.plot(epochs, mer, label='MER', linewidth=1.5, marker='^', markersize=4, alpha=0.8)
+    ax.plot(epochs, wil, label='WIL', linewidth=1.5, marker='v', markersize=4, alpha=0.8)
+
+    # Mark best epoch
+    ax.axvline(x=best_epoch, color='red', linestyle='--', alpha=0.5, label=f'Best Epoch ({best_epoch})')
+
+    ax.set_xlabel('Epoch', fontsize=12)
+    ax.set_ylabel('Error Rate', fontsize=12)
+    ax.set_title('Word and Character Error Rates', fontsize=14, fontweight='bold')
+    ax.legend(loc='best', fontsize=10)
+    ax.grid(True, alpha=0.3)
+
+    plt.tight_layout()
+    plt.savefig(output_path / '1_error_rates.png', dpi=300, bbox_inches='tight')
+    plt.close()
+    logger.info("Saved: 1_error_rates.png")
+
+    # ========== Plot 2: BLEU Score ==========
+    fig, ax = plt.subplots(figsize=(10, 6))
+
+    ax.plot(epochs, bleu, label='BLEU', linewidth=2, marker='o', markersize=4, color='green')
+    ax.axvline(x=best_epoch, color='red', linestyle='--', alpha=0.5, label=f'Best Epoch ({best_epoch})')
+
+    ax.set_xlabel('Epoch', fontsize=12)
+    ax.set_ylabel('BLEU Score', fontsize=12)
+    ax.set_title('BLEU Score over Epochs', fontsize=14, fontweight='bold')
+    ax.legend(loc='best', fontsize=10)
+    ax.grid(True, alpha=0.3)
+
+    plt.tight_layout()
+    plt.savefig(output_path / '2_bleu_score.png', dpi=300, bbox_inches='tight')
+    plt.close()
+    logger.info("Saved: 2_bleu_score.png")
+
+    # ========== Plot 3: Error Breakdown (4 subplots) ==========
+    fig, axes = plt.subplots(2, 2, figsize=(14, 10))
+
+    # Substitutions
+    axes[0, 0].plot(epochs, substitutions, linewidth=2, marker='o', markersize=4, color='red')  # type: ignore[index]
+    axes[0, 0].axvline(x=best_epoch, color='red', linestyle='--', alpha=0.3)  # type: ignore[index]
+    axes[0, 0].set_xlabel('Epoch', fontsize=11)  # type: ignore[index]
+    axes[0, 0].set_ylabel('Count', fontsize=11)  # type: ignore[index]
+    axes[0, 0].set_title('Substitutions', fontsize=12, fontweight='bold')  # type: ignore[index]
+    axes[0, 0].grid(True, alpha=0.3)  # type: ignore[index]
+
+    # Deletions
+    axes[0, 1].plot(epochs, deletions, linewidth=2, marker='o', markersize=4, color='orange')  # type: ignore[index]
+    axes[0, 1].axvline(x=best_epoch, color='red', linestyle='--', alpha=0.3)  # type: ignore[index]
+    axes[0, 1].set_xlabel('Epoch', fontsize=11)  # type: ignore[index]
+    axes[0, 1].set_ylabel('Count', fontsize=11)  # type: ignore[index]
+    axes[0, 1].set_title('Deletions', fontsize=12, fontweight='bold')  # type: ignore[index]
+    axes[0, 1].grid(True, alpha=0.3)  # type: ignore[index]
+
+    # Insertions
+    axes[1, 0].plot(epochs, insertions, linewidth=2, marker='o', markersize=4, color='purple')  # type: ignore[index]
+    axes[1, 0].axvline(x=best_epoch, color='red', linestyle='--', alpha=0.3)  # type: ignore[index]
+    axes[1, 0].set_xlabel('Epoch', fontsize=11)  # type: ignore[index]
+    axes[1, 0].set_ylabel('Count', fontsize=11)  # type: ignore[index]
+    axes[1, 0].set_title('Insertions', fontsize=12, fontweight='bold')  # type: ignore[index]
+    axes[1, 0].grid(True, alpha=0.3)  # type: ignore[index]
+
+    # Hits
+    axes[1, 1].plot(epochs, hits, linewidth=2, marker='o', markersize=4, color='green')  # type: ignore[index]
+    axes[1, 1].axvline(x=best_epoch, color='red', linestyle='--', alpha=0.3)  # type: ignore[index]
+    axes[1, 1].set_xlabel('Epoch', fontsize=11)  # type: ignore[index]
+    axes[1, 1].set_ylabel('Count', fontsize=11)  # type: ignore[index]
+    axes[1, 1].set_title('Hits (Correct Words)', fontsize=12, fontweight='bold')  # type: ignore[index]
+    axes[1, 1].grid(True, alpha=0.3)  # type: ignore[index]
+
+    plt.suptitle('Error Breakdown over Epochs', fontsize=14, fontweight='bold', y=0.995)
+    plt.tight_layout()
+    plt.savefig(output_path / '3_error_breakdown.png', dpi=300, bbox_inches='tight')
+    plt.close()
+    logger.info("Saved: 3_error_breakdown.png")
+
+    # ========== Plot 4: Hits / Total Predictions Ratio ==========
+    fig, ax = plt.subplots(figsize=(10, 6))
+
+    ax.plot(epochs, hits_ratio, linewidth=2, marker='o', markersize=4, color='blue')
+    ax.axvline(x=best_epoch, color='red', linestyle='--', alpha=0.5, label=f'Best Epoch ({best_epoch})')
+
+    ax.set_xlabel('Epoch', fontsize=12)
+    ax.set_ylabel('Hits / Total Predictions', fontsize=12)
+    ax.set_title('Word Accuracy (Hits per Sample)', fontsize=14, fontweight='bold')
+    ax.legend(loc='best', fontsize=10)
+    ax.grid(True, alpha=0.3)
+
+    plt.tight_layout()
+    plt.savefig(output_path / '4_hits_ratio.png', dpi=300, bbox_inches='tight')
+    plt.close()
+    logger.info("Saved: 4_hits_ratio.png")
+
+    # ========== Plot 5: Combined WER, CER, Train Loss ==========
+    fig, ax1 = plt.subplots(figsize=(10, 6))
+
+    # Plot error rates on primary y-axis
+    ax1.plot(epochs, wer, label='WER', linewidth=2.5, marker='o', markersize=4, color='C0')
+    ax1.plot(epochs, cer, label='CER', linewidth=2.5, marker='s', markersize=4, color='C1')
+    ax1.set_xlabel('Epoch', fontsize=12)
+    ax1.set_ylabel('Error Rate', fontsize=12, color='black')
+    ax1.tick_params(axis='y', labelcolor='black')
+    ax1.grid(True, alpha=0.3)
+
+    # Create secondary y-axis for train loss
+    ax2 = ax1.twinx()
+    ax2.plot(epochs, train_loss, label='Train Loss', linewidth=2, marker='^', markersize=4, color='C2')  # type: ignore[attr-defined]
+    ax2.set_ylabel('Train Loss', fontsize=12, color='C2')  # type: ignore[attr-defined]
+    ax2.tick_params(axis='y', labelcolor='C2')  # type: ignore[attr-defined]
+
+    # Mark best epoch
+    ax1.axvline(x=best_epoch, color='red', linestyle='--', alpha=0.5, label=f'Best Epoch ({best_epoch})')
+
+    # Combine legends
+    lines1, labels1 = ax1.get_legend_handles_labels()
+    lines2, labels2 = ax2.get_legend_handles_labels()  # type: ignore[attr-defined]
+    ax1.legend(lines1 + lines2, labels1 + labels2, loc='best', fontsize=10)
+
+    ax1.set_title('Error Rates and Training Loss', fontsize=14, fontweight='bold')
+
+    plt.tight_layout()
+    plt.savefig(output_path / '5_combined_metrics.png', dpi=300, bbox_inches='tight')
+    plt.close()
+    logger.info("Saved: 5_combined_metrics.png")
+
+    logger.info(f"All plots saved successfully to: {output_path}")
+    logger.info(f"Best epoch: {best_epoch} (WER: {min(wer):.4f})")
