@@ -120,6 +120,7 @@ training:
   max_grad_norm: 1.0
   learning_rate: 5e-5
   weight_decay: 0.01
+  label_smoothing_factor: 0.05  # Label smoothing for regularization (0.0 = no smoothing)
 
   # Learning rate scheduler configuration
   scheduler_name: "warmup_plateau_decay"  # Scheduler type: "reduce_on_plateau", "cosine", "onecycle", "linear"

@@ -47,6 +47,7 @@ training:
   save_steps: 50
   logging_steps: 5
   fp16: false  # Disable mixed precision for debugging
+  label_smoothing_factor: 0.05  # Label smoothing for regularization (0.0 = no smoothing)
 
   # Learning rate scheduler configuration
   scheduler_name: "linear"  # Scheduler type: "reduce_on_plateau", "cosine", "onecycle", "linear"

@@ -270,7 +270,7 @@ def train_one_epoch(
         if attention_mask is not None:
             attention_mask = attention_mask.to(device)
 
-        # Forward pass
+        # Forward pass - unified loss calculation with optional label smoothing
         if config.model.model_type.lower() == "whisper":
             outputs = model.forward(input_features, labels=labels)
         else:  # speech2text or custom
@@ -280,7 +280,22 @@ def train_one_epoch(
                 labels=labels
             )
 
-        loss = outputs['loss']
+        # Get logits and compute loss manually with CrossEntropyLoss
+        # This allows us to use label_smoothing parameter (0.0 = no smoothing, equivalent to built-in loss)
+        logits = outputs['logits']
+
+        # CrossEntropyLoss expects: (batch_size * seq_len, vocab_size) and (batch_size * seq_len)
+        # Reshape: (batch_size, seq_len, vocab_size) -> (batch_size * seq_len, vocab_size)
+        vocab_size = logits.size(-1)
+        logits_flat = logits.view(-1, vocab_size)
+        labels_flat = labels.view(-1)
+
+        # Create loss function with label smoothing
+        criterion = torch.nn.CrossEntropyLoss(
+            ignore_index=-100,  # Ignore padding tokens
+            label_smoothing=config.training.label_smoothing_factor
+        )
+        loss = criterion(logits_flat, labels_flat)
 
         # Backward pass
         loss.backward()
@@ -1402,6 +1417,7 @@ def main():
         # Optimizer and scheduler ready
         logger.info(f"Using optimizer: AdamW (lr={config.training.learning_rate})")
         logger.info(f"Using scheduler: {config.training.scheduler_name}")
+        logger.info(f"Label smoothing factor: {config.training.label_smoothing_factor}")
         logger.info(f"Starting from epoch {start_epoch}, global_step {global_step}")
 
         # Training loop

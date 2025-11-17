@@ -219,6 +219,7 @@ class TrainingConfig:
     max_grad_norm: float = 1.0  # Max gradient norm for gradient clipping (0 = no clipping)
     learning_rate: float = 1e-5
     weight_decay: float = 0.01
+    label_smoothing_factor: float = 0.0  # Label smoothing factor (0.0 = no smoothing, 0.1 = 10% smoothing)
 
     # Learning rate scheduler configuration
     scheduler_name: str = "linear"  # Scheduler type: "reduce_on_plateau", "cosine", "onecycle", "linear", "warmup_plateau_decay"
