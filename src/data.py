@@ -342,9 +342,6 @@ class CommonVoiceDataset(Dataset):
                 )
                 input_features = audio_inputs.input_features.squeeze(0)  # (freq, time)
                 # Apply spectrogram augmentations (if enabled and training)
-                # Whisper features are already in (freq, time) format
-                if self.augmentation and self.split == "train":
-                    input_features = self.augmentation.apply_spectrogram_augmentations(input_features)
                 # Return (freq, time) format - unified with Speech2Text
             elif isinstance(self.processor, Speech2TextProcessor):
                 # Speech2Text: truncate audio to max_source_positions from model config
@@ -359,10 +356,9 @@ class CommonVoiceDataset(Dataset):
                 input_features = audio_inputs.input_features.squeeze(0)
                 # Speech2Text extractor returns (time, freq) - transpose to unified (freq, time) format
                 input_features = input_features.T  # (time, freq) -> (freq, time)
-                # Apply spectrogram augmentations (if enabled and training)
                 # Augmentations expect (freq, time) format
-                if self.augmentation and self.split == "train":
-                    input_features = self.augmentation.apply_spectrogram_augmentations(input_features)
+            if self.augmentation and self.split == "train":
+                input_features = self.augmentation.apply_spectrogram_augmentations(input_features)
                 # Keep (freq, time) format - AudioCollator will transpose back to (time, freq) if needed
 
             # Tokenize text
