@@ -93,9 +93,9 @@ model:
   # Freezing strategy for fine-tuning
   freeze_feature_encoder: true  # Freeze feature encoder - acoustic features are language-agnostic
   freeze_encoder: true  # Freeze encoder - acoustic features are language-agnostic
-  freeze_decoder: true  # Decoder learns language-specific patterns, should be trainable
+  freeze_decoder: false  # Decoder learns language-specific patterns, should be trainable
   unfreeze_last_n_encoder_layers: 0
-  unfreeze_last_n_decoder_layers: 2
+  unfreeze_last_n_decoder_layers: 0
 
   # Fine-grained unfreezing for critical components (applied AFTER freeze/unfreeze operations)
   # Critical for cross-lingual transfer: if decoder is frozen, embeddings must be unfrozen
@@ -120,6 +120,7 @@ training:
   max_grad_norm: 1.0
   learning_rate: 3e-3
   weight_decay: 0.01
+  label_smoothing_factor: 0.05  # Label smoothing for regularization (0.0 = no smoothing)
 
   # Learning rate scheduler configuration
   scheduler_name: "warmup_plateau_decay"  # Scheduler type: "reduce_on_plateau", "cosine", "onecycle", "linear"
@@ -152,8 +153,8 @@ training:
 
   # Warmup + Plateau + Linear Decay scheduler settings
   warmup_plateau_decay:
-    warmup_ratio: 0.1  # Warmup for 10% of total steps (LR: 0 -> 1)
-    plateau_ratio: 0.4  # Plateau ends at 50% of total steps (LR: 1 constant)
+    warmup_ratio: 0.05  # Warmup for 5% of total steps (LR: 0 -> 1)
+    plateau_ratio: 0.6  # Plateau ends at 65% of total steps (LR: 1 constant)
     # After plateau_ratio, LR decays linearly from 1 to 0 until end
 
   max_steps: null

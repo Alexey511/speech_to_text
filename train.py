@@ -55,7 +55,7 @@ except ImportError:
 DEFAULT_CONFIG = {
     "model_path": "experiments/baselines/s2t-cross-lingual",
     "config": None,  # None = auto-search in model directory
-    "experiment_name": "s2t-cross-lingual_train_1_decoder_3e-3",  # None = auto-generate from model name + "_trained"
+    "experiment_name": "s2t-cross-lingual_train_full_dec_3e-3",  # None = auto-generate from model name + "_trained"
     "epochs": None,  # None = use config value
 }
 # Example model paths:
