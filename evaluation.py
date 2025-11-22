@@ -42,10 +42,10 @@ os.environ["TOKENIZERS_PARALLELISM"] = "false"
 # ==============================================================================
 # При запуске через VSCode "Run" будут использованы эти значения
 DEFAULT_CONFIG = {
-    "model_path": "experiments/whisper-base_train_full_decoder/checkpoints/epoch_4",
+    "model_path": "experiments/baselines/whisper-small",
     "config": None,  # None = auto-search in model directory
     "dataset_split": "validation",  # "train", "validation", "test"
-    "experiment_name": "whisper-base_full_dec_eval_val",  # None = auto-generate from model name
+    "experiment_name": "whisper-small_evaluation_val",  # None = auto-generate from model name
 }
 # Example model paths:
 # experiments/baselines/whisper-small

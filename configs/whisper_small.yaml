@@ -48,9 +48,9 @@ data:
     noise_factor: 0.02
 
     speed_perturbation: true
-    speed_probability: 0.3
-    speed_factor_range: [0.9, 1.1]
-    speed_num_steps: 3
+    speed_probability: 1.0
+    speed_factor_range: [0.8, 1.2]
+    speed_num_steps: 20
 
     pitch_shift: true
     pitch_probability: 0.3

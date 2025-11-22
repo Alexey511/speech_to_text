@@ -1,6 +1,6 @@
 experiment:
   output_dir: experiments
-  experiment_name: whisper-base_full_decoder
+  experiment_name: whisper-base_train_full_dec_5e-5
   seed: 42
 data:
   language: ru
@@ -29,21 +29,21 @@ data:
     noise_probability: 0.3
     noise_factor: 0.02
     speed_perturbation: true
-    speed_probability: 0.3
+    speed_probability: 0.5
     speed_factor_range:
-    - 0.9
-    - 1.1
-    speed_num_steps: 3
+    - 0.8
+    - 1.2
+    speed_num_steps: 20
     pitch_shift: true
-    pitch_probability: 0.3
+    pitch_probability: 0.5
     pitch_shift_range:
-    - -2
-    - 2
+    - -3
+    - 3
     volume_perturbation: true
-    volume_probability: 0.3
+    volume_probability: 0.5
     volume_range_db:
-    - -10
-    - 10
+    - -12
+    - 12
     fade_inout: true
     fade_probability: 0.2
     fade_duration: 0.1
@@ -73,6 +73,10 @@ model:
   freeze_decoder: false
   unfreeze_last_n_encoder_layers: 0
   unfreeze_last_n_decoder_layers: 0
+  unfreeze_embed_tokens: false
+  unfreeze_embed_positions_decoder: false
+  unfreeze_lm_head: false
+  unfreeze_layer_norm_decoder: false
   activation_dropout: 0.0
   attention_dropout: 0.0
   dropout: 0.0
@@ -84,7 +88,7 @@ model:
   intermediate_size: 1024
   custom: null
 training:
-  num_train_epochs: 5
+  num_train_epochs: 6
   train_batch_size: 48
   eval_batch_size: 128
   gradient_accumulation_steps: 2
@@ -93,7 +97,8 @@ training:
   max_grad_norm: 1.0
   learning_rate: 5.0e-05
   weight_decay: 0.01
-  scheduler_name: linear
+  label_smoothing_factor: 0.05
+  scheduler_name: warmup_plateau_decay
   reduce_on_plateau:
     factor: 0.5
     patience: 2
@@ -112,6 +117,9 @@ training:
     final_div_factor: 10000.0
   linear:
     warmup_ratio: 0.1
+  warmup_plateau_decay:
+    warmup_ratio: 0.1
+    plateau_ratio: 0.2
   max_steps: null
   eval_steps: 500
   save_steps: 1000

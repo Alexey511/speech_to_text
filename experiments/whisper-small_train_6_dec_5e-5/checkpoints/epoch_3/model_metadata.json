@@ -1,0 +1,36 @@
+{
+  "model_name": "openai/whisper-small",
+  "model_type": "whisper",
+  "model_info": {
+    "model_type": "whisper",
+    "model_name": "openai/whisper-small",
+    "total_parameters": 241734912,
+    "trainable_parameters": 96879360,
+    "trainable_ratio": 0.40076693597323665
+  },
+  "config": {
+    "model_name": "openai/whisper-small",
+    "model_type": "whisper",
+    "tokenizer_name_or_path": null,
+    "freeze_feature_encoder": true,
+    "freeze_encoder": true,
+    "freeze_decoder": true,
+    "unfreeze_last_n_encoder_layers": 0,
+    "unfreeze_last_n_decoder_layers": 6,
+    "unfreeze_embed_tokens": true,
+    "unfreeze_embed_positions_decoder": true,
+    "unfreeze_lm_head": true,
+    "unfreeze_layer_norm_decoder": true,
+    "activation_dropout": 0.0,
+    "attention_dropout": 0.0,
+    "dropout": 0.0,
+    "use_gpu": true,
+    "compile_model": false,
+    "hidden_size": 256,
+    "num_attention_heads": 4,
+    "num_hidden_layers": 4,
+    "intermediate_size": 1024,
+    "custom": null
+  },
+  "weight_tying": true
+}

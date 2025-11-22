@@ -1,0 +1,435 @@
+2025-11-20 14:45:10,997 - src.utils - INFO - Logging setup complete. Level: INFO
+2025-11-20 14:45:10,997 - src.utils - INFO - Log file: experiments\whisper-base_train_5_dec_5e-5\training.log
+2025-11-20 14:45:10,998 - src.utils - INFO - Checkpoint path: experiments\baselines\whisper-base
+2025-11-20 14:45:10,998 - src.utils - INFO - Configuration file: experiments\baselines\whisper-base\config.yaml
+2025-11-20 14:45:11,007 - src.utils - INFO - ============================================================
+2025-11-20 14:45:11,008 - src.utils - INFO - SYSTEM INFORMATION
+2025-11-20 14:45:11,008 - src.utils - INFO - ============================================================
+2025-11-20 14:45:11,008 - src.utils - INFO - Python Version: 3.10.18
+2025-11-20 14:45:11,008 - src.utils - INFO - PyTorch Version: 2.5.1
+2025-11-20 14:45:11,008 - src.utils - INFO - GPU: NVIDIA GeForce RTX 4070 Ti
+2025-11-20 14:45:11,008 - src.utils - INFO - GPU Memory: 12.0 GB
+2025-11-20 14:45:11,008 - src.utils - INFO - CUDA Version: 12.4
+2025-11-20 14:45:11,008 - src.utils - INFO - CPU Cores: 16
+2025-11-20 14:45:11,008 - src.utils - INFO - ============================================================
+2025-11-20 14:45:11,010 - src.utils - INFO - Initializing data manager...
+2025-11-20 14:45:11,010 - src.utils - INFO - Loading experiment objects...
+2025-11-20 14:45:11,011 - src.models - INFO - CUDA optimizations enabled (cudnn.benchmark=True)
+2025-11-20 14:45:11,011 - src.models - INFO - ModelManager initialized
+2025-11-20 14:45:11,011 - __main__ - INFO - Using device: cuda
+2025-11-20 14:45:11,012 - __main__ - INFO - Loading model from checkpoint: experiments\baselines\whisper-base
+2025-11-20 14:45:11,021 - src.models - INFO - Creating processor from checkpoint config: openai/whisper-base
+2025-11-20 14:45:11,021 - src.models - INFO - Creating WhisperProcessor with language='ru', task='transcribe'
+2025-11-20 14:45:12,118 - src.models - INFO - Loading Whisper model: openai/whisper-base
+2025-11-20 14:45:13,541 - src.models - INFO - Feature encoder frozen (conv1, conv2, embed_positions)
+2025-11-20 14:45:13,541 - src.models - INFO - Encoder frozen
+2025-11-20 14:45:13,562 - src.models - INFO - Model loaded with default freezing settings. Total parameters: 72,593,920, Trainable: 52,003,328
+2025-11-20 14:45:13,563 - src.models - INFO - Model created: whisper - openai/whisper-base
+2025-11-20 14:45:15,826 - src.models - INFO - Loaded weights from experiments\baselines\whisper-base\model_weights.pt
+2025-11-20 14:45:15,826 - src.models - INFO - Restoring weight tying from metadata...
+2025-11-20 14:45:15,827 - src.models - INFO - Weight tying restored: proj_out.weight now shares tensor with decoder.embed_tokens.weight
+2025-11-20 14:45:15,901 - src.models - INFO - Model moved to device: cuda
+2025-11-20 14:45:15,902 - src.models - INFO - Model Info: {'model_type': 'whisper', 'model_name': 'openai/whisper-base', 'total_parameters': 72593920, 'trainable_parameters': 52003328, 'trainable_ratio': 0.7163592763691504}
+2025-11-20 14:45:15,903 - __main__ - INFO - Applying freeze settings from config...
+2025-11-20 14:45:15,903 - src.models - INFO - Feature encoder frozen (conv1, conv2, embed_positions)
+2025-11-20 14:45:15,903 - src.models - INFO - Encoder frozen
+2025-11-20 14:45:15,904 - src.models - INFO - Decoder frozen
+2025-11-20 14:45:15,904 - src.models - INFO - Unfroze last 5 decoder layers
+2025-11-20 14:45:15,904 - src.models - INFO - Decoder embed_tokens unfrozen
+2025-11-20 14:45:15,904 - src.models - INFO - Decoder embed_positions unfrozen
+2025-11-20 14:45:15,905 - src.models - INFO - proj_out (lm_head) unfrozen
+2025-11-20 14:45:15,905 - src.models - INFO - Decoder layer_norm unfrozen
+2025-11-20 14:45:15,906 - __main__ - INFO - Model parameters: 47,800,320 / 72,593,920 trainable
+2025-11-20 14:45:15,906 - __main__ - INFO - No experiment_metadata.json found - starting new training
+2025-11-20 14:45:15,907 - __main__ - INFO - No optimizer_state.pt found - starting new training from baseline
+2025-11-20 14:45:15,907 - __main__ - INFO - Experiment loaded: openai/whisper-base
+2025-11-20 14:45:15,907 - __main__ - INFO - Will start training from epoch 0, global_step 0
+2025-11-20 14:45:15,907 - src.data - INFO - Set pad_token_id: 50257
+2025-11-20 14:45:15,907 - src.data - INFO - WhisperProcessor verified: language='ru', task='transcribe'
+2025-11-20 14:45:15,908 - src.utils - INFO - Loading datasets...
+2025-11-20 14:45:15,909 - src.data - INFO - Loading train split from TSV file C:\Users\User\Documents\Progs\Projects\speech_to_text\data\cv-corpus-22.0-2025-06-20\ru\train.tsv...
+2025-11-20 14:45:16,015 - src.data - INFO - Loaded 26,654 samples from train split
+2025-11-20 14:45:16,017 - src.data - INFO - Loading clip durations from clip_durations.tsv...
+2025-11-20 14:45:16,174 - src.data - INFO - Merged durations for 26654 samples
+2025-11-20 14:45:16,179 - src.data - INFO - Pre-filtered 0 samples by metadata duration (min: 0.2s, max: 30.0s). Final filtering after trim_silence happens in AudioPreprocessor.
+2025-11-20 14:45:16,180 - src.data - INFO - After filtering: 26,654 samples remaining
+2025-11-20 14:45:16,180 - src.data - INFO - Cached train split with 26654 samples
+2025-11-20 14:45:37,256 - src.data - INFO - Loading validation split from TSV file C:\Users\User\Documents\Progs\Projects\speech_to_text\data\cv-corpus-22.0-2025-06-20\ru\dev.tsv...
+2025-11-20 14:45:37,332 - src.data - INFO - Loaded 10,243 samples from validation split
+2025-11-20 14:45:37,332 - src.data - INFO - Loading clip durations from clip_durations.tsv...
+2025-11-20 14:45:37,519 - src.data - INFO - Merged durations for 10243 samples
+2025-11-20 14:45:37,522 - src.data - INFO - Pre-filtered 0 samples by metadata duration (min: 0.2s, max: 30.0s). Final filtering after trim_silence happens in AudioPreprocessor.
+2025-11-20 14:45:37,522 - src.data - INFO - After filtering: 10,243 samples remaining
+2025-11-20 14:45:37,522 - src.data - INFO - Cached validation split with 10243 samples
+2025-11-20 14:46:03,561 - src.utils - INFO - Train dataset size: 26654
+2025-11-20 14:46:03,562 - src.utils - INFO - Validation dataset size: 10243
+2025-11-20 14:46:03,564 - __main__ - INFO - Experiment directory: experiments\whisper-base_train_5_dec_5e-5
+2025-11-20 14:46:03,564 - __main__ - INFO - Checkpoints directory: experiments\whisper-base_train_5_dec_5e-5\checkpoints
+2025-11-20 14:46:03,565 - __main__ - INFO - Experiment path: experiments\baselines\whisper-base
+2025-11-20 14:46:03,565 - __main__ - INFO - Resume training: False
+2025-11-20 14:46:03,628 - __main__ - INFO - Configuration saved to: experiments\whisper-base_train_5_dec_5e-5\config.yaml
+2025-11-20 14:46:03,950 - src.config - INFO - ============================================================
+2025-11-20 14:46:03,950 - src.config - INFO - CONFIGURATION
+2025-11-20 14:46:03,950 - src.config - INFO - ============================================================
+2025-11-20 14:46:03,952 - src.config - INFO - experiment:
+2025-11-20 14:46:03,952 - src.config - INFO -   output_dir: experiments
+2025-11-20 14:46:03,952 - src.config - INFO -   experiment_name: whisper-base_train_5_dec_5e-5
+2025-11-20 14:46:03,952 - src.config - INFO -   seed: 42
+2025-11-20 14:46:03,952 - src.config - INFO - data:
+2025-11-20 14:46:03,952 - src.config - INFO -   language: ru
+2025-11-20 14:46:03,952 - src.config - INFO -   task: transcribe
+2025-11-20 14:46:03,952 - src.config - INFO -   train_split: train
+2025-11-20 14:46:03,953 - src.config - INFO -   validation_split: dev
+2025-11-20 14:46:03,953 - src.config - INFO -   test_split: test
+2025-11-20 14:46:03,953 - src.config - INFO -   max_duration: 30.0
+2025-11-20 14:46:03,953 - src.config - INFO -   min_duration: 0.2
+2025-11-20 14:46:03,953 - src.config - INFO -   sample_rate: 16000
+2025-11-20 14:46:03,953 - src.config - INFO -   data_dir: data
+2025-11-20 14:46:03,954 - src.config - INFO -   dataset_path: cv-corpus-22.0-2025-06-20/ru
+2025-11-20 14:46:03,954 - src.config - INFO -   num_workers: 4
+2025-11-20 14:46:03,954 - src.config - INFO -   preprocessing_num_workers: 8
+2025-11-20 14:46:03,954 - src.config - INFO -   normalize: true
+2025-11-20 14:46:03,955 - src.config - INFO -   trim_silence: true
+2025-11-20 14:46:03,955 - src.config - INFO -   silence_threshold: 0.01
+2025-11-20 14:46:03,955 - src.config - INFO -   processing_and_augmentation_device: cpu
+2025-11-20 14:46:03,955 - src.config - INFO -   filter_by_duration: true
+2025-11-20 14:46:03,956 - src.config - INFO -   pin_memory: true
+2025-11-20 14:46:03,956 - src.config - INFO -   max_source_positions: 6000
+2025-11-20 14:46:03,956 - src.config - INFO -   max_target_positions: 1024
+2025-11-20 14:46:03,956 - src.config - INFO -   augmentation:
+2025-11-20 14:46:03,956 - src.config - INFO -     enabled: true
+2025-11-20 14:46:03,956 - src.config - INFO -     add_noise: true
+2025-11-20 14:46:03,956 - src.config - INFO -     noise_probability: 0.3
+2025-11-20 14:46:03,956 - src.config - INFO -     noise_factor: 0.02
+2025-11-20 14:46:03,957 - src.config - INFO -     speed_perturbation: true
+2025-11-20 14:46:03,957 - src.config - INFO -     speed_probability: 0.5
+2025-11-20 14:46:03,957 - src.config - INFO -     speed_factor_range:
+2025-11-20 14:46:03,957 - src.config - INFO -     - 0.8
+2025-11-20 14:46:03,957 - src.config - INFO -     - 1.2
+2025-11-20 14:46:03,957 - src.config - INFO -     speed_num_steps: 20
+2025-11-20 14:46:03,958 - src.config - INFO -     pitch_shift: true
+2025-11-20 14:46:03,958 - src.config - INFO -     pitch_probability: 0.5
+2025-11-20 14:46:03,958 - src.config - INFO -     pitch_shift_range:
+2025-11-20 14:46:03,958 - src.config - INFO -     - -3
+2025-11-20 14:46:03,958 - src.config - INFO -     - 3
+2025-11-20 14:46:03,958 - src.config - INFO -     volume_perturbation: true
+2025-11-20 14:46:03,958 - src.config - INFO -     volume_probability: 0.5
+2025-11-20 14:46:03,959 - src.config - INFO -     volume_range_db:
+2025-11-20 14:46:03,959 - src.config - INFO -     - -12
+2025-11-20 14:46:03,959 - src.config - INFO -     - 12
+2025-11-20 14:46:03,959 - src.config - INFO -     fade_inout: true
+2025-11-20 14:46:03,959 - src.config - INFO -     fade_probability: 0.2
+2025-11-20 14:46:03,959 - src.config - INFO -     fade_duration: 0.1
+2025-11-20 14:46:03,960 - src.config - INFO -     spec_augment: true
+2025-11-20 14:46:03,960 - src.config - INFO -     spec_augment_probability: 0.4
+2025-11-20 14:46:03,960 - src.config - INFO -     time_mask_max_size: 20
+2025-11-20 14:46:03,960 - src.config - INFO -     freq_mask_max_size: 30
+2025-11-20 14:46:03,960 - src.config - INFO -     num_time_masks: 2
+2025-11-20 14:46:03,960 - src.config - INFO -     num_freq_masks: 2
+2025-11-20 14:46:03,961 - src.config - INFO -     time_stretch: true
+2025-11-20 14:46:03,961 - src.config - INFO -     time_stretch_probability: 0.3
+2025-11-20 14:46:03,961 - src.config - INFO -     time_stretch_range:
+2025-11-20 14:46:03,961 - src.config - INFO -     - 0.95
+2025-11-20 14:46:03,961 - src.config - INFO -     - 1.05
+2025-11-20 14:46:03,961 - src.config - INFO -     reverb: true
+2025-11-20 14:46:03,961 - src.config - INFO -     reverb_probability: 0.2
+2025-11-20 14:46:03,961 - src.config - INFO -     reverb_time: 0.3
+2025-11-20 14:46:03,962 - src.config - INFO -     reverb_decay_rate: 0.3
+2025-11-20 14:46:03,962 - src.config - INFO -     reverb_impulse_amplitude: 0.1
+2025-11-20 14:46:03,962 - src.config - INFO -     reverb_mix_level: 0.3
+2025-11-20 14:46:03,962 - src.config - INFO - model:
+2025-11-20 14:46:03,962 - src.config - INFO -   model_name: openai/whisper-base
+2025-11-20 14:46:03,963 - src.config - INFO -   model_type: whisper
+2025-11-20 14:46:03,963 - src.config - INFO -   tokenizer_name_or_path: null
+2025-11-20 14:46:03,963 - src.config - INFO -   freeze_feature_encoder: true
+2025-11-20 14:46:03,963 - src.config - INFO -   freeze_encoder: true
+2025-11-20 14:46:03,963 - src.config - INFO -   freeze_decoder: true
+2025-11-20 14:46:03,963 - src.config - INFO -   unfreeze_last_n_encoder_layers: 0
+2025-11-20 14:46:03,964 - src.config - INFO -   unfreeze_last_n_decoder_layers: 5
+2025-11-20 14:46:03,964 - src.config - INFO -   unfreeze_embed_tokens: true
+2025-11-20 14:46:03,964 - src.config - INFO -   unfreeze_embed_positions_decoder: true
+2025-11-20 14:46:03,964 - src.config - INFO -   unfreeze_lm_head: true
+2025-11-20 14:46:03,964 - src.config - INFO -   unfreeze_layer_norm_decoder: true
+2025-11-20 14:46:03,965 - src.config - INFO -   activation_dropout: 0.0
+2025-11-20 14:46:03,965 - src.config - INFO -   attention_dropout: 0.0
+2025-11-20 14:46:03,965 - src.config - INFO -   dropout: 0.0
+2025-11-20 14:46:03,965 - src.config - INFO -   use_gpu: true
+2025-11-20 14:46:03,965 - src.config - INFO -   compile_model: false
+2025-11-20 14:46:03,966 - src.config - INFO -   hidden_size: 256
+2025-11-20 14:46:03,966 - src.config - INFO -   num_attention_heads: 4
+2025-11-20 14:46:03,966 - src.config - INFO -   num_hidden_layers: 4
+2025-11-20 14:46:03,966 - src.config - INFO -   intermediate_size: 1024
+2025-11-20 14:46:03,967 - src.config - INFO -   custom: null
+2025-11-20 14:46:03,967 - src.config - INFO - training:
+2025-11-20 14:46:03,967 - src.config - INFO -   num_train_epochs: 6
+2025-11-20 14:46:03,967 - src.config - INFO -   train_batch_size: 48
+2025-11-20 14:46:03,967 - src.config - INFO -   eval_batch_size: 128
+2025-11-20 14:46:03,967 - src.config - INFO -   gradient_accumulation_steps: 2
+2025-11-20 14:46:03,968 - src.config - INFO -   eval_accumulation_steps: null
+2025-11-20 14:46:03,968 - src.config - INFO -   gradient_checkpointing: false
+2025-11-20 14:46:03,968 - src.config - INFO -   max_grad_norm: 1.0
+2025-11-20 14:46:03,968 - src.config - INFO -   learning_rate: 5.0e-05
+2025-11-20 14:46:03,968 - src.config - INFO -   weight_decay: 0.01
+2025-11-20 14:46:03,968 - src.config - INFO -   label_smoothing_factor: 0.05
+2025-11-20 14:46:03,969 - src.config - INFO -   scheduler_name: warmup_plateau_decay
+2025-11-20 14:46:03,969 - src.config - INFO -   reduce_on_plateau:
+2025-11-20 14:46:03,969 - src.config - INFO -     factor: 0.5
+2025-11-20 14:46:03,969 - src.config - INFO -     patience: 2
+2025-11-20 14:46:03,969 - src.config - INFO -     min_lr: 1.0e-07
+2025-11-20 14:46:03,969 - src.config - INFO -     mode: min
+2025-11-20 14:46:03,970 - src.config - INFO -     threshold: 0.0001
+2025-11-20 14:46:03,970 - src.config - INFO -   cosine:
+2025-11-20 14:46:03,970 - src.config - INFO -     T_max: 10
+2025-11-20 14:46:03,970 - src.config - INFO -     eta_min: 1.0e-07
+2025-11-20 14:46:03,970 - src.config - INFO -     last_epoch: -1
+2025-11-20 14:46:03,970 - src.config - INFO -   onecycle:
+2025-11-20 14:46:03,971 - src.config - INFO -     max_lr: 0.0001
+2025-11-20 14:46:03,971 - src.config - INFO -     pct_start: 0.3
+2025-11-20 14:46:03,971 - src.config - INFO -     anneal_strategy: cos
+2025-11-20 14:46:03,971 - src.config - INFO -     div_factor: 25.0
+2025-11-20 14:46:03,971 - src.config - INFO -     final_div_factor: 10000.0
+2025-11-20 14:46:03,972 - src.config - INFO -   linear:
+2025-11-20 14:46:03,972 - src.config - INFO -     warmup_ratio: 0.1
+2025-11-20 14:46:03,972 - src.config - INFO -   warmup_plateau_decay:
+2025-11-20 14:46:03,972 - src.config - INFO -     warmup_ratio: 0.1
+2025-11-20 14:46:03,973 - src.config - INFO -     plateau_ratio: 0.2
+2025-11-20 14:46:03,973 - src.config - INFO -   max_steps: null
+2025-11-20 14:46:03,973 - src.config - INFO -   eval_steps: 500
+2025-11-20 14:46:03,973 - src.config - INFO -   save_steps: 1000
+2025-11-20 14:46:03,973 - src.config - INFO -   logging_steps: 100
+2025-11-20 14:46:03,974 - src.config - INFO -   load_best_model_at_end: true
+2025-11-20 14:46:03,974 - src.config - INFO -   metric_for_best_model: eval_wer
+2025-11-20 14:46:03,974 - src.config - INFO -   greater_is_better: false
+2025-11-20 14:46:03,974 - src.config - INFO -   save_total_limit: 5
+2025-11-20 14:46:03,974 - src.config - INFO -   fp16: true
+2025-11-20 14:46:03,975 - src.config - INFO -   num_workers: 4
+2025-11-20 14:46:03,975 - src.config - INFO -   remove_unused_columns: true
+2025-11-20 14:46:03,975 - src.config - INFO -   use_cpu_offload: false
+2025-11-20 14:46:03,975 - src.config - INFO -   use_early_stopping: true
+2025-11-20 14:46:03,976 - src.config - INFO -   early_stopping_patience: 3
+2025-11-20 14:46:03,976 - src.config - INFO -   early_stopping_threshold: 0.01
+2025-11-20 14:46:03,976 - src.config - INFO - evaluation:
+2025-11-20 14:46:03,976 - src.config - INFO -   batch_size: 128
+2025-11-20 14:46:03,976 - src.config - INFO -   num_workers: 8
+2025-11-20 14:46:03,976 - src.config - INFO -   compute_metrics: true
+2025-11-20 14:46:03,977 - src.config - INFO -   prediction_loss_only: false
+2025-11-20 14:46:03,977 - src.config - INFO -   eval_on_start: false
+2025-11-20 14:46:03,977 - src.config - INFO -   eval_accumulation_steps: null
+2025-11-20 14:46:03,977 - src.config - INFO -   calculate_wer: true
+2025-11-20 14:46:03,977 - src.config - INFO -   calculate_cer: true
+2025-11-20 14:46:03,977 - src.config - INFO -   calculate_bleu: true
+2025-11-20 14:46:03,977 - src.config - INFO -   num_beams: 1
+2025-11-20 14:46:03,978 - src.config - INFO -   max_length: 448
+2025-11-20 14:46:03,978 - src.config - INFO -   language: ru
+2025-11-20 14:46:03,978 - src.config - INFO -   task: transcribe
+2025-11-20 14:46:03,978 - src.config - INFO -   repetition_penalty: 1.2
+2025-11-20 14:46:03,978 - src.config - INFO -   no_repeat_ngram_size: 3
+2025-11-20 14:46:03,978 - src.config - INFO - logging:
+2025-11-20 14:46:03,978 - src.config - INFO -   use_wandb: false
+2025-11-20 14:46:03,978 - src.config - INFO -   wandb_project: speech-to-text-ru
+2025-11-20 14:46:03,978 - src.config - INFO -   wandb_entity: null
+2025-11-20 14:46:03,978 - src.config - INFO -   log_level: INFO
+2025-11-20 14:46:03,979 - src.config - INFO -   report_to:
+2025-11-20 14:46:03,979 - src.config - INFO -   - tensorboard
+2025-11-20 14:46:03,979 - src.config - INFO -   - wandb
+2025-11-20 14:46:03,979 - src.config - INFO - project_name: speech-to-text-ru
+2025-11-20 14:46:03,979 - src.config - INFO - description: Whisper Base for Russian speech-to-text
+2025-11-20 14:46:03,979 - src.config - INFO - version: 0.1.0
+2025-11-20 14:46:03,979 - src.config - INFO - ============================================================
+2025-11-20 14:46:03,989 - src.utils - INFO - Using GPU: NVIDIA GeForce RTX 4070 Ti
+2025-11-20 14:46:03,990 - src.utils - INFO - GPU Memory: 11.99 GB
+2025-11-20 14:46:03,998 - src.utils - INFO - Model parameters: 72,593,920 total, 47,800,320 trainable
+2025-11-20 14:46:03,998 - src.data - INFO - Initialized AudioCollator with device: cpu, model_type: whisper, labels padding: -100, transpose_features: False
+2025-11-20 14:46:04,004 - src.utils - INFO - Training batches per epoch: 556
+2025-11-20 14:46:04,004 - src.utils - INFO - Validation batches: 81
+2025-11-20 14:46:04,005 - src.utils - INFO - Total training steps: 3336
+2025-11-20 14:46:04,005 - __main__ - INFO - Creating warmup_plateau_decay scheduler with total_steps=3336
+2025-11-20 14:46:04,008 - __main__ - INFO - No scheduler_state.pt found - using fresh scheduler
+2025-11-20 14:46:04,009 - src.utils - INFO - Using optimizer: AdamW (lr=5e-05)
+2025-11-20 14:46:04,009 - src.utils - INFO - Using scheduler: warmup_plateau_decay
+2025-11-20 14:46:04,009 - src.utils - INFO - Label smoothing factor: 0.05
+2025-11-20 14:46:04,009 - src.utils - INFO - Starting from epoch 0, global_step 0
+2025-11-20 14:46:04,010 - src.utils - INFO - ============================================================
+2025-11-20 14:46:04,010 - src.utils - INFO - Starting training...
+2025-11-20 14:46:04,010 - src.utils - INFO - ============================================================
+2025-11-20 14:46:04,012 - src.utils - INFO - 
+Epoch 0/5
+2025-11-20 15:00:03,609 - src.utils - INFO - Epoch 0 - Average training loss: 1.7089, Duration: 839.59s
+2025-11-20 15:00:03,610 - src.utils - INFO - Running validation...
+2025-11-20 15:06:47,428 - src.utils - INFO - Computing validation metrics...
+2025-11-20 15:06:51,382 - src.utils - INFO - Validation - Epoch 0 - WER: 0.2679, CER: 0.0753
+2025-11-20 15:06:51,383 - src.utils - INFO - Current LR: 5.00e-05
+2025-11-20 15:06:51,383 - src.utils - INFO - New best WER: 0.2679
+2025-11-20 15:06:51,384 - src.models - INFO - CUDA optimizations enabled (cudnn.benchmark=True)
+2025-11-20 15:06:51,384 - src.models - INFO - ModelManager initialized
+2025-11-20 15:06:51,800 - src.models - INFO - Model weights saved to experiments\whisper-base_train_5_dec_5e-5\checkpoints\epoch_0\model_weights.pt
+2025-11-20 15:06:51,800 - src.models - INFO - Detected weight tying: decoder.embed_tokens shares weights with output projection
+2025-11-20 15:06:51,802 - src.models - INFO - Model metadata saved to experiments\whisper-base_train_5_dec_5e-5\checkpoints\epoch_0\model_metadata.json
+2025-11-20 15:06:51,802 - src.models - INFO - Checkpoint saved to experiments\whisper-base_train_5_dec_5e-5\checkpoints\epoch_0
+2025-11-20 15:06:51,803 - src.utils - INFO - Model checkpoint saved: experiments\whisper-base_train_5_dec_5e-5\checkpoints\epoch_0
+2025-11-20 15:06:52,243 - src.utils - INFO - Optimizer state saved: experiments\whisper-base_train_5_dec_5e-5\checkpoints\epoch_0\optimizer_state.pt
+2025-11-20 15:06:52,244 - src.utils - INFO - Scheduler state saved: experiments\whisper-base_train_5_dec_5e-5\checkpoints\epoch_0\scheduler_state.pt
+2025-11-20 15:06:52,244 - src.utils - INFO - Experiment metadata saved: experiments\whisper-base_train_5_dec_5e-5\checkpoints\epoch_0\experiment_metadata.json
+2025-11-20 15:06:52,271 - src.utils - INFO - Config saved to: experiments\whisper-base_train_5_dec_5e-5\checkpoints\epoch_0\config.yaml
+2025-11-20 15:06:52,272 - src.utils - INFO - Metrics saved to: experiments\whisper-base_train_5_dec_5e-5\checkpoints\epoch_0\metrics.json
+2025-11-20 15:06:52,272 - src.utils - INFO - Updated cumulative metrics: experiments\whisper-base_train_5_dec_5e-5\metrics_on_all_epochs.json
+2025-11-20 15:06:52,777 - src.utils - INFO - Best checkpoint also saved to: experiments\whisper-base_train_5_dec_5e-5\best_checkpoint
+2025-11-20 15:06:52,778 - src.utils - INFO - 
+Epoch 1/5
+2025-11-20 15:20:29,160 - src.utils - INFO - Epoch 1 - Average training loss: 1.3919, Duration: 816.38s
+2025-11-20 15:20:29,160 - src.utils - INFO - Running validation...
+2025-11-20 15:31:22,934 - src.utils - INFO - Computing validation metrics...
+2025-11-20 15:31:26,666 - src.utils - INFO - Validation - Epoch 1 - WER: 0.2455, CER: 0.0694
+2025-11-20 15:31:26,668 - src.utils - INFO - Current LR: 4.17e-05
+2025-11-20 15:31:26,668 - src.utils - INFO - New best WER: 0.2455
+2025-11-20 15:31:26,668 - src.models - INFO - CUDA optimizations enabled (cudnn.benchmark=True)
+2025-11-20 15:31:26,668 - src.models - INFO - ModelManager initialized
+2025-11-20 15:31:27,002 - src.models - INFO - Model weights saved to experiments\whisper-base_train_5_dec_5e-5\checkpoints\epoch_1\model_weights.pt
+2025-11-20 15:31:27,003 - src.models - INFO - Detected weight tying: decoder.embed_tokens shares weights with output projection
+2025-11-20 15:31:27,005 - src.models - INFO - Model metadata saved to experiments\whisper-base_train_5_dec_5e-5\checkpoints\epoch_1\model_metadata.json
+2025-11-20 15:31:27,005 - src.models - INFO - Checkpoint saved to experiments\whisper-base_train_5_dec_5e-5\checkpoints\epoch_1
+2025-11-20 15:31:27,006 - src.utils - INFO - Model checkpoint saved: experiments\whisper-base_train_5_dec_5e-5\checkpoints\epoch_1
+2025-11-20 15:31:27,417 - src.utils - INFO - Optimizer state saved: experiments\whisper-base_train_5_dec_5e-5\checkpoints\epoch_1\optimizer_state.pt
+2025-11-20 15:31:27,419 - src.utils - INFO - Scheduler state saved: experiments\whisper-base_train_5_dec_5e-5\checkpoints\epoch_1\scheduler_state.pt
+2025-11-20 15:31:27,420 - src.utils - INFO - Experiment metadata saved: experiments\whisper-base_train_5_dec_5e-5\checkpoints\epoch_1\experiment_metadata.json
+2025-11-20 15:31:27,448 - src.utils - INFO - Config saved to: experiments\whisper-base_train_5_dec_5e-5\checkpoints\epoch_1\config.yaml
+2025-11-20 15:31:27,449 - src.utils - INFO - Metrics saved to: experiments\whisper-base_train_5_dec_5e-5\checkpoints\epoch_1\metrics.json
+2025-11-20 15:31:27,451 - src.utils - INFO - Updated cumulative metrics: experiments\whisper-base_train_5_dec_5e-5\metrics_on_all_epochs.json
+2025-11-20 15:31:27,755 - src.utils - INFO - Best checkpoint also saved to: experiments\whisper-base_train_5_dec_5e-5\best_checkpoint
+2025-11-20 15:31:27,755 - src.utils - INFO - 
+Epoch 2/5
+2025-11-20 15:44:11,607 - src.utils - INFO - Epoch 2 - Average training loss: 1.2847, Duration: 763.85s
+2025-11-20 15:44:11,608 - src.utils - INFO - Running validation...
+2025-11-20 15:55:11,183 - src.utils - INFO - Computing validation metrics...
+2025-11-20 15:55:14,772 - src.utils - INFO - Validation - Epoch 2 - WER: 0.2314, CER: 0.0658
+2025-11-20 15:55:14,773 - src.utils - INFO - Current LR: 3.12e-05
+2025-11-20 15:55:14,774 - src.utils - INFO - New best WER: 0.2314
+2025-11-20 15:55:14,774 - src.models - INFO - CUDA optimizations enabled (cudnn.benchmark=True)
+2025-11-20 15:55:14,774 - src.models - INFO - ModelManager initialized
+2025-11-20 15:55:15,132 - src.models - INFO - Model weights saved to experiments\whisper-base_train_5_dec_5e-5\checkpoints\epoch_2\model_weights.pt
+2025-11-20 15:55:15,132 - src.models - INFO - Detected weight tying: decoder.embed_tokens shares weights with output projection
+2025-11-20 15:55:15,134 - src.models - INFO - Model metadata saved to experiments\whisper-base_train_5_dec_5e-5\checkpoints\epoch_2\model_metadata.json
+2025-11-20 15:55:15,134 - src.models - INFO - Checkpoint saved to experiments\whisper-base_train_5_dec_5e-5\checkpoints\epoch_2
+2025-11-20 15:55:15,135 - src.utils - INFO - Model checkpoint saved: experiments\whisper-base_train_5_dec_5e-5\checkpoints\epoch_2
+2025-11-20 15:55:15,524 - src.utils - INFO - Optimizer state saved: experiments\whisper-base_train_5_dec_5e-5\checkpoints\epoch_2\optimizer_state.pt
+2025-11-20 15:55:15,525 - src.utils - INFO - Scheduler state saved: experiments\whisper-base_train_5_dec_5e-5\checkpoints\epoch_2\scheduler_state.pt
+2025-11-20 15:55:15,525 - src.utils - INFO - Experiment metadata saved: experiments\whisper-base_train_5_dec_5e-5\checkpoints\epoch_2\experiment_metadata.json
+2025-11-20 15:55:15,553 - src.utils - INFO - Config saved to: experiments\whisper-base_train_5_dec_5e-5\checkpoints\epoch_2\config.yaml
+2025-11-20 15:55:15,554 - src.utils - INFO - Metrics saved to: experiments\whisper-base_train_5_dec_5e-5\checkpoints\epoch_2\metrics.json
+2025-11-20 15:55:15,557 - src.utils - INFO - Updated cumulative metrics: experiments\whisper-base_train_5_dec_5e-5\metrics_on_all_epochs.json
+2025-11-20 15:55:15,838 - src.utils - INFO - Best checkpoint also saved to: experiments\whisper-base_train_5_dec_5e-5\best_checkpoint
+2025-11-20 15:55:15,838 - src.utils - INFO - 
+Epoch 3/5
+2025-11-20 16:08:46,040 - src.utils - INFO - Epoch 3 - Average training loss: 1.2157, Duration: 810.20s
+2025-11-20 16:08:46,041 - src.utils - INFO - Running validation...
+2025-11-20 16:16:04,114 - src.utils - INFO - Computing validation metrics...
+2025-11-20 16:16:07,533 - src.utils - INFO - Validation - Epoch 3 - WER: 0.2258, CER: 0.0654
+2025-11-20 16:16:07,535 - src.utils - INFO - Current LR: 2.08e-05
+2025-11-20 16:16:07,535 - src.utils - INFO - New best WER: 0.2258
+2025-11-20 16:16:07,536 - src.models - INFO - CUDA optimizations enabled (cudnn.benchmark=True)
+2025-11-20 16:16:07,536 - src.models - INFO - ModelManager initialized
+2025-11-20 16:16:07,892 - src.models - INFO - Model weights saved to experiments\whisper-base_train_5_dec_5e-5\checkpoints\epoch_3\model_weights.pt
+2025-11-20 16:16:07,892 - src.models - INFO - Detected weight tying: decoder.embed_tokens shares weights with output projection
+2025-11-20 16:16:07,894 - src.models - INFO - Model metadata saved to experiments\whisper-base_train_5_dec_5e-5\checkpoints\epoch_3\model_metadata.json
+2025-11-20 16:16:07,894 - src.models - INFO - Checkpoint saved to experiments\whisper-base_train_5_dec_5e-5\checkpoints\epoch_3
+2025-11-20 16:16:07,895 - src.utils - INFO - Model checkpoint saved: experiments\whisper-base_train_5_dec_5e-5\checkpoints\epoch_3
+2025-11-20 16:16:08,256 - src.utils - INFO - Optimizer state saved: experiments\whisper-base_train_5_dec_5e-5\checkpoints\epoch_3\optimizer_state.pt
+2025-11-20 16:16:08,257 - src.utils - INFO - Scheduler state saved: experiments\whisper-base_train_5_dec_5e-5\checkpoints\epoch_3\scheduler_state.pt
+2025-11-20 16:16:08,257 - src.utils - INFO - Experiment metadata saved: experiments\whisper-base_train_5_dec_5e-5\checkpoints\epoch_3\experiment_metadata.json
+2025-11-20 16:16:08,286 - src.utils - INFO - Config saved to: experiments\whisper-base_train_5_dec_5e-5\checkpoints\epoch_3\config.yaml
+2025-11-20 16:16:08,287 - src.utils - INFO - Metrics saved to: experiments\whisper-base_train_5_dec_5e-5\checkpoints\epoch_3\metrics.json
+2025-11-20 16:16:08,288 - src.utils - INFO - Updated cumulative metrics: experiments\whisper-base_train_5_dec_5e-5\metrics_on_all_epochs.json
+2025-11-20 16:16:08,583 - src.utils - INFO - Best checkpoint also saved to: experiments\whisper-base_train_5_dec_5e-5\best_checkpoint
+2025-11-20 16:16:08,584 - src.utils - INFO - 
+Epoch 4/5
+2025-11-20 16:29:26,347 - src.utils - INFO - Epoch 4 - Average training loss: 1.1667, Duration: 797.76s
+2025-11-20 16:29:26,347 - src.utils - INFO - Running validation...
+2025-11-20 16:41:48,243 - src.utils - INFO - Computing validation metrics...
+2025-11-20 16:41:51,426 - src.utils - INFO - Validation - Epoch 4 - WER: 0.2220, CER: 0.0655
+2025-11-20 16:41:51,427 - src.utils - INFO - Current LR: 1.04e-05
+2025-11-20 16:41:51,427 - src.utils - INFO - New best WER: 0.2220
+2025-11-20 16:41:51,428 - src.models - INFO - CUDA optimizations enabled (cudnn.benchmark=True)
+2025-11-20 16:41:51,428 - src.models - INFO - ModelManager initialized
+2025-11-20 16:41:51,777 - src.models - INFO - Model weights saved to experiments\whisper-base_train_5_dec_5e-5\checkpoints\epoch_4\model_weights.pt
+2025-11-20 16:41:51,778 - src.models - INFO - Detected weight tying: decoder.embed_tokens shares weights with output projection
+2025-11-20 16:41:51,781 - src.models - INFO - Model metadata saved to experiments\whisper-base_train_5_dec_5e-5\checkpoints\epoch_4\model_metadata.json
+2025-11-20 16:41:51,781 - src.models - INFO - Checkpoint saved to experiments\whisper-base_train_5_dec_5e-5\checkpoints\epoch_4
+2025-11-20 16:41:51,781 - src.utils - INFO - Model checkpoint saved: experiments\whisper-base_train_5_dec_5e-5\checkpoints\epoch_4
+2025-11-20 16:41:52,186 - src.utils - INFO - Optimizer state saved: experiments\whisper-base_train_5_dec_5e-5\checkpoints\epoch_4\optimizer_state.pt
+2025-11-20 16:41:52,187 - src.utils - INFO - Scheduler state saved: experiments\whisper-base_train_5_dec_5e-5\checkpoints\epoch_4\scheduler_state.pt
+2025-11-20 16:41:52,187 - src.utils - INFO - Experiment metadata saved: experiments\whisper-base_train_5_dec_5e-5\checkpoints\epoch_4\experiment_metadata.json
+2025-11-20 16:41:52,212 - src.utils - INFO - Config saved to: experiments\whisper-base_train_5_dec_5e-5\checkpoints\epoch_4\config.yaml
+2025-11-20 16:41:52,213 - src.utils - INFO - Metrics saved to: experiments\whisper-base_train_5_dec_5e-5\checkpoints\epoch_4\metrics.json
+2025-11-20 16:41:52,215 - src.utils - INFO - Updated cumulative metrics: experiments\whisper-base_train_5_dec_5e-5\metrics_on_all_epochs.json
+2025-11-20 16:41:52,493 - src.utils - INFO - Best checkpoint also saved to: experiments\whisper-base_train_5_dec_5e-5\best_checkpoint
+2025-11-20 16:41:52,493 - src.utils - INFO - 
+Epoch 5/5
+2025-11-20 16:55:59,624 - src.utils - INFO - Epoch 5 - Average training loss: 1.1382, Duration: 847.13s
+2025-11-20 16:55:59,625 - src.utils - INFO - Running validation...
+2025-11-20 17:06:02,642 - src.utils - INFO - Computing validation metrics...
+2025-11-20 17:06:06,119 - src.utils - INFO - Validation - Epoch 5 - WER: 0.2204, CER: 0.0653
+2025-11-20 17:06:06,119 - src.utils - INFO - Current LR: 0.00e+00
+2025-11-20 17:06:06,120 - src.utils - INFO - New best WER: 0.2204
+2025-11-20 17:06:06,120 - src.models - INFO - CUDA optimizations enabled (cudnn.benchmark=True)
+2025-11-20 17:06:06,120 - src.models - INFO - ModelManager initialized
+2025-11-20 17:06:06,501 - src.models - INFO - Model weights saved to experiments\whisper-base_train_5_dec_5e-5\checkpoints\epoch_5\model_weights.pt
+2025-11-20 17:06:06,502 - src.models - INFO - Detected weight tying: decoder.embed_tokens shares weights with output projection
+2025-11-20 17:06:06,504 - src.models - INFO - Model metadata saved to experiments\whisper-base_train_5_dec_5e-5\checkpoints\epoch_5\model_metadata.json
+2025-11-20 17:06:06,504 - src.models - INFO - Checkpoint saved to experiments\whisper-base_train_5_dec_5e-5\checkpoints\epoch_5
+2025-11-20 17:06:06,505 - src.utils - INFO - Model checkpoint saved: experiments\whisper-base_train_5_dec_5e-5\checkpoints\epoch_5
+2025-11-20 17:06:06,890 - src.utils - INFO - Optimizer state saved: experiments\whisper-base_train_5_dec_5e-5\checkpoints\epoch_5\optimizer_state.pt
+2025-11-20 17:06:06,891 - src.utils - INFO - Scheduler state saved: experiments\whisper-base_train_5_dec_5e-5\checkpoints\epoch_5\scheduler_state.pt
+2025-11-20 17:06:06,892 - src.utils - INFO - Experiment metadata saved: experiments\whisper-base_train_5_dec_5e-5\checkpoints\epoch_5\experiment_metadata.json
+2025-11-20 17:06:06,918 - src.utils - INFO - Config saved to: experiments\whisper-base_train_5_dec_5e-5\checkpoints\epoch_5\config.yaml
+2025-11-20 17:06:06,918 - src.utils - INFO - Metrics saved to: experiments\whisper-base_train_5_dec_5e-5\checkpoints\epoch_5\metrics.json
+2025-11-20 17:06:06,920 - src.utils - INFO - Updated cumulative metrics: experiments\whisper-base_train_5_dec_5e-5\metrics_on_all_epochs.json
+2025-11-20 17:06:07,436 - src.utils - INFO - Best checkpoint also saved to: experiments\whisper-base_train_5_dec_5e-5\best_checkpoint
+2025-11-20 17:06:07,441 - src.utils - INFO - Removed old checkpoint: experiments\whisper-base_train_5_dec_5e-5\checkpoints\epoch_0
+2025-11-20 17:06:07,441 - src.utils - INFO - ============================================================
+2025-11-20 17:06:07,441 - src.utils - INFO - Training completed!
+2025-11-20 17:06:07,441 - src.utils - INFO - Total training time: 2:20:03.429065
+2025-11-20 17:06:07,442 - src.utils - INFO - Best WER: 0.2204 (Epoch 5)
+2025-11-20 17:06:07,442 - src.utils - INFO - ============================================================
+2025-11-20 17:06:07,442 - src.utils - INFO - ============================================================
+2025-11-20 17:06:07,442 - src.utils - INFO - Running final evaluation on test set...
+2025-11-20 17:06:07,443 - src.utils - INFO - ============================================================
+2025-11-20 17:06:07,445 - src.data - INFO - Loading test split from TSV file C:\Users\User\Documents\Progs\Projects\speech_to_text\data\cv-corpus-22.0-2025-06-20\ru\test.tsv...
+2025-11-20 17:06:07,533 - src.data - INFO - Loaded 10,244 samples from test split
+2025-11-20 17:06:07,534 - src.data - INFO - Loading clip durations from clip_durations.tsv...
+2025-11-20 17:06:07,709 - src.data - INFO - Merged durations for 10244 samples
+2025-11-20 17:06:07,712 - src.data - INFO - Pre-filtered 0 samples by metadata duration (min: 0.2s, max: 30.0s). Final filtering after trim_silence happens in AudioPreprocessor.
+2025-11-20 17:06:07,712 - src.data - INFO - After filtering: 10,244 samples remaining
+2025-11-20 17:06:07,712 - src.data - INFO - Cached test split with 10244 samples
+2025-11-20 17:06:29,317 - src.utils - INFO - Test dataset size: 10244
+2025-11-20 17:06:29,317 - src.data - INFO - Initialized AudioCollator with device: cpu, model_type: whisper, labels padding: -100, transpose_features: False
+2025-11-20 17:13:38,322 - src.utils - INFO - Computing test metrics...
+2025-11-20 17:13:42,260 - src.utils - INFO - ============================================================
+2025-11-20 17:13:42,260 - src.utils - INFO - Test Set Results:
+2025-11-20 17:13:42,260 - src.utils - INFO - ============================================================
+2025-11-20 17:13:42,261 - src.utils - INFO - Word Error Rate (WER): 0.2554 (25.54%)
+2025-11-20 17:13:42,261 - src.utils - INFO - Character Error Rate (CER): 0.0841 (8.41%)
+2025-11-20 17:13:42,261 - src.utils - INFO - BLEU Score: 0.6138
+2025-11-20 17:13:42,261 - src.utils - INFO - Substitutions: 17,264
+2025-11-20 17:13:42,262 - src.utils - INFO - Deletions: 2,028
+2025-11-20 17:13:42,262 - src.utils - INFO - Insertions: 2,726
+2025-11-20 17:13:42,262 - src.utils - INFO - Correct Words: 66,916
+2025-11-20 17:13:42,262 - src.utils - INFO - ============================================================
+2025-11-20 17:13:42,285 - src.utils - INFO - Test metrics saved to: experiments\whisper-base_train_5_dec_5e-5\test_results.json
+2025-11-20 17:13:42,465 - src.utils - INFO - Test predictions saved to: experiments\whisper-base_train_5_dec_5e-5\test_predictions.csv
+2025-11-20 17:13:42,851 - src.utils - INFO - ============================================================
+2025-11-20 17:13:42,852 - src.utils - INFO - Generating training plots...
+2025-11-20 17:13:42,852 - src.utils - INFO - ============================================================
+2025-11-20 17:13:42,854 - src.utils - INFO - Saving plots to: experiments\whisper-base_train_5_dec_5e-5\graphs
+2025-11-20 17:13:43,317 - src.utils - INFO - Saved: 1_error_rates.png
+2025-11-20 17:13:43,582 - src.utils - INFO - Saved: 2_bleu_score.png
+2025-11-20 17:13:44,278 - src.utils - INFO - Saved: 3_error_breakdown.png
+2025-11-20 17:13:44,551 - src.utils - INFO - Saved: 4_hits_ratio.png
+2025-11-20 17:13:44,896 - src.utils - INFO - Saved: 5_combined_metrics.png
+2025-11-20 17:13:44,896 - src.utils - INFO - All plots saved successfully to: experiments\whisper-base_train_5_dec_5e-5\graphs
+2025-11-20 17:13:44,897 - src.utils - INFO - Best epoch: 5 (WER: 0.2204)
+2025-11-20 17:13:44,897 - src.utils - INFO - Training plots generated successfully
+2025-11-20 17:13:44,897 - src.utils - INFO - ============================================================
+2025-11-20 17:13:44,897 - src.utils - INFO - All done!
+2025-11-20 17:13:44,897 - src.utils - INFO - Results saved to: experiments\whisper-base_train_5_dec_5e-5
+2025-11-20 17:13:44,897 - src.utils - INFO - TensorBoard: tensorboard --logdir experiments\whisper-base_train_5_dec_5e-5/tensorboard
+2025-11-20 17:13:44,897 - src.utils - INFO - ============================================================

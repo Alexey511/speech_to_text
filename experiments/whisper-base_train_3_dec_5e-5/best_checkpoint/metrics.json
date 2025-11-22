@@ -1,0 +1,13 @@
+{
+  "wer": 0.22151171390535573,
+  "cer": 0.0648373222870837,
+  "mer": 0.21581473721551542,
+  "wil": 0.35580175177856377,
+  "substitutions": 15325,
+  "deletions": 1823,
+  "insertions": 2320,
+  "hits": 70739,
+  "total_predictions": 10243,
+  "empty_predictions": 0,
+  "bleu": 0.6505782737463887
+}

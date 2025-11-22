@@ -48,17 +48,17 @@ data:
     noise_factor: 0.02
 
     speed_perturbation: true
-    speed_probability: 0.3
-    speed_factor_range: [0.9, 1.1]
-    speed_num_steps: 3
+    speed_probability: 0.5
+    speed_factor_range: [0.8, 1.2]
+    speed_num_steps: 20
 
     pitch_shift: true
-    pitch_probability: 0.3
-    pitch_shift_range: [-2, 2]
+    pitch_probability: 0.5
+    pitch_shift_range: [-3, 3]
 
     volume_perturbation: true
-    volume_probability: 0.3
-    volume_range_db: [-10, 10]
+    volume_probability: 0.5
+    volume_range_db: [-12, 12]
 
     fade_inout: true
     fade_probability: 0.2
@@ -87,15 +87,15 @@ model:
   # Freezing strategy for fine-tuning
   freeze_feature_encoder: true  # Freeze feature encoder - acoustic features are language-agnostic
   freeze_encoder: true  # Freeze encoder - acoustic features are language-agnostic
-  freeze_decoder: false
+  freeze_decoder: true
   unfreeze_last_n_encoder_layers: 0
-  unfreeze_last_n_decoder_layers: 0
+  unfreeze_last_n_decoder_layers: 3
 
   # Fine-grained unfreezing for critical components
-  unfreeze_embed_tokens: false
-  unfreeze_embed_positions_decoder: false
-  unfreeze_lm_head: false
-  unfreeze_layer_norm_decoder: false
+  unfreeze_embed_tokens: true
+  unfreeze_embed_positions_decoder: true
+  unfreeze_lm_head: true
+  unfreeze_layer_norm_decoder: true
 
   # Dropout parameters (standard HuggingFace names) - Whisper defaults to 0.0
   activation_dropout: 0.0  # Dropout for activation functions
@@ -106,14 +106,14 @@ model:
 
 # Training configuration
 training:
-  num_train_epochs: 10
-  train_batch_size: 48
+  num_train_epochs: 6
+  train_batch_size: 32
   eval_batch_size: 128
   gradient_accumulation_steps: 2
   max_grad_norm: 1.0
   learning_rate: 5e-5
   weight_decay: 0.01
-  label_smoothing_factor: 0.0  # Label smoothing for regularization (0.0 = no smoothing)
+  label_smoothing_factor: 0.05  # Label smoothing for regularization (0.0 = no smoothing)
 
   # Learning rate scheduler configuration
   scheduler_name: "warmup_plateau_decay"  # Scheduler type: "reduce_on_plateau", "cosine", "onecycle", "linear"
@@ -147,7 +147,7 @@ training:
   # Warmup + Plateau + Linear Decay scheduler settings
   warmup_plateau_decay:
     warmup_ratio: 0.1  # Warmup for 10% of total steps (LR: 0 -> 1)
-    plateau_ratio: 0.3  # Plateau ends at 50% of total steps (LR: 1 constant)
+    plateau_ratio: 0.2  # Plateau ends at 50% of total steps (LR: 1 constant)
     # After plateau_ratio, LR decays linearly from 1 to 0 until end
 
   max_steps: null

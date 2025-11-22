@@ -17,6 +17,10 @@
     "freeze_decoder": false,
     "unfreeze_last_n_encoder_layers": 0,
     "unfreeze_last_n_decoder_layers": 0,
+    "unfreeze_embed_tokens": false,
+    "unfreeze_embed_positions_decoder": false,
+    "unfreeze_lm_head": false,
+    "unfreeze_layer_norm_decoder": false,
     "activation_dropout": 0.0,
     "attention_dropout": 0.0,
     "dropout": 0.0,
@@ -27,5 +31,6 @@
     "num_hidden_layers": 4,
     "intermediate_size": 1024,
     "custom": null
-  }
+  },
+  "weight_tying": true
 }

@@ -53,9 +53,9 @@ except ImportError:
 # CONFIGURATION - Edit these parameters to run via VSCode
 # ==============================================================================
 DEFAULT_CONFIG = {
-    "model_path": "experiments/baselines/s2t-cross-lingual",
+    "model_path": "experiments/baselines/whisper-small",
     "config": None,  # None = auto-search in model directory
-    "experiment_name": "s2t-cross-lingual_train_full_dec_3e-3",  # None = auto-generate from model name + "_trained"
+    "experiment_name": "whisper-small_train_6_dec_5e-5",  # None = auto-generate from model name + "_trained"
     "epochs": None,  # None = use config value
 }
 # Example model paths:
