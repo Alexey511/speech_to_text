@@ -55,7 +55,7 @@ except ImportError:
 DEFAULT_CONFIG = {
     "model_path": "experiments/baselines/whisper-small",
     "config": None,  # None = auto-search in model directory
-    "experiment_name": "whisper-small_train_6_dec_5e-5",  # None = auto-generate from model name + "_trained"
+    "experiment_name": "whisper-small_train_10_dec_5e-5",  # None = auto-generate from model name + "_trained"
     "epochs": None,  # None = use config value
 }
 # Example model paths:
