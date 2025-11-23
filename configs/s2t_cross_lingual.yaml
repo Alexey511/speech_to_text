@@ -158,9 +158,9 @@ training:
     # After plateau_ratio, LR decays linearly from 1 to 0 until end
 
   max_steps: null
-  eval_steps: 500
-  save_steps: 1000
-  logging_steps: 100
+  eval_steps: 32000  # Number of audio samples between evaluations (was 500 batches * 64 batch_size)
+  save_steps: 64000  # Number of audio samples between saves (was 1000 batches * 64 batch_size)
+  logging_steps: 6400  # Number of audio samples between logs (was 100 batches * 64 batch_size)
   load_best_model_at_end: true
   metric_for_best_model: "eval_wer"
   greater_is_better: false

@@ -42,10 +42,10 @@ training:
   gradient_accumulation_steps: 1
   learning_rate: 1e-4
   num_train_epochs: 2
-  max_steps: 100  # Very limited steps
-  eval_steps: 25
-  save_steps: 50
-  logging_steps: 5
+  max_steps: 200  # Number of audio samples (was 100 batches * 2 batch_size)
+  eval_steps: 50  # Number of audio samples (was 25 batches * 2 batch_size)
+  save_steps: 100  # Number of audio samples (was 50 batches * 2 batch_size)
+  logging_steps: 10  # Number of audio samples (was 5 batches * 2 batch_size)
   fp16: false  # Disable mixed precision for debugging
   label_smoothing_factor: 0.05  # Label smoothing for regularization (0.0 = no smoothing)
 

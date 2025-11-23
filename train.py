@@ -241,12 +241,14 @@ def train_one_epoch(
         scheduler: Learning rate scheduler
         config: Project configuration
         epoch: Current epoch number (0-indexed)
-        global_step: Current global step
+        global_step: Total number of audio samples processed (not batches)
+                    This makes metrics comparable across experiments with different batch sizes
         writer: TensorBoard writer
         logger: Logger instance
 
     Returns:
         Tuple of (average_loss, new_global_step, epoch_duration_seconds)
+        where new_global_step is updated by the number of samples processed in this epoch
     """
     # Start timer
     epoch_start_time = datetime.now()
@@ -256,6 +258,9 @@ def train_one_epoch(
 
     total_loss = 0.0
     num_batches = 0
+
+    # Track last logged step for threshold-based logging
+    last_logged_step = global_step
 
     # Progress bar
     pbar = tqdm(train_dataloader, desc=f"Epoch {epoch} Training")
@@ -316,8 +321,10 @@ def train_one_epoch(
         total_loss += loss.item()
         num_batches += 1
 
-        # Update global step
-        global_step += 1
+        # Update global step (count total audio samples processed, not batches)
+        # This makes global_step independent of batch_size for fair comparison across experiments
+        actual_batch_size = input_features.size(0)
+        global_step += actual_batch_size
 
         # Update progress bar
         current_lr = optimizer.param_groups[0]['lr']
@@ -327,8 +334,8 @@ def train_one_epoch(
             'lr': f'{current_lr:.2e}'
         })
 
-        # Log to TensorBoard
-        if global_step % config.training.logging_steps == 0:
+        # Log to TensorBoard (threshold-based: log when we've processed logging_steps samples)
+        if global_step - last_logged_step >= config.training.logging_steps:
             writer.add_scalar('train/loss', loss.item(), global_step)
             writer.add_scalar('train/learning_rate', current_lr, global_step)
 
@@ -340,6 +347,8 @@ def train_one_epoch(
                     'epoch': epoch,
                     'global_step': global_step
                 })
+
+            last_logged_step = global_step
 
         # Clear CUDA cache periodically
         if (batch_idx + 1) % 10 == 0 and torch.cuda.is_available():
@@ -375,7 +384,7 @@ def validate_model(
         data_manager: Data manager instance
         config: Project configuration
         epoch: Current epoch number (0-indexed)
-        global_step: Current global step
+        global_step: Total number of audio samples processed (for x-axis in TensorBoard)
         writer: TensorBoard writer
         logger: Logger instance
 
@@ -647,7 +656,7 @@ def save_experiment_metadata(
 
     Args:
         last_finished_epoch: Last completed epoch number (0-indexed)
-        global_step: Current global step
+        global_step: Total number of audio samples processed (not batches)
         save_path: Path to save experiment_metadata.json
         logger: Logger instance
     """
@@ -671,6 +680,7 @@ def load_experiment_metadata(checkpoint_path: Path, logger: logging.Logger) -> T
 
     Returns:
         Tuple of (last_finished_epoch, global_step)
+        where global_step is the total number of audio samples processed
         If metadata doesn't exist, returns (-1, 0) indicating new training
     """
     metadata_path = checkpoint_path / "experiment_metadata.json"

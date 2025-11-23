@@ -229,10 +229,10 @@ class TrainingConfig:
     linear: Optional[LinearLRConfig] = None
     warmup_plateau_decay: Optional[WarmupPlateauDecayConfig] = None
 
-    max_steps: Optional[int] = None
-    eval_steps: int = 500
-    save_steps: int = 1000
-    logging_steps: int = 100
+    max_steps: Optional[int] = None  # Max training steps in audio samples (None = train for num_train_epochs)
+    eval_steps: int = 500  # Evaluate every N audio samples (not batches)
+    save_steps: int = 1000  # Save checkpoint every N audio samples (not batches)
+    logging_steps: int = 100  # Log metrics every N audio samples (not batches)
     load_best_model_at_end: bool = True
     metric_for_best_model: str = "eval_wer"
     greater_is_better: bool = False
