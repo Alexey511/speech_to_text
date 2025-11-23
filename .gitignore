@@ -169,7 +169,6 @@ huggingface/
 # Temporary Directories
 # ============================================================================
 
-.temp/
 tests/.test_tmp/
 tmp/
 temp/

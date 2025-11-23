@@ -1,0 +1,1 @@
+/usr/bin/bash: line 1: C:UsersUseranaconda3envsbasennpython.exe: command not found
