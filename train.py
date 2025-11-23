@@ -227,12 +227,13 @@ def train_one_epoch(
     scheduler,
     config: ProjectConfig,
     epoch: int,
-    global_step: int,
+    global_batch: int,
     writer: SummaryWriter,
-    logger: logging.Logger
+    logger: logging.Logger,
+    scaler: torch.cuda.amp.GradScaler
 ) -> Tuple[float, int, float]:
     """
-    Train for one epoch.
+    Train for one epoch with mixed precision (FP16) and gradient accumulation.
 
     Args:
         model: Model to train
@@ -241,14 +242,14 @@ def train_one_epoch(
         scheduler: Learning rate scheduler
         config: Project configuration
         epoch: Current epoch number (0-indexed)
-        global_step: Total number of audio samples processed (not batches)
-                    This makes metrics comparable across experiments with different batch sizes
+        global_batch: Total number of batches processed so far (for internal tracking)
         writer: TensorBoard writer
         logger: Logger instance
+        scaler: GradScaler for mixed precision training
 
     Returns:
-        Tuple of (average_loss, new_global_step, epoch_duration_seconds)
-        where new_global_step is updated by the number of samples processed in this epoch
+        Tuple of (average_loss, new_global_batch, epoch_duration_seconds)
+        where new_global_batch is updated by the number of batches processed in this epoch
     """
     # Start timer
     epoch_start_time = datetime.now()
@@ -256,11 +257,31 @@ def train_one_epoch(
     model.train()
     device = next(model.parameters()).device
 
+    # Determine dtype for mixed precision (bfloat16 if supported, else float16)
+    if device.type == 'cuda' and torch.cuda.is_bf16_supported():
+        amp_dtype = torch.bfloat16
+    else:
+        amp_dtype = torch.float16
+
     total_loss = 0.0
     num_batches = 0
 
-    # Track last logged step for threshold-based logging
-    last_logged_step = global_step
+    # Track last logged samples for threshold-based logging
+    # global_batch counts real batches from DataLoader, multiply by batch_size to get samples
+    last_logged_samples = global_batch * config.training.train_batch_size
+
+    # Track accumulated loss for correct logging (before dividing by gradient_accumulation_steps)
+    accumulated_loss = 0.0
+    accumulated_batches = 0
+
+    # Zero gradients before starting epoch
+    optimizer.zero_grad()
+
+    # Create loss function once (avoid overhead of creating it every batch)
+    criterion = torch.nn.CrossEntropyLoss(
+        ignore_index=-100,  # Ignore padding tokens
+        label_smoothing=config.training.label_smoothing_factor
+    )
 
     # Progress bar
     pbar = tqdm(train_dataloader, desc=f"Epoch {epoch} Training")
@@ -275,84 +296,121 @@ def train_one_epoch(
         if attention_mask is not None:
             attention_mask = attention_mask.to(device)
 
-        # Forward pass - unified loss calculation with optional label smoothing
-        if config.model.model_type.lower() == "whisper":
-            outputs = model.forward(input_features, labels=labels)
-        else:  # speech2text or custom
-            outputs = model.forward(
-                input_features,
-                attention_mask=attention_mask,
-                labels=labels
-            )
+        # Forward pass with mixed precision (autocast)
+        with torch.autocast(device_type='cuda', dtype=amp_dtype, enabled=config.training.fp16):
+            # Forward pass - unified loss calculation with optional label smoothing
+            if config.model.model_type.lower() == "whisper":
+                outputs = model.forward(input_features, labels=labels)
+            else:  # speech2text or custom
+                outputs = model.forward(
+                    input_features,
+                    attention_mask=attention_mask,
+                    labels=labels
+                )
 
-        # Get logits and compute loss manually with CrossEntropyLoss
-        # This allows us to use label_smoothing parameter (0.0 = no smoothing, equivalent to built-in loss)
-        logits = outputs['logits']
+            # Get logits and compute loss manually with CrossEntropyLoss
+            # This allows us to use label_smoothing parameter (0.0 = no smoothing, equivalent to built-in loss)
+            logits = outputs['logits']
 
-        # CrossEntropyLoss expects: (batch_size * seq_len, vocab_size) and (batch_size * seq_len)
-        # Reshape: (batch_size, seq_len, vocab_size) -> (batch_size * seq_len, vocab_size)
-        vocab_size = logits.size(-1)
-        logits_flat = logits.view(-1, vocab_size)
-        labels_flat = labels.view(-1)
+            # CrossEntropyLoss expects: (batch_size * seq_len, vocab_size) and (batch_size * seq_len)
+            # Reshape: (batch_size, seq_len, vocab_size) -> (batch_size * seq_len, vocab_size)
+            # Use reshape() instead of view() - safer as it handles non-contiguous tensors
+            vocab_size = logits.size(-1)
+            logits_flat = logits.reshape(-1, vocab_size)
+            labels_flat = labels.reshape(-1)
 
-        # Create loss function with label smoothing
-        criterion = torch.nn.CrossEntropyLoss(
-            ignore_index=-100,  # Ignore padding tokens
-            label_smoothing=config.training.label_smoothing_factor
-        )
-        loss = criterion(logits_flat, labels_flat)
+            # Compute loss with pre-created criterion
+            loss = criterion(logits_flat, labels_flat)
 
-        # Backward pass
-        loss.backward()
+            # Divide loss by gradient_accumulation_steps for correct averaging
+            loss = loss / config.training.gradient_accumulation_steps
 
-        # Gradient clipping (optional but recommended)
-        if config.training.max_grad_norm > 0:
-            torch.nn.utils.clip_grad_norm_(model.parameters(), config.training.max_grad_norm)
+        # Backward pass with gradient scaling
+        scaler.scale(loss).backward()
 
-        # Optimizer step
-        optimizer.step()
-        optimizer.zero_grad()
+        # Accumulate loss for display (detach and convert to float32 for stability)
+        accumulated_loss += loss.detach().float().item() * config.training.gradient_accumulation_steps
+        accumulated_batches += 1
 
-        # Linear, OneCycleLR, and WarmupPlateauDecay schedulers step per batch
+        # Scheduler step (per batch for OneCycleLR, Linear, WarmupPlateauDecay)
+        # Must be called every batch, not every optimizer step, for correct dynamics
         if config.training.scheduler_name.lower() in ["linear", "onecycle", "warmup_plateau_decay"]:
             scheduler.step()
 
-        # Accumulate loss
-        total_loss += loss.item()
-        num_batches += 1
+        # Optimizer step only every gradient_accumulation_steps batches
+        if (batch_idx + 1) % config.training.gradient_accumulation_steps == 0:
+            # Gradient clipping (optional but recommended)
+            if config.training.max_grad_norm > 0:
+                # Unscale gradients before clipping
+                scaler.unscale_(optimizer)
+                torch.nn.utils.clip_grad_norm_(model.parameters(), config.training.max_grad_norm)
 
-        # Update global step (count total audio samples processed, not batches)
-        # This makes global_step independent of batch_size for fair comparison across experiments
-        actual_batch_size = input_features.size(0)
-        global_step += actual_batch_size
+            # Optimizer step with gradient scaling
+            scaler.step(optimizer)
+            scaler.update()
+            optimizer.zero_grad()
 
-        # Update progress bar
-        current_lr = optimizer.param_groups[0]['lr']
-        pbar.set_postfix({
-            'loss': f'{loss.item():.4f}',
-            'avg_loss': f'{total_loss/num_batches:.4f}',
-            'lr': f'{current_lr:.2e}'
-        })
+            # Update global_batch (internal tracking in real batches)
+            # We just processed gradient_accumulation_steps real batches from DataLoader
+            global_batch += config.training.gradient_accumulation_steps
 
-        # Log to TensorBoard (threshold-based: log when we've processed logging_steps samples)
-        if global_step - last_logged_step >= config.training.logging_steps:
-            writer.add_scalar('train/loss', loss.item(), global_step)
-            writer.add_scalar('train/learning_rate', current_lr, global_step)
+            # Update metrics after real optimizer step
+            avg_accumulated_loss = accumulated_loss / accumulated_batches
+            total_loss += avg_accumulated_loss
+            num_batches += config.training.gradient_accumulation_steps
 
-            # Log to WandB if enabled
-            if config.logging.use_wandb and WANDB_AVAILABLE and wandb.run:
-                wandb.log({
-                    'train/loss': loss.item(),
-                    'train/learning_rate': current_lr,
-                    'epoch': epoch,
-                    'global_step': global_step
-                })
+            # Update progress bar
+            current_lr = optimizer.param_groups[0]['lr']
+            pbar.set_postfix({
+                'loss': f'{avg_accumulated_loss:.4f}',
+                'avg_loss': f'{total_loss/num_batches:.4f}',
+                'lr': f'{current_lr:.2e}'
+            })
 
-            last_logged_step = global_step
+            # Calculate current global_samples for reporting (real batches * batch_size)
+            global_samples = global_batch * config.training.train_batch_size
 
-        # Clear CUDA cache periodically
-        if (batch_idx + 1) % 10 == 0 and torch.cuda.is_available():
-            torch.cuda.empty_cache()
+            # Log to TensorBoard (threshold-based: log when we've processed logging_steps samples)
+            # Report by samples (not batches) for fair comparison across experiments with different batch sizes
+            if global_samples - last_logged_samples >= config.training.logging_steps:
+                writer.add_scalar('train/loss', avg_accumulated_loss, global_samples)
+                writer.add_scalar('train/learning_rate', current_lr, global_samples)
+
+                # Log to WandB if enabled
+                if config.logging.use_wandb and WANDB_AVAILABLE and wandb.run:
+                    wandb.log({
+                        'train/loss': avg_accumulated_loss,
+                        'train/learning_rate': current_lr,
+                        'epoch': epoch,
+                        'global_samples': global_samples
+                    })
+
+                last_logged_samples = global_samples
+
+            # Reset accumulated loss
+            accumulated_loss = 0.0
+            accumulated_batches = 0
+
+    # Handle remaining gradients if epoch ended mid-accumulation
+    if accumulated_batches > 0:
+        # Gradient clipping
+        if config.training.max_grad_norm > 0:
+            scaler.unscale_(optimizer)
+            torch.nn.utils.clip_grad_norm_(model.parameters(), config.training.max_grad_norm)
+
+        # Final optimizer step
+        scaler.step(optimizer)
+        scaler.update()
+        optimizer.zero_grad()
+
+        # Update global_batch (internal tracking in real batches)
+        # We just processed accumulated_batches real batches from DataLoader
+        global_batch += accumulated_batches
+
+        # Update metrics
+        avg_accumulated_loss = accumulated_loss / accumulated_batches
+        total_loss += avg_accumulated_loss
+        num_batches += accumulated_batches
 
     # Calculate average loss
     avg_loss = total_loss / num_batches if num_batches > 0 else 0.0
@@ -362,7 +420,7 @@ def train_one_epoch(
 
     logger.info(f"Epoch {epoch} - Average training loss: {avg_loss:.4f}, Duration: {epoch_duration:.2f}s")
 
-    return avg_loss, global_step, epoch_duration
+    return avg_loss, global_batch, epoch_duration
 
 
 def validate_model(
@@ -371,7 +429,7 @@ def validate_model(
     data_manager: DataManager,
     config: ProjectConfig,
     epoch: int,
-    global_step: int,
+    global_batch: int,
     writer: SummaryWriter,
     logger: logging.Logger
 ) -> Dict[str, float]:
@@ -384,7 +442,7 @@ def validate_model(
         data_manager: Data manager instance
         config: Project configuration
         epoch: Current epoch number (0-indexed)
-        global_step: Total number of audio samples processed (for x-axis in TensorBoard)
+        global_batch: Total number of batches processed so far (for internal tracking)
         writer: TensorBoard writer
         logger: Logger instance
 
@@ -483,21 +541,24 @@ def validate_model(
     # Log metrics
     logger.info(f"Validation - Epoch {epoch} - WER: {metrics['wer']:.4f}, CER: {metrics['cer']:.4f}")
 
-    # Log to TensorBoard
-    writer.add_scalar('val/wer', metrics['wer'], global_step)
-    writer.add_scalar('val/cer', metrics['cer'], global_step)
+    # Calculate global_samples for reporting (real batches * batch_size)
+    global_samples = global_batch * config.training.train_batch_size
+
+    # Log to TensorBoard (report by samples for fair comparison)
+    writer.add_scalar('val/wer', metrics['wer'], global_samples)
+    writer.add_scalar('val/cer', metrics['cer'], global_samples)
     if 'bleu' in metrics and metrics['bleu'] > 0:
-        writer.add_scalar('val/bleu', metrics['bleu'], global_step)
+        writer.add_scalar('val/bleu', metrics['bleu'], global_samples)
     if 'mer' in metrics:
-        writer.add_scalar('val/mer', metrics['mer'], global_step)
+        writer.add_scalar('val/mer', metrics['mer'], global_samples)
     if 'wil' in metrics:
-        writer.add_scalar('val/wil', metrics['wil'], global_step)
+        writer.add_scalar('val/wil', metrics['wil'], global_samples)
 
     # Log error breakdown
-    writer.add_scalar('val/substitutions', metrics['substitutions'], global_step)
-    writer.add_scalar('val/deletions', metrics['deletions'], global_step)
-    writer.add_scalar('val/insertions', metrics['insertions'], global_step)
-    writer.add_scalar('val/hits', metrics['hits'], global_step)
+    writer.add_scalar('val/substitutions', metrics['substitutions'], global_samples)
+    writer.add_scalar('val/deletions', metrics['deletions'], global_samples)
+    writer.add_scalar('val/insertions', metrics['insertions'], global_samples)
+    writer.add_scalar('val/hits', metrics['hits'], global_samples)
 
     # Log to WandB if enabled
     if config.logging.use_wandb and WANDB_AVAILABLE and wandb.run:
@@ -509,7 +570,7 @@ def validate_model(
             'val/insertions': metrics['insertions'],
             'val/hits': metrics['hits'],
             'epoch': epoch,
-            'global_step': global_step
+            'global_samples': global_samples
         }
         if 'bleu' in metrics and metrics['bleu'] > 0:
             wandb_metrics['val/bleu'] = metrics['bleu']
@@ -545,7 +606,7 @@ def update_all_epochs_metrics(
     train_loss: float,
     learning_rate: float,
     epoch_duration: float,
-    global_step: int,
+    global_batch: int,
     val_metrics: Dict[str, float],
     experiment_dir: str,
     is_best: bool,
@@ -561,7 +622,7 @@ def update_all_epochs_metrics(
         train_loss: Average training loss for this epoch
         learning_rate: Current learning rate
         epoch_duration: Training time for this epoch (in seconds)
-        global_step: Current global step
+        global_batch: Total number of batches processed so far
         val_metrics: Validation metrics dictionary
         experiment_dir: Experiment directory path
         is_best: Whether this is the best model so far
@@ -582,7 +643,7 @@ def update_all_epochs_metrics(
         "train_loss": train_loss,
         "learning_rate": learning_rate,
         "epoch_duration": epoch_duration,
-        "global_step": global_step,
+        "global_batch": global_batch,
         "is_best": is_best,
         **val_metrics  # Unpack all validation metrics (wer, cer, mer, wil, bleu, etc.)
     }
@@ -600,23 +661,23 @@ def update_all_epochs_metrics(
 def save_optimizer_state(
     optimizer: torch.optim.Optimizer,
     epoch: int,
-    global_step: int,
+    global_batch: int,
     save_path: Path,
     logger: logging.Logger
 ) -> None:
     """
-    Save optimizer state with epoch and global_step to file.
+    Save optimizer state with epoch and global_batch to file.
 
     Args:
         optimizer: Optimizer with state to save
         epoch: Current epoch number
-        global_step: Current global step
+        global_batch: Total number of batches processed so far
         save_path: Path to save optimizer_state.pt
         logger: Logger instance
     """
     optimizer_state = {
         'epoch': epoch,
-        'global_step': global_step,
+        'global_batch': global_batch,
         'optimizer_state_dict': optimizer.state_dict(),
     }
 
@@ -647,22 +708,22 @@ def save_scheduler_state(
 
 def save_experiment_metadata(
     last_finished_epoch: int,
-    global_step: int,
+    global_batch: int,
     save_path: Path,
     logger: logging.Logger
 ) -> None:
     """
-    Save experiment metadata (last finished epoch, global step, etc.)
+    Save experiment metadata (last finished epoch, global batch, etc.)
 
     Args:
         last_finished_epoch: Last completed epoch number (0-indexed)
-        global_step: Total number of audio samples processed (not batches)
+        global_batch: Total number of batches processed so far
         save_path: Path to save experiment_metadata.json
         logger: Logger instance
     """
     metadata = {
         'last_finished_epoch': last_finished_epoch,
-        'global_step': global_step,
+        'global_batch': global_batch,
     }
 
     with open(save_path, 'w', encoding='utf-8') as f:
@@ -679,8 +740,8 @@ def load_experiment_metadata(checkpoint_path: Path, logger: logging.Logger) -> T
         logger: Logger instance
 
     Returns:
-        Tuple of (last_finished_epoch, global_step)
-        where global_step is the total number of audio samples processed
+        Tuple of (last_finished_epoch, global_batch)
+        where global_batch is the total number of batches processed
         If metadata doesn't exist, returns (-1, 0) indicating new training
     """
     metadata_path = checkpoint_path / "experiment_metadata.json"
@@ -690,10 +751,10 @@ def load_experiment_metadata(checkpoint_path: Path, logger: logging.Logger) -> T
             metadata = json.load(f)
 
         last_finished_epoch = metadata.get('last_finished_epoch', -1)
-        global_step = metadata.get('global_step', 0)
+        global_batch = metadata.get('global_batch', 0)
 
-        logger.info(f"Loaded experiment metadata: last_finished_epoch={last_finished_epoch}, global_step={global_step}")
-        return last_finished_epoch, global_step
+        logger.info(f"Loaded experiment metadata: last_finished_epoch={last_finished_epoch}, global_batch={global_batch}")
+        return last_finished_epoch, global_batch
     else:
         logger.info("No experiment_metadata.json found - starting new training")
         return -1, 0
@@ -704,7 +765,7 @@ def save_checkpoint(
     optimizer: torch.optim.Optimizer,
     scheduler: Any,
     epoch: int,
-    global_step: int,
+    global_batch: int,
     metrics: Dict[str, float],
     experiment_dir: str,
     config: ProjectConfig,
@@ -718,7 +779,7 @@ def save_checkpoint(
     Save training checkpoint (model + optimizer + scheduler + experiment metadata).
 
     Model is saved via ModelManager (model_weights.pt + model_metadata.json - without epoch).
-    Optimizer state is saved separately (optimizer_state.pt with global_step).
+    Optimizer state is saved separately (optimizer_state.pt with global_batch).
     Scheduler state is saved separately (scheduler_state.pt).
     Experiment metadata is saved separately (experiment_metadata.json with last_finished_epoch).
 
@@ -727,7 +788,7 @@ def save_checkpoint(
         optimizer: Optimizer state
         scheduler: Scheduler state
         epoch: Current finished epoch number (0-indexed)
-        global_step: Current global step
+        global_batch: Total number of batches processed so far
         metrics: Validation metrics
         experiment_dir: Experiment directory
         config: Project configuration
@@ -745,17 +806,17 @@ def save_checkpoint(
     model_manager.save_checkpoint(model, config.model, str(epoch_checkpoint_dir))
     logger.info(f"Model checkpoint saved: {epoch_checkpoint_dir}")
 
-    # Save optimizer state separately (includes global_step only, epoch is in experiment_metadata)
+    # Save optimizer state separately (includes global_batch only, epoch is in experiment_metadata)
     optimizer_state_path = epoch_checkpoint_dir / "optimizer_state.pt"
-    save_optimizer_state(optimizer, epoch, global_step, optimizer_state_path, logger)
+    save_optimizer_state(optimizer, epoch, global_batch, optimizer_state_path, logger)
 
     # Save scheduler state separately
     scheduler_state_path = epoch_checkpoint_dir / "scheduler_state.pt"
     save_scheduler_state(scheduler, scheduler_state_path, logger)
 
-    # Save experiment metadata (last_finished_epoch, global_step)
+    # Save experiment metadata (last_finished_epoch, global_batch)
     experiment_metadata_path = epoch_checkpoint_dir / "experiment_metadata.json"
-    save_experiment_metadata(epoch, global_step, experiment_metadata_path, logger)
+    save_experiment_metadata(epoch, global_batch, experiment_metadata_path, logger)
 
     # Save full config for compatibility with find_config and evaluation
     config_path = epoch_checkpoint_dir / "config.yaml"
@@ -772,7 +833,7 @@ def save_checkpoint(
         train_loss=train_loss,
         learning_rate=learning_rate,
         epoch_duration=epoch_duration,
-        global_step=global_step,
+        global_batch=global_batch,
         val_metrics=metrics,
         experiment_dir=experiment_dir,
         is_best=is_best,
@@ -1005,7 +1066,7 @@ def evaluate_test_set(
 def create_scheduler(
     optimizer,
     config: ProjectConfig,
-    total_steps: int
+    total_batches: int
 ):
     """
     Create learning rate scheduler based on configuration.
@@ -1013,7 +1074,7 @@ def create_scheduler(
     Args:
         optimizer: PyTorch optimizer
         config: Project configuration
-        total_steps: Total training steps (required for all schedulers)
+        total_batches: Total training batches (required for all schedulers)
 
     Returns:
         Learning rate scheduler
@@ -1049,13 +1110,13 @@ def create_scheduler(
     elif scheduler_name == "onecycle":
         if config.training.onecycle is None:
             raise ValueError("onecycle config is None but scheduler_name is 'onecycle'")
-        if total_steps is None:
-            raise ValueError("total_steps is required for OneCycleLR scheduler")
+        if total_batches is None:
+            raise ValueError("total_batches is required for OneCycleLR scheduler")
 
         scheduler = OneCycleLR(
             optimizer,
             max_lr=config.training.onecycle.max_lr,
-            total_steps=total_steps,
+            total_steps=total_batches,
             pct_start=config.training.onecycle.pct_start,
             anneal_strategy=config.training.onecycle.anneal_strategy,  # type: ignore
             div_factor=config.training.onecycle.div_factor,
@@ -1066,28 +1127,28 @@ def create_scheduler(
     elif scheduler_name == "linear":
         if config.training.linear is None:
             raise ValueError("linear config is None but scheduler_name is 'linear'")
-        if total_steps is None:
-            raise ValueError("total_steps is required for linear scheduler with warmup")
+        if total_batches is None:
+            raise ValueError("total_batches is required for linear scheduler with warmup")
 
-        # Calculate warmup steps as a ratio of total training steps
-        num_warmup_steps = int(config.training.linear.warmup_ratio * total_steps)
+        # Calculate warmup steps as a ratio of total training batches
+        num_warmup_steps = int(config.training.linear.warmup_ratio * total_batches)
 
         scheduler = get_linear_schedule_with_warmup(
             optimizer,
             num_warmup_steps=num_warmup_steps,
-            num_training_steps=total_steps
+            num_training_steps=total_batches
         )
         return scheduler
 
     elif scheduler_name == "warmup_plateau_decay":
         if config.training.warmup_plateau_decay is None:
             raise ValueError("warmup_plateau_decay config is None but scheduler_name is 'warmup_plateau_decay'")
-        if total_steps is None:
-            raise ValueError("total_steps is required for warmup_plateau_decay scheduler")
+        if total_batches is None:
+            raise ValueError("total_batches is required for warmup_plateau_decay scheduler")
 
         # Calculate phase boundaries
-        warmup_steps = int(config.training.warmup_plateau_decay.warmup_ratio * total_steps)
-        plateau_end_step = int(config.training.warmup_plateau_decay.plateau_ratio * total_steps)
+        warmup_steps = int(config.training.warmup_plateau_decay.warmup_ratio * total_batches)
+        plateau_end_step = int(config.training.warmup_plateau_decay.plateau_ratio * total_batches)
 
         def lr_lambda(current_step: int) -> float:
             """
@@ -1095,7 +1156,7 @@ def create_scheduler(
 
             Phase 1 (0 to warmup_steps): Linear warmup from 0 to 1
             Phase 2 (warmup_steps to plateau_end_step): Constant at 1 (plateau)
-            Phase 3 (plateau_end_step to total_steps): Linear decay from 1 to 0
+            Phase 3 (plateau_end_step to total_batches): Linear decay from 1 to 0
             """
             if current_step < warmup_steps:
                 # Warmup phase: linear increase from 0 to 1
@@ -1105,7 +1166,7 @@ def create_scheduler(
                 return 1.0
             else:
                 # Decay phase: linear decrease from 1 to 0
-                decay_steps = total_steps - plateau_end_step
+                decay_steps = total_batches - plateau_end_step
                 progress = (current_step - plateau_end_step) / float(max(1, decay_steps))
                 return max(0.0, 1.0 - progress)
 
@@ -1122,7 +1183,7 @@ def create_scheduler(
 def load_scheduler(
     optimizer: torch.optim.Optimizer,
     config: ProjectConfig,
-    total_steps: int,
+    total_batches: int,
     checkpoint_path: str
 ) -> Any:
     """
@@ -1135,7 +1196,7 @@ def load_scheduler(
     Args:
         optimizer: Optimizer instance
         config: Project configuration
-        total_steps: Total training steps (from DataLoader length * num_epochs)
+        total_batches: Total training batches (from DataLoader length * num_epochs)
         checkpoint_path: Path to checkpoint directory (may contain scheduler_state.pt)
 
     Returns:
@@ -1145,8 +1206,8 @@ def load_scheduler(
     checkpoint_path_obj = Path(checkpoint_path)
 
     # Create scheduler (always create fresh first)
-    logger.info(f"Creating {config.training.scheduler_name} scheduler with total_steps={total_steps}")
-    scheduler = create_scheduler(optimizer, config, total_steps)
+    logger.info(f"Creating {config.training.scheduler_name} scheduler with total_batches={total_batches}")
+    scheduler = create_scheduler(optimizer, config, total_batches)
 
     # Try to load scheduler state
     scheduler_state_path = checkpoint_path_obj / "scheduler_state.pt"
@@ -1184,7 +1245,7 @@ def load_experiment_objects(
         config: Project configuration
 
     Returns:
-        Dict with keys: model, processor, optimizer, start_epoch, global_step
+        Dict with keys: model, processor, optimizer, start_epoch, global_batch
     """
     logger = logging.getLogger(__name__)
     checkpoint_path_obj = Path(checkpoint_path)
@@ -1233,8 +1294,8 @@ def load_experiment_objects(
         weight_decay=config.training.weight_decay
     )
 
-    # Load experiment metadata (contains last_finished_epoch and global_step)
-    last_finished_epoch, global_step = load_experiment_metadata(checkpoint_path_obj, logger)
+    # Load experiment metadata (contains last_finished_epoch and global_batch)
+    last_finished_epoch, global_batch = load_experiment_metadata(checkpoint_path_obj, logger)
 
     # Calculate start_epoch: if resuming, continue from next epoch after last_finished_epoch
     # last_finished_epoch = -1 means new training, so start_epoch = 0
@@ -1255,14 +1316,14 @@ def load_experiment_objects(
         logger.info("No optimizer_state.pt found - starting new training from baseline")
 
     logger.info(f"Experiment loaded: {checkpoint_info.get('model_name', 'unknown')}")
-    logger.info(f"Will start training from epoch {start_epoch}, global_step {global_step}")
+    logger.info(f"Will start training from epoch {start_epoch}, global_batch {global_batch}")
 
     return {
         'model': model,
         'processor': processor,
         'optimizer': optimizer,
         'start_epoch': start_epoch,
-        'global_step': global_step
+        'global_batch': global_batch
     }
 
 
@@ -1345,7 +1406,7 @@ def main():
         processor = exp_objects['processor']
         optimizer = exp_objects['optimizer']
         start_epoch = exp_objects['start_epoch']
-        global_step = exp_objects['global_step']
+        global_batch = exp_objects['global_batch']
 
         # Determine if this is resume based on start_epoch
         is_resume = start_epoch > 0
@@ -1414,21 +1475,33 @@ def main():
         logger.info(f"Training batches per epoch: {len(train_dataloader)}")
         logger.info(f"Validation batches: {len(val_dataloader)}")
 
-        # Calculate total training steps
+        # Calculate total training batches (batches per epoch * num epochs)
         num_train_epochs = config.training.num_train_epochs
-        steps_per_epoch = len(train_dataloader)
-        total_steps = steps_per_epoch * num_train_epochs
+        batches_per_epoch = len(train_dataloader)
+        total_batches = batches_per_epoch * num_train_epochs
 
-        logger.info(f"Total training steps: {total_steps}")
+        logger.info(f"Total training batches: {total_batches}")
 
         # Create/load scheduler (automatically loads state if scheduler_state.pt exists)
-        scheduler = load_scheduler(optimizer, config, total_steps, str(checkpoint_path))
+        scheduler = load_scheduler(optimizer, config, total_batches, str(checkpoint_path))
+
+        # Create GradScaler for mixed precision training
+        scaler = torch.cuda.amp.GradScaler(enabled=config.training.fp16)
+
+        # Check bfloat16 support
+        if torch.cuda.is_available() and torch.cuda.is_bf16_supported():
+            amp_dtype_name = "bfloat16"
+        else:
+            amp_dtype_name = "float16"
 
         # Optimizer and scheduler ready
         logger.info(f"Using optimizer: AdamW (lr={config.training.learning_rate})")
         logger.info(f"Using scheduler: {config.training.scheduler_name}")
+        logger.info(f"Mixed precision: {config.training.fp16} (dtype: {amp_dtype_name if config.training.fp16 else 'N/A'})")
+        logger.info(f"Gradient accumulation steps: {config.training.gradient_accumulation_steps}")
+        logger.info(f"Effective batch size: {config.training.train_batch_size * config.training.gradient_accumulation_steps} ({config.training.train_batch_size} * {config.training.gradient_accumulation_steps})")
         logger.info(f"Label smoothing factor: {config.training.label_smoothing_factor}")
-        logger.info(f"Starting from epoch {start_epoch}, global_step {global_step}")
+        logger.info(f"Starting from epoch {start_epoch}, global_batch {global_batch}")
 
         # Training loop
         logger.info("="*60)
@@ -1458,16 +1531,17 @@ def main():
             logger.info(f"\nEpoch {epoch}/{num_train_epochs-1}")
 
             # Train for one epoch
-            avg_train_loss, global_step, epoch_duration = train_one_epoch(
+            avg_train_loss, global_batch, epoch_duration = train_one_epoch(
                 model=model,
                 train_dataloader=train_dataloader,
                 optimizer=optimizer,
                 scheduler=scheduler,
                 config=config,
                 epoch=epoch,
-                global_step=global_step,
+                global_batch=global_batch,
                 writer=writer,
-                logger=logger
+                logger=logger,
+                scaler=scaler
             )
 
             # Validate
@@ -1477,7 +1551,7 @@ def main():
                 data_manager=data_manager,
                 config=config,
                 epoch=epoch,
-                global_step=global_step,
+                global_batch=global_batch,
                 writer=writer,
                 logger=logger
             )
@@ -1513,7 +1587,7 @@ def main():
                 optimizer=optimizer,
                 scheduler=scheduler,
                 epoch=epoch,
-                global_step=global_step,
+                global_batch=global_batch,
                 metrics=val_metrics,
                 experiment_dir=experiment_dir,
                 config=config,
