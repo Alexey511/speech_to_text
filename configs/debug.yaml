@@ -30,15 +30,13 @@ model:
 
 # Debug data settings
 data:
-  preprocessing_num_workers: 2
-  num_workers: 1
   dataset_path: "cv-corpus-22.0-2025-06-20/ru"  # Explicit path for debug mode
 
 # Debug training settings (fast and minimal)
 training:
   train_batch_size: 2
   eval_batch_size: 4
-  num_workers: 1
+  num_workers: 2
   gradient_accumulation_steps: 1
   learning_rate: 1e-4
   num_train_epochs: 2

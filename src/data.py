@@ -930,7 +930,7 @@ class DataManager:
         dataset: CommonVoiceDataset,
         batch_size: int,
         shuffle: bool = False,
-        num_workers: Optional[int] = None,
+        num_workers: int = 0,
         transpose_features: bool = False
     ) -> DataLoader:
         """Create DataLoader for the dataset
@@ -939,15 +939,13 @@ class DataManager:
             dataset: CommonVoiceDataset instance
             batch_size: Batch size
             shuffle: Whether to shuffle the dataset
-            num_workers: Number of data loading workers (defaults to config.data.num_workers)
+            num_workers: Number of data loading workers
             transpose_features: If True, transpose input_features from (batch, freq, time) to (batch, time, freq).
                               Default False (for Whisper which expects (batch, freq, time)).
                               Set to True for Speech2Text which expects (batch, time, freq).
         """
         if self.processor is None:
             raise ValueError("Processor must be set up before creating DataLoader. Call setup_processor first.")
-        if num_workers is None:
-            num_workers = self.config.data.num_workers
 
         # Setup collator with model_type and transpose_features
         collator = AudioCollator(

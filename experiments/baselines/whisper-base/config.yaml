@@ -23,8 +23,6 @@ data:
   sample_rate: 16000
   data_dir: "data"
   dataset_path: "cv-corpus-22.0-2025-06-20/ru"
-  num_workers: 4
-  preprocessing_num_workers: 8
   normalize: true
   trim_silence: true
   silence_threshold: 0.01
@@ -89,7 +87,7 @@ model:
   freeze_encoder: true  # Freeze encoder - acoustic features are language-agnostic
   freeze_decoder: true
   unfreeze_last_n_encoder_layers: 0
-  unfreeze_last_n_decoder_layers: 3
+  unfreeze_last_n_decoder_layers: 2
 
   # Fine-grained unfreezing for critical components
   unfreeze_embed_tokens: true

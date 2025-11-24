@@ -23,8 +23,6 @@ data:
   sample_rate: 16000  #target sample rate
   data_dir: "data"  # Directory containing cv-corpus-22.0-2025-06-20/
   dataset_path: "cv-corpus-22.0-2025-06-20/ru"  # Path to specific dataset within data_dir
-  num_workers: 4
-  preprocessing_num_workers: 8
   normalize: true  # Normalize audio amplitude
   trim_silence: true  # Trim silence from audio
   silence_threshold: 0.01  # Threshold for silence detection (fraction of max energy, 0.0-1.0)

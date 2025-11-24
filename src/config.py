@@ -69,8 +69,6 @@ class DataConfig:
     sample_rate: int = 16000    #target sample rate
     data_dir: str = "data"  # Directory containing cv-corpus-22.0-2025-06-20/
     dataset_path: str = "cv-corpus-22.0-2025-06-20/ru"  # Path to specific dataset within data_dir
-    num_workers: int = 4
-    preprocessing_num_workers: int = 8
     normalize: bool = True  # Normalize audio amplitude
     trim_silence: bool = True  # Trim silence from audio
     silence_threshold: float = 0.01  # Threshold for silence detection (fraction of max energy, 0.0-1.0)
