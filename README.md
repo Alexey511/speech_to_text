@@ -47,8 +47,8 @@
 | Модель | Стратегия | WER ↓ | CER ↓ | Улучшение | Эпох | Время |
 |--------|-----------|-------|-------|-----------|------|-------|
 | Whisper Base | Encoder frozen, decoder trainable | ~22-25% | ~6-8% | ✅ -10% WER | 5 | ~1.5h |
-| Whisper Small | Encoder frozen, decoder trainable | ~11-13% | ~4-5% | ✅ -9% WER | 5 | ~3h |
-| Speech2Text | Cross-lingual (En→Ru) | ~45-50% | ~20-25% | ✅ -50%+ WER | 8 | ~2h |
+| Whisper Small | Encoder frozen, decoder trainable | ~11-13% | ~4-5% | ✅ -9% WER | 6 | ~3h |
+| Speech2Text | Cross-lingual (En→Ru) | ~45-50% | ~20-25% | ✅ -50%+ WER | 30 | ~2h |
 
 **Ключевые выводы:**
 
@@ -65,17 +65,20 @@
 3. **Ограничения малого датасета очевидны**:
    - 40 часов недостаточно для достижения SOTA качества
    - Whisper Small после fine-tuning (~12% WER) не дотягивает до коммерческих решений (~5-7% WER)
-   - Для production систем требуются тысячи часов данных
+   - Для production систем требуется больше данных
 
-### Сравнение стратегий fine-tuning (Whisper Small)
+### Сравнение стратегий обучения (Whisper Small)
 
-| Стратегия заморозки | WER ↓ | CER ↓ | Время обучения | Примечание |
-|---------------------|-------|-------|----------------|------------|
-| Full decoder trainable | ~11-13% | ~3-4% | ~3h | **✅ Оптимальный баланс** |
-| Last 4 encoder layers + decoder | ~11-14% | ~3-4% | ~4h | Marginal improvement |
-| Full model trainable | ~12-15% | ~4-5% | ~5h | Overfitting на малых данных |
+| Стратегия | WER ↓ | CER ↓ | Время обучения |
+|-----------|-------|-------|----------------|
+| Last 2 encoder layers unfrozen | ~15-18% | ~5-7% | ~3h |
+| Last 4 encoder layers unfrozen | ~11-14% | ~3-4% | ~3h |
+| Last 6 encoder layers unfrozen | ~11-13% | ~3-4% | ~3h |
+| Last 8 encoder layers unfrozen | ~11-13% | ~3-4% | ~3h |
+| Last 10 encoder layers unfrozen | ~11-13% | ~3-4% | ~3h |
+| Full decoder unfrozen | ~11-13% | ~3-4% | ~3h |
 
-**Вывод:** Заморозка encoder и обучение только decoder - оптимальная стратегия для fine-tuning на малых данных.
+*Экспериментальные результаты для определения оптимальной стратегии*
 
 *Детальные результаты и графики обучения доступны в experiments/ директории и через TensorBoard*
 
@@ -761,5 +764,3 @@ MIT License - см. [LICENSE](LICENSE) для деталей.
 ---
 
 <div align="center">
-  <p>Разработано с ❤️ для демонстрации современных ML/DL практик</p>
-</div>
