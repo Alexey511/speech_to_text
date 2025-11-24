@@ -258,7 +258,6 @@ speech_to_text/
 ├── train.py                           # Training script
 ├── evaluation.py                      # Standalone evaluation
 ├── inference.py                       # Production inference
-├── CLAUDE.md                          # Project guide для AI assistant
 └── README.md
 
 **Примечание:** Код построен с возможностью расширения (добавление новых моделей, метрик, аугментаций). Например, при необходимости можно легко реализовать GPU аугментации или custom модели - архитектура это поддерживает.
